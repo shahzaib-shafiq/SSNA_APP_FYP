@@ -12,6 +12,7 @@
     "@react-native-firebase/app": "^18.6.2",
     "@react-native-firebase/auth": "^18.6.2",
     "@react-native-google-signin/google-signin": "^10.1.1",
+    "@react-navigation/native": "^6.1.9",
     "expo": "~49.0.15",
     "expo-dev-client": "~2.4.12",
     "expo-status-bar": "~1.6.0",
