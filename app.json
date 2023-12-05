@@ -2,7 +2,6 @@
   "expo": {
     "name": "my-app",
     "slug": "my-app",
-    "plugins":["@react-native-google-signin/google-signin"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,20 +18,13 @@
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile":"./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.shahzaibshafiq100.myapp"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "69c534fb-8a29-4a7e-8581-677db2eb1d20"
-      }
     }
   }
 }
