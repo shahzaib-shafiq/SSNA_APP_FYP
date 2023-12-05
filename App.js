@@ -60,11 +60,11 @@ function DrawerRoot({ navigation }) {
           header: () => <Upper />,
         })}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="FacultyInfo"
         component={FacultyInfo}
         options={{ headerShown: false }}
-      /> */}
+      />
       {/* <Drawer.Screen
         name="HOMESCREEN"
         component={HOMESCREEN}
