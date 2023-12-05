@@ -52,14 +52,14 @@ function DrawerRoot({ navigation }) {
         component={MAINPAGE}
         options={{ headerShown: false }}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="AnnouncementsScreenMain"
         component={AnnouncementsScreenMain}
         options={(props) => ({
           headerShown: true,
           header: () => <Upper />,
         })}
-      /> */}
+      />
       {/* <Drawer.Screen
         name="FacultyInfo"
         component={FacultyInfo}
