@@ -47,29 +47,29 @@ function DrawerRoot({ navigation }) {
         component={LOGINPAGE}
         options={{ headerShown: false }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="MAINPAGE"
         component={MAINPAGE}
         options={{ headerShown: false }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="AnnouncementsScreenMain"
         component={AnnouncementsScreenMain}
         options={(props) => ({
           headerShown: true,
           header: () => <Upper />,
         })}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="FacultyInfo"
         component={FacultyInfo}
         options={{ headerShown: false }}
-      />
-      <Drawer.Screen
+      /> */}
+      {/* <Drawer.Screen
         name="HOMESCREEN"
         component={HOMESCREEN}
         options={{ headerShown: false }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }
