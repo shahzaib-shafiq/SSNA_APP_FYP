@@ -47,11 +47,11 @@ function DrawerRoot({ navigation }) {
         component={LOGINPAGE}
         options={{ headerShown: false }}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="MAINPAGE"
         component={MAINPAGE}
         options={{ headerShown: false }}
-      /> */}
+      />
       {/* <Drawer.Screen
         name="AnnouncementsScreenMain"
         component={AnnouncementsScreenMain}
