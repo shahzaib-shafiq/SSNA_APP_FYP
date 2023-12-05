@@ -1,4 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
+const Stack = createNativeStackNavigator();
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import LOCATION from "./screens/LOCATION";
+import BUSROUTES from "./screens/BUSROUTES";
+import Timetable from "./screens/Timetable";
+import CourseMaterial from "./screens/CourseMaterial";
+import CourseMaterial1 from "./screens/CourseMaterial1";
+import LOGINPAGE1 from "./screens/LOGINPAGE1";
+import LOGINPAGE from "./screens/LOGINPAGE";
+import REGISTRARTION1 from "./screens/REGISTRARTION1";
+import REGISTRARTION from "./screens/REGISTRARTION";
+import HOMESCREEN from "./screens/HOMESCREEN";
+import SeniorGuidanceScreenAnswe from "./screens/SeniorGuidanceScreenAnswe";
+import SeniorGuidanceScreenAnswe1 from "./screens/SeniorGuidanceScreenAnswe1";
+import SeniorGuidanceScreenViewD from "./screens/SeniorGuidanceScreenViewD";
+import SeniorGuidanceScreenMain from "./screens/SeniorGuidanceScreenMain";
+import FacultyInfo from "./screens/FacultyInfo";
+import MAINPAGE from "./screens/MAINPAGE";
+import DrawerMenu from "./components/DrawerMenu";
+import AnnouncementsScreenMain from "./screens/AnnouncementsScreenMain";
+import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import Upper from "./components/Upper";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   View,
   Text,
@@ -6,12 +32,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-
-
-import LOGINPAGE from './screens/LOGINPAGE'
-
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
@@ -27,7 +47,6 @@ function DrawerRoot({ navigation }) {
         component={LOGINPAGE}
         options={{ headerShown: false }}
       />
-{/*       
       <Drawer.Screen
         name="MAINPAGE"
         component={MAINPAGE}
@@ -50,7 +69,7 @@ function DrawerRoot({ navigation }) {
         name="HOMESCREEN"
         component={HOMESCREEN}
         options={{ headerShown: false }}
-      /> */}
+      />
     </Drawer.Navigator>
   );
 }
