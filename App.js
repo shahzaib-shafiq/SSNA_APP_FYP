@@ -65,11 +65,11 @@ function DrawerRoot({ navigation }) {
         component={FacultyInfo}
         options={{ headerShown: false }}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="HOMESCREEN"
         component={HOMESCREEN}
         options={{ headerShown: false }}
-      /> */}
+      />
     </Drawer.Navigator>
   );
 }
