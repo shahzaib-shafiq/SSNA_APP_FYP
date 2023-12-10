@@ -35,19 +35,14 @@ const LOGINPAGE = () => {
       <Text style={[styles.signInNow, styles.signInNowFlexBox]}>
         SIGN IN NOW!
       </Text>
-      {/* <View style={[styles.loginPageItem, styles.loginLayout]} />
-      <Text style={[styles.f201234cfdnuedupk, styles.text1Typo]}>
-        f201234@cfd.nu.edu.pk
-      </Text> */}
-      {/* <View style={[styles.loginPageInner, styles.loginLayout]} />
-      <Text style={[styles.text1, styles.text1Typo]}>*********</Text>
-      <Text style={[styles.email, styles.emailTypo]}>EMAIL</Text>
-      <Text style={[styles.password, styles.emailTypo]}>PASSWORD</Text> */}
-      <Pressable
+      
+     <Pressable
         style={styles.rectanglePressable}
-        onPress={() => navigation.navigate("LOGINPAGE1")}
-      />
-      <Text style={[styles.signIn, styles.signInPosition]}>SIGN IN</Text>
+        onPress={() => navigation.navigate("LOGINPAGE1")}>
+        {/* Content inside the Pressable (if needed) */}
+        <Text style={styles.signIn}>SIGN IN</Text>
+    </Pressable>
+
       <Text style={[styles.resumeYourJourney, styles.signInNowFlexBox]}>
         RESUME YOUR JOURNEY
       </Text>
@@ -71,10 +66,10 @@ const LOGINPAGE = () => {
         ]}
         contentFit="cover"
         source={require("../assets/mdipasswordoutline.png")}
-      /> */}
-      {/* <Text style={[styles.forgotPassword, styles.signInNowFlexBox]}>
+      /> }
+      {/* {<Text style={[styles.forgotPassword, styles.signInNowFlexBox]}>
         Forgot Password?
-      </Text> */}
+      </Text> } */}
     </View>
   );
 };
@@ -100,12 +95,12 @@ const styles = StyleSheet.create({
     left: 54,
     position: "absolute",
   },
-  text1Typo: {
-    fontSize: FontSize.size_xl,
-    textAlign: "center",
-    fontFamily: FontFamily.akshar,
-    position: "absolute",
-  },
+  // text1Typo: {
+  //   fontSize: FontSize.size_xl,
+  //   textAlign: "center",
+  //   fontFamily: FontFamily.akshar,
+  //   position: "absolute",
+  // },
   emailTypo: {
     fontFamily: FontFamily.poppins,
     textAlign: "center",
@@ -141,7 +136,7 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 4,
     elevation: 4,
-    shadowOpacity: 1,
+    shadowOpacity: 10,
     width: 398,
     height: 634,
     opacity: 0.1,
@@ -173,10 +168,10 @@ const styles = StyleSheet.create({
   bottomtext: {
     height: "4.18%",
     width: "55.95%",
-    top: "88.84%",
+    top: "90.84%",
     right: "21.95%",
     bottom: "6.97%",
-    left: "22.09%",
+    left: "23.09%",
     position: "absolute",
   },
   signInNow: {
@@ -191,11 +186,11 @@ const styles = StyleSheet.create({
   loginPageItem: {
     top: 442,
   },
-  f201234cfdnuedupk: {
-    top: 451,
-    left: 126,
-    color: Color.colorGray_500,
-  },
+  // f201234cfdnuedupk: {
+  //   top: 451,
+  //   left: 126,
+  //   color: Color.colorGray_500,
+  // },
   loginPageInner: {
     top: 549,
   },
@@ -218,6 +213,16 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppins,
     position: "absolute",
   },
+ 
+  signIn: {
+    top: 7,
+    fontSize: FontSize.size_11xl,
+    fontFamily: FontFamily.poppins,
+    textAlign: "center",
+    color: Color.colorWhite,
+    fontWeight: "500",
+    textAlign: "center"
+  },
   rectanglePressable: {
     top: 400,
     left: 82,
@@ -226,14 +231,6 @@ const styles = StyleSheet.create({
     width: 261,
     height: 50,
     position: "absolute",
-  },
-  signIn: {
-    top: 404,
-    fontSize: FontSize.size_11xl,
-    fontFamily: FontFamily.poppins,
-    textAlign: "center",
-    color: Color.colorWhite,
-    fontWeight: "500",
   },
   resumeYourJourney: {
     top: 329,
@@ -248,21 +245,21 @@ const styles = StyleSheet.create({
     width: 110,
     height: 108,
   },
-  arcticonshuaweiEmail1: {
-    top: 450,
-  },
-  mdipasswordOutlineIcon1: {
-    top: 557,
-  },
-  forgotPassword: {
-    marginLeft: 20,
-    top: 598,
-    left: "50%",
-    fontSize: FontSize.size_sm,
-    fontFamily: FontFamily.calibri,
-    width: 171,
-    height: 20,
-  },
+  // arcticonshuaweiEmail1: {
+  //   top: 450,
+  // },
+  // mdipasswordOutlineIcon1: {
+  //   top: 557,
+  // },
+  // forgotPassword: {
+  //   marginLeft: 20,
+  //   top: 598,
+  //   left: "50%",
+  //   fontSize: FontSize.size_sm,
+  //   fontFamily: FontFamily.calibri,
+  //   width: 171,
+  //   height: 20,
+  // },
   loginPage: {
     flex: 1,
     width: "100%",
