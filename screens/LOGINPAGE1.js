@@ -7,6 +7,18 @@ import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 const LOGINPAGE1 = () => {
   const navigation = useNavigation();
 
+  // Function to navigate after a delay
+  const navigateAfterDelay = () => {
+    setTimeout(() => {
+      navigation.navigate("DrawerRoot", { screen: "MAINPAGE" });
+    }, 2000); // 2000 milliseconds (2 seconds)
+  };
+
+  // Call the function on component mount
+  React.useEffect(() => {
+    navigateAfterDelay();
+  }, []);
+
   return (
     <View style={styles.loginPage1}>
       <Image
