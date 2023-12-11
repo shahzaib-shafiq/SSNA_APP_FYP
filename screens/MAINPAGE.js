@@ -46,16 +46,19 @@ const MAINPAGE = () => {
       </View>
       <Text style={styles.quickAccess1}>Quick Access !</Text>
       <View style={[styles.mainPageItem, styles.pressableLayout]} />
-      <LinearGradient
-        style={[styles.wrapper, styles.wrapperLayout]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() => navigation.navigate("Timetable")}
-        />
-      </LinearGradient>
+      <Pressable
+  style={[styles.pressable, styles.pressableLayout]}
+  onPress={() => navigation.navigate("Timetable")}
+>
+  <LinearGradient
+    style={[styles.wrapper, styles.wrapperLayout]}
+    locations={[0, 1, 1]}
+    colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
+  >
+    {/* Your other components: Text, Image, etc. */}
+    {/* ... */}
+  </LinearGradient>
+</Pressable>
       <LinearGradient
         style={[styles.container, styles.wrapperLayout]}
         locations={[0, 1, 1]}
