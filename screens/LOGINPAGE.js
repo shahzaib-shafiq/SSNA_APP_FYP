@@ -4,8 +4,42 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import auth from '@react-native-firebase/auth';
+// Initialize GoogleSignin
+GoogleSignin.configure({
+  webClientId: '879576680646-imadre0ps3b4ot8a1gi4kfgmnqjjekec.apps.googleusercontent.com', // Replace with your Web Client ID
+});
+
 const LOGINPAGE = () => {
   const navigation = useNavigation();
+  const handleGoogleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      
+      // Handle successful sign-in here
+      // You can access user information from userInfo.user
+      console.log(userInfo.user);
+  
+      // Navigate to MAINPAGE or your desired screen
+      navigation.navigate("MAINPAGE");
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // User cancelled the sign-in
+        console.log('Google Sign-In cancelled');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // Sign-in is in progress already
+        console.log('Google Sign-In in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // Play services are not available or outdated
+        console.log('Play services not available');
+      } else {
+        // Some other error occurred
+        console.error('Error during Google Sign-In', error);
+      }
+    }
+  };
 
   return (
     <View style={styles.loginPage}>
@@ -41,7 +75,8 @@ const LOGINPAGE = () => {
             styles.rectanglePressable,
             pressed && styles.rectanglePressablePressed, // Add a style for pressed state if desired
           ]}
-          onPress={() => navigation.navigate("MAINPAGE")}
+          onPress={handleGoogleSignIn}
+          // onPress={() => navigation.navigate("MAINPAGE")}
         >
           <Text style={styles.signIn}>SIGN IN</Text>
         </Pressable>

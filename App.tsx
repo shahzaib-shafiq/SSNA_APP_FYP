@@ -20,6 +20,7 @@ import Timetable from './screens/Timetable';
 import SeniorGuidanceScreenAnswe from './screens/SeniorGuidanceScreenAnswe';
 import SeniorGuidanceScreenMain from './screens/SeniorGuidanceScreenMain';
 import UpcomingEventDetails from './screens/UpcomingEventsDetails';
+import { GoogleSignin } from '@react-native-community/google-signin';
 // import PushNotification from 'react-native-push-notification';
 
 const Stack = createStackNavigator();
@@ -34,7 +35,7 @@ const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="LOGINPAGE"
+        initialRouteName="UpcomingEvents"
         screenOptions={{ headerShown: false }}
       >
 
