@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image } from "expo-image";
+import LinearGradient from 'react-native-linear-gradient';
+import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
@@ -9,11 +9,12 @@ const MAINPAGE = () => {
   const navigation = useNavigation();
 
   return (
+    
     <View style={styles.mainPage}>
       <LinearGradient
         style={[styles.bluebg, styles.bluebgPosition]}
-        locations={[0.38, 1]}
-        colors={["#0086ff", "rgba(77, 142, 169, 0)"]}
+        locations={[1, 1]}
+        colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
       />
       <Image
         style={[styles.mingcutemenuFillIcon1, styles.iconLayout1]}
@@ -25,7 +26,7 @@ const MAINPAGE = () => {
         contentFit="cover"
         source={require("../assets/mask-group.png")}
       />
-      <Text style={styles.usernameStyle}>Hi, Tahir!</Text>
+      <Text style={styles.usernameStyle}>Welcome back!</Text>
       <Image
         style={[styles.pngtreecartoonSchoolSupplie1, styles.bluebgPosition]}
         contentFit="cover"
@@ -44,179 +45,129 @@ const MAINPAGE = () => {
           source={require("../assets/search-11.png")}
         />
       </View>
-      <Text style={styles.quickAccess1}>Quick Access !</Text>
-      <View style={[styles.mainPageItem, styles.pressableLayout]} />
-      <LinearGradient
-        style={[styles.wrapper, styles.wrapperLayout]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() => navigation.navigate("Timetable")}
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.container, styles.wrapperLayout]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() => navigation.navigate("SeniorGuidanceScreenMain")}
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.frame, styles.framePosition]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() => navigation.navigate("BUSROUTES")}
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.rectangleLineargradient, styles.framePosition]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() =>
-            navigation.navigate("DrawerRoot", {
-              screen: "AnnouncementsScreenMain",
-            })
-          }
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.wrapper1, styles.wrapperLayout]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() =>
-            navigation.navigate("DrawerRoot", { screen: "FacultyInfo" })
-          }
-        />
-      </LinearGradient>
-      <LinearGradient
-        style={[styles.wrapper2, styles.wrapperLayout]}
-        locations={[0, 1, 1]}
-        colors={["#0086ff", "rgba(0, 0, 0, 0)", "#0087ff"]}
-      >
-        <Pressable
-          style={[styles.pressable, styles.pressableLayout]}
-          onPress={() => navigation.navigate("LOCATION")}
-        />
-      </LinearGradient>
-      <Text style={[styles.location, styles.locationTypo]}>Location</Text>
-      <Text style={[styles.facultyInfo, styles.locationTypo]}>
-        Faculty Info
-      </Text>
-      <Text style={[styles.viewTimetable, styles.viewTimetableTypo]}>
-        View Timetable
-      </Text>
-      <Text style={[styles.guidancePortal, styles.viewTimetableTypo]}>
-        Guidance Portal
-      </Text>
-      <Text style={[styles.busRoutes, styles.busRoutesTypo]}>Bus Routes</Text>
-      <Text style={[styles.announcements, styles.busRoutesTypo]}>
-        Announcements
-      </Text>
-      <Image
-        style={[styles.googleMapsLogo20201Icon, styles.searchbarItemLayout]}
-        contentFit="cover"
-        source={require("../assets/google-maps-logo-2020-1.png")}
-      />
-      <Image
-        style={styles.pngwing1Icon}
-        contentFit="cover"
-        source={require("../assets/pngwing-1.png")}
-      />
-      <Image
-        style={styles.screenshot20231116142906RIcon}
-        contentFit="cover"
-        source={require("../assets/screenshot-20231116-142906removebgpreview-1.png")}
-      />
-      <Image
-        style={styles.promotion86292861Icon}
-        contentFit="cover"
-        source={require("../assets/promotion-8629286-1.png")}
-      />
-      <Image
-        style={styles.schedule42532501Icon}
-        contentFit="cover"
-        source={require("../assets/schedule-4253250-1.png")}
-      />
-      <Image
-        style={styles.previewRemovebgPreview1Icon}
-        contentFit="cover"
-        source={require("../assets/previewremovebgpreview-1.png")}
-      />
-      <View style={styles.upcomingEvents}>
-        <View style={[styles.upcomingEventsChild, styles.upcomingLayout]} />
-        <View style={[styles.upcomingEventsItem, styles.upcomingLayout]} />
-        <View style={[styles.upcomingEventsInner, styles.upcomingLayout]} />
-        <Text style={[styles.daira2024, styles.daira2024Typo]}>Daira 2024</Text>
-        <Text style={[styles.convocation2025, styles.daira2024Typo]}>
-          CONVOCATION 2025
-        </Text>
-        <Text style={[styles.homecoming2025, styles.daira2024Typo]}>
-          HOMECOMING 2025
-        </Text>
-        <Text
-          style={[
-            styles.biggestNationalOlympiad1,
-            styles.alumniGatheringPosition,
-          ]}
+      <Text style={styles.quickAccess1}>Quick Access</Text>
+      
+      <View style={[styles.mainPageItem, styles.pressableLayout]}>
+      
+        <LinearGradient
+          style={[styles.timetableBOX, styles.wrapperLayout]}
+          locations={[1, 1]}
+          colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
         >
-          Biggest National Olympiad of Pakistan.
-        </Text>
-        <Text
-          style={[
-            styles.ceremonyForGraduating1,
-            styles.alumniGatheringPosition,
-          ]}
+          <Pressable
+            style={[styles.pressable, styles.pressableLayout]}
+            onPress={() => navigation.navigate("Timetable")}
+          />
+        </LinearGradient>
+        <LinearGradient
+          style={[styles.guidancePortalBOX, styles.wrapperLayout]}
+          locations={[1, 1]}
+          colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
         >
-          Ceremony for graduating batch
+          <Pressable
+            style={[styles.pressable, styles.pressableLayout]}
+            onPress={() => navigation.navigate("SeniorGuidanceScreenMain")}
+          />
+        </LinearGradient>
+        <LinearGradient
+          style={[styles.busRoutesBOX, styles.framePosition]}
+          locations={[1, 1]}
+        colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
+        >
+          <Pressable
+            style={[styles.pressable, styles.pressableLayout]}
+            onPress={() => navigation.navigate("BUSROUTES")}
+          />
+        </LinearGradient>
+        <LinearGradient
+          style={[styles.announcementsBOX, styles.framePosition]}
+          locations={[1, 1]}
+        colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
+        >
+          <Pressable
+            style={[styles.pressable, styles.pressableLayout]}
+            onPress={() =>
+              navigation.navigate("MAINPAGE")
+            }
+          />
+        </LinearGradient>
+        <LinearGradient
+          style={[styles.facultyInfoBOX, styles.wrapperLayout]}
+          locations={[1, 1]}
+          colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
+        >
+          <Pressable
+            style={[styles.pressable, styles.pressableLayout]}
+            onPress={() =>
+              navigation.navigate("FacultyInfo")
+            }
+          />
+        </LinearGradient>
+        <LinearGradient
+          style={[styles.locationBOX, styles.wrapperLayout]}
+          locations={[1, 1]}
+        colors={["#33c0ff", "rgba(77, 142, 180, 0)"]}
+        >
+          <Pressable
+            style={[styles.pressable, styles.pressableLayout]}
+            onPress={() => navigation.navigate("LOCATION")}
+          />
+        </LinearGradient>
+
+
+        <Text style={[styles.location, styles.locationTypo]}>Location</Text>
+        <Text style={[styles.facultyInfo, styles.locationTypo]}>
+          Faculty Info
         </Text>
-        <Text style={[styles.alumniGathering, styles.alumniGatheringPosition]}>
-          Alumni gathering
+        <Text style={[styles.viewTimetable, styles.viewTimetableTypo]}>
+          View Timetable
         </Text>
-        <Text style={[styles.march2024, styles.march2024Position]}>
-          March, 2024
+        <Text style={[styles.guidancePortal, styles.viewTimetableTypo]}>
+          Guidance Portal
         </Text>
-        <Text style={[styles.october2025, styles.march2024Position]}>
-          October, 2025
+        <Text style={[styles.busRoutes, styles.busRoutesTypo]}>Bus Routes</Text>
+        <Text style={[styles.announcements, styles.busRoutesTypo]}>
+          Announcements
         </Text>
-        <Text style={[styles.november2025, styles.march2024Position]}>
-          November, 2025
-        </Text>
+
+
+
         <Image
-          style={[styles.calendar1Icon1, styles.iconLayout]}
+          style={[styles.googleMapsLogo20201Icon, styles.searchbarItemLayout]}
           contentFit="cover"
-          source={require("../assets/calendar-1.png")}
+          source={require("../assets/google-maps-logo-2020-1.png")}
         />
         <Image
-          style={[styles.calendar2Icon1, styles.iconLayout]}
+          style={styles.pngwing1Icon}
           contentFit="cover"
-          source={require("../assets/calendar-1.png")}
+          source={require("../assets/pngwing-1.png")}
         />
         <Image
-          style={[styles.calendar3Icon1, styles.iconLayout]}
+          style={styles.screenshot20231116142906RIcon}
           contentFit="cover"
-          source={require("../assets/calendar-1.png")}
+          source={require("../assets/screenshot-20231116-142906removebgpreview-1.png")}
         />
-        <Text style={styles.upcomingEvents1}>Upcoming Events</Text>
+        <Image
+          style={styles.promotion86292861Icon}
+          contentFit="cover"
+          source={require("../assets/promotion-8629286-1.png")}
+        />
+        <Image
+          style={styles.schedule42532501Icon}
+          contentFit="cover"
+          source={require("../assets/schedule-4253250-1.png")}
+        />
+        <Image
+          style={styles.previewRemovebgPreview1Icon}
+          contentFit="cover"
+          source={require("../assets/previewremovebgpreview-1.png")}
+        />
       </View>
-      <Image
-        style={[styles.materialSymbolsLighthelpOuIcon1, styles.iconLayout1]}
-        contentFit="cover"
-        source={require("../assets/materialsymbolslighthelpoutline.png")}
-      />
+        <Image
+          style={[styles.materialSymbolsLighthelpOuIcon1, styles.iconLayout1]}
+          contentFit="cover"
+          source={require("../assets/materialsymbolslighthelpoutline.png")}
+        />
     </View>
   );
 };
@@ -224,26 +175,33 @@ const MAINPAGE = () => {
 const styles = StyleSheet.create({
   bluebgPosition: {
     right: 0,
-    top: 0,
+    top: -20,
     position: "absolute",
   },
   iconLayout1: {
-    height: 24,
-    width: 24,
+    height: 30,
+    width: 30,
     position: "absolute",
     overflow: "hidden",
+  },
+  mingcutemenuFillIcon1: {
+    top: 50,
+    left: 30,
+    height: 90,
+    width: 90,
   },
   searchbarItemLayout: {
     width: 45,
     position: "absolute",
   },
   pressableLayout: {
-    opacity: 0.1,
-    borderRadius: Border.br_smi,
+    opacity: 1,
+    borderRadius: 13,
   },
   wrapperLayout: {
     height: 120,
     width: 170,
+    borderRadius: 13,
     position: "absolute",
   },
   framePosition: {
@@ -332,21 +290,15 @@ const styles = StyleSheet.create({
   bluebg: {
     borderBottomRightRadius: Border.br_6xl,
     borderBottomLeftRadius: Border.br_6xl,
-    width: 430,
-    height: 309,
+    width: 415,
+    height: 329,
     backgroundColor: "transparent",
   },
-  mingcutemenuFillIcon1: {
-    top: 79,
-    left: 20,
-    height: 24,
-    width: 24,
-  },
   maskGroupIcon1: {
-    top: 80,
-    left: 378,
-    width: 31,
-    height: 31,
+    top: 55,
+    left: 350,
+    width: 41,
+    height: 41,
     position: "absolute",
   },
   usernameStyle: {
@@ -360,9 +312,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   pngtreecartoonSchoolSupplie1: {
-    width: 217,
-    height: 245,
-    opacity: 0.2,
+    width: 317,
+    height: 145,
+    left:200,
+    opacity: 0.7,
   },
   mainPageChild: {
     top: 235,
@@ -420,63 +373,63 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   quickAccess1: {
-    top: 364,
-    color: "#222",
-    fontWeight: "600",
+    top: 330,
+    color: "#111",
+    fontWeight: "700",
     fontSize: FontSize.size_5xl,
     left: 21,
     fontFamily: FontFamily.inter,
     textAlign: "center",
+    opacity:0.6,
     position: "absolute",
   },
   mainPageItem: {
-    top: 404,
-    shadowColor: "rgba(0, 0, 0, 0.25)",
+    top: -40,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
       height: 4,
     },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
-    borderColor: "#000",
     width: 389,
     height: 456,
-    left: 21,
+    left: -7,
     borderRadius: Border.br_smi,
-    borderWidth: 1,
-    borderStyle: "solid",
+    borderWidth: 0,
     position: "absolute",
-    backgroundColor: Color.colorWhite,
   },
   pressable: {
     height: "100%",
     backgroundColor: "transparent",
-    borderRadius: Border.br_smi,
+    borderRadius: 13,
     width: "100%",
   },
-  wrapper: {
+  timetableBOX: {
     top: 426,
     width: 170,
     left: 34,
   },
-  container: {
+  guidancePortalBOX: {
     left: 225,
     top: 426,
     width: 170,
+    borderRadius: 13,
   },
-  frame: {
+  busRoutesBOX: {
     left: 34,
+    borderRadius: 13,
   },
-  rectangleLineargradient: {
+  announcementsBOX: {
     left: 225,
+    borderRadius: 13,
   },
-  wrapper1: {
+  facultyInfoBOX: {
     top: 716,
+    borderRadius: 13,
     left: 225,
   },
-  wrapper2: {
+  locationBOX: {
     top: 715,
+    borderRadius: 13,
     left: 34,
   },
   location: {
@@ -624,8 +577,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   materialSymbolsLighthelpOuIcon1: {
-    top: 243,
-    left: 367,
+    top: 240,
+    left: 363,
   },
   mainPage: {
     flex: 1,

@@ -1,7 +1,5 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import Query2 from "../components/Query2";
-import Query1 from "../components/Query1";
 import Query from "../components/Query";
 import Upper2 from "../components/Upper2";
 import Filters1 from "../components/Filters1";
@@ -13,8 +11,6 @@ const SeniorGuidanceScreenMain = () => {
       <View style={styles.homeScreen}>
         <View style={[styles.screenmain, styles.screenmainLayout]} />
       </View>
-      <Query2 />
-      <Query1 />
       <Query />
       <Upper2 />
       <Filters1 />

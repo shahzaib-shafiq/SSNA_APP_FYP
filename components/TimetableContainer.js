@@ -6,8 +6,8 @@ import {
   Text,
   ImageSourcePropType,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image } from "expo-image";
+import LinearGradient from 'react-native-linear-gradient';
+import { Image } from "react-native";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
 
 const getStyleValue = (key, value) => {

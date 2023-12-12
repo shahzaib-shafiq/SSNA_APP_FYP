@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image } from "expo-image";
+import { Image } from "react-native";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";

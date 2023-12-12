@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Image } from "expo-image";
-import { StyleSheet, View } from "react-native";
+// import { Image } from "expo-image";
+import { StyleSheet, View, Image} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TimetableContainer from "../components/TimetableContainer";
 import { Color } from "../GlobalStyles";

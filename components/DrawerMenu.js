@@ -175,7 +175,7 @@ const DrawerMenu = ({ state, navigation }) => {
           <Pressable
             style={[styles.home, styles.mapPosition]}
             onPress={() =>
-              navigation.navigate("DrawerRoot", { screen: "MAINPAGE" })
+              navigation.navigate("MAINPAGE")
             }
           >
             {stateIndex === 1 ? drawerItemsActive[1] : drawerItemsNormal[1]}
@@ -193,9 +193,7 @@ const DrawerMenu = ({ state, navigation }) => {
           <Pressable
             style={[styles.announcements1, styles.mapPosition]}
             onPress={() =>
-              navigation.navigate("DrawerRoot", {
-                screen: "AnnouncementsScreenMain",
-              })
+              navigation.navigate("UpcomingEvents")
             }
           >
             {stateIndex === 0 ? drawerItemsActive[0] : drawerItemsNormal[0]}
@@ -213,7 +211,7 @@ const DrawerMenu = ({ state, navigation }) => {
           <Pressable
             style={[styles.facultyInfo1, styles.mapPosition]}
             onPress={() =>
-              navigation.navigate("DrawerRoot", { screen: "FacultyInfo" })
+              navigation.navigate("FacultyInfo")
             }
           >
             {stateIndex === 2 ? drawerItemsActive[2] : drawerItemsNormal[2]}
@@ -248,7 +246,7 @@ const DrawerMenu = ({ state, navigation }) => {
         <Pressable
           style={styles.epback}
           onPress={() =>
-            navigation.navigate("DrawerRoot", { screen: "MAINPAGE" })
+            navigation.navigate("MAINPAGE")
           }
         >
           <Image

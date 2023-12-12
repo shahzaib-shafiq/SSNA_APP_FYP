@@ -1,16 +1,47 @@
 import React, { useMemo } from "react";
-import { Text, StyleSheet, View } from "react-native";
-import { Button, Icon } from "@ui-kitten/components";
-import { Image } from "expo-image";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const getStyleValue = (key, value) => {
   if (value === undefined) return;
   return { [key]: value === "unset" ? undefined : value };
 };
+
+// const AnnouncementCard = ({
+//   downloadAttachementMarginTop,
+//   onButtonDownloadPress,
+// }) => {
+//   const announcementStyle = useMemo(() => {
+//     return {
+//       ...getStyleValue("marginTop", downloadAttachementMarginTop),
+//     };
+//   }, [downloadAttachementMarginTop]);
+
+//   return (
+//     <View style={[styles.announcement, announcementStyle]}>
+//       <Text style={[styles.studentsCanCollect1, styles.daysAgoFlexBox]}>
+//        title
+//       </Text>
+//       <TouchableOpacity
+//         style={styles.buttonDownload1}
+//         onPress={onButtonDownloadPress}
+//       >
+//         <MaterialIcons name="file-download" size={24} color="#535353" />
+//       </TouchableOpacity>
+//       <Text style={[styles.daysAgo, styles.daysAgoFlexBox]}>2 days ago</Text>
+//       <Text style={[styles.admitCards, styles.admitCardsTypo]}>
+//         Admit Cards
+//       </Text>
+//     </View>
+//   );
+// };
+
 const AnnouncementCard = ({
   downloadAttachementMarginTop,
   onButtonDownloadPress,
+  title,
+  announcement,
 }) => {
   const announcementStyle = useMemo(() => {
     return {
@@ -20,20 +51,18 @@ const AnnouncementCard = ({
 
   return (
     <View style={[styles.announcement, announcementStyle]}>
-      <Text style={[styles.studentsCanCollect1, styles.daysAgoFlexBox]}>
-        Students can collect thier admit cards from the respective offices,
-        kindly see the pdf attached below to avoid any inconvenience.
+      <Text style={[styles.titleText, styles.daysAgoFlexBox]}>
+        {title}
       </Text>
-      <Button
+      <Text style={[styles.studentsCanCollect1, styles.daysAgoFlexBox]}>
+        {announcement}
+      </Text>
+      <TouchableOpacity
         style={styles.buttonDownload1}
-        size="medium"
-        color="#535353"
-        textStyle={styles.buttonDownloadText}
-        accessoryLeft={<Icon name="download" pack="material" />}
         onPress={onButtonDownloadPress}
       >
-        Download Attachement
-      </Button>
+        <MaterialIcons name="file-download" size={24} color="#535353" />
+      </TouchableOpacity>
       <Text style={[styles.daysAgo, styles.daysAgoFlexBox]}>2 days ago</Text>
       <Text style={[styles.admitCards, styles.admitCardsTypo]}>
         Admit Cards
@@ -46,6 +75,7 @@ const styles = StyleSheet.create({
   buttonDownloadText: {
     fontWeight: "600",
     fontFamily: "Inter",
+    marginLeft: 5,
   },
   daysAgoFlexBox: {
     textAlign: "left",

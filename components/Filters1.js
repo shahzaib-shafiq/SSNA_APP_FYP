@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Image } from "expo-image";
+import { Image } from "react-native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 
 const Filters1 = () => {

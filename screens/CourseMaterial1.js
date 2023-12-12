@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { Image } from "expo-image";
+import { Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Color, FontFamily, Border, Padding } from "../GlobalStyles";
