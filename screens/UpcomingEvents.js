@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
-import LinearGradient from 'react-native-linear-gradient';
 import { Image } from "react-native";
-import { StyleSheet, View, Text,Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
 import database from '@react-native-firebase/database';
-import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import PushNotification from 'react-native-push-notification';
+import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, View, Text,Pressable } from "react-native";
+import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 
+const UpcomingEvents = ({ route }) => {
 
-const UpcomingEvents = ({ navigation }) => {
+  const { userDetail } = route.params;
 
+  const navigation = useNavigation();
   const [announcements, setUpcomingEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getData = () => {
     const db = database();
     const dbRef = db.ref('/Announcements');
-  
+
+    const formatDate = (dateString) => {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+      return formattedDate;
+    };
+
     dbRef.on('value', (snapshot) => {
       const data = snapshot.val();
   
@@ -29,21 +34,24 @@ const UpcomingEvents = ({ navigation }) => {
           description: data[id].description,
           Title: data[id].Title,
           Announcement: data[id].Announcement,
+          AnnouncementDate: formatDate(data[id].AnnouncementDate),
+          img: data[id].img,
+
         }));
       
         // Check if a new event is added
         if (eventsData.length > announcements.length) {
           const newEvent = eventsData[eventsData.length - 1];
-      
+          
           // Update the state before showing the notification
           setUpcomingEvents(eventsData);
       
           // Show a notification for the new event
-          PushNotification.localNotification({
-            channelId: 'default-channel-id',
-            title: 'New Event',
-            message: newEvent.Title,
-          });
+          // PushNotification.localNotification({
+          //   channelId: 'default-channel-id',
+          //   title: 'New Event',
+          //   message: newEvent.Title,
+          // });
         } else if (eventsData.length < announcements.length) {
           // Event removed, update the state without triggering a notification
           setUpcomingEvents(eventsData);
@@ -70,6 +78,7 @@ const UpcomingEvents = ({ navigation }) => {
         <View style={[styles.screenmain, styles.bluebgPosition]} />
       </View>
 
+    {/* FOR EACH EVENT CARD */}
     {announcements.map((events,index) => (
 
       <Pressable
@@ -78,7 +87,7 @@ const UpcomingEvents = ({ navigation }) => {
           styles.upcomingEventsChild,
           { zIndex: announcements.length - index }, // Adjust the zIndex
         ]}
-        onPress={() => navigation.navigate("UpcomingEventsDetails", { events })}
+        onPress={() => navigation.navigate("UpcomingEventsDetails", { userDetail,events })}
       >
           <View 
             style={[
@@ -86,12 +95,11 @@ const UpcomingEvents = ({ navigation }) => {
               { top: 118 + index * 150 } 
             ]}
           >
-
             <View style={[styles.upcomingEvents1, styles.upcomingPosition]}>
             
             <View style={[styles.upcomingEventsChild, styles.upcomingPosition]}>
               <Image
-                source={require('../assets/daira2024.png')}
+                source={{ uri: events.img }}
                 style={{ width: '100%', height: '130%', borderRadius: Border.br_mini }}
               />
             </View>
@@ -105,7 +113,7 @@ const UpcomingEvents = ({ navigation }) => {
 
               {/* DATE */}
               <Text style={styles.dateStyle}>
-                March, 2024
+              {events?.AnnouncementDate}
               </Text>
               <Image
                 style={styles.calendar1Icon}
@@ -117,27 +125,30 @@ const UpcomingEvents = ({ navigation }) => {
         </Pressable>
       ))}
 
-    
+
+      {/* HEADER */}
       <View style={styles.upper}>
         <LinearGradient
           colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
           style={[styles.bluebg, styles.bluebgPosition]}
-          // locations={[0, 0.59]}
         />
         {<Pressable
           style={styles.menus1}
           
           onPress={() => 
             {console.log('Pressable pressed');
-            navigation.navigate("MAINPAGE")}}
+            navigation.navigate("MAINPAGE",{userDetail})}}
         >
           <Image
             style={styles.icon}
-            contentFit="cover"
+            contentFit="cover" 
             source={require("../assets/epback.png")}
           />
-        </Pressable> }
+          
+        </Pressable> 
+        }
         <Text style={[styles.guidancePortal, styles.textTypo]}>Upcoming Events</Text>
+        
       </View>
     </View>
   );
@@ -176,15 +187,16 @@ const styles = StyleSheet.create({
     height: 82,
     position: "absolute",
   },
+  upcomingEventsChild: {
+    borderRadius: Border.br_mini,
+    backgroundColor: Color.colorMistyrose,
+    width: 179,
+  },
   textTypo: {
     color: Color.colorWhite,
     textAlign: "left",
     fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
-  },
-  textPosition: {
-    display: "none",
-    position: "absolute",
   },
   screenmain: {
     backgroundColor: Color.colorWhite,
@@ -198,11 +210,6 @@ const styles = StyleSheet.create({
     width: 375,
     position: "absolute",
     height: 812,
-  },
-  upcomingEventsChild: {
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorMistyrose,
-    width: 179,
   },
   EventTitleStyle: {
     marginTop: 15,
@@ -252,12 +259,6 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
   },
-  apps1: {
-    top: 240,
-  },
-  apps2: {
-    top: 356,
-  },
   bluebg: {
     backgroundColor: "transparent",
   },
@@ -286,35 +287,6 @@ const styles = StyleSheet.create({
     left: "20%",
     fontSize: FontSize.size_5xl,
     position: "absolute",
-  },
-  upperChild: {
-    height: "13.39%",
-    width: "9.61%",
-    top: "79.57%",
-    right: "5.34%",
-    bottom: "7.04%",
-    left: "85.06%",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_1100,
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowRadius: 6.1,
-    elevation: 6.1,
-    shadowOpacity: 1,
-  },
-  text: {
-    height: "23.61%",
-    width: "6.94%",
-    top: "74.68%",
-    left: "86.66%",
-    fontSize: FontSize.size_21xl,
-    color: Color.colorWhite,
-    textAlign: "left",
-    fontFamily: FontFamily.interSemiBold,
-    fontWeight: "600",
   },
   upper: {
     top: -193,

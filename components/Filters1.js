@@ -1,46 +1,50 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
 import { Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 
 const Filters1 = () => {
   return (
     <View style={styles.filters}>
+
       <View style={[styles.filters1, styles.filtersShadowBox1]}>
-        <View style={styles.filtersShadowBox} />
+        <View style={styles.filtersShadowBoxMain} />
         <Text style={[styles.all, styles.mostTypo]}>All</Text>
       </View>
+
       <View style={[styles.filters2, styles.filtersShadowBox1]}>
-        <View style={styles.filtersShadowBox} />
+        <View style={styles.filtersShadowBoxMain} />
         <Text style={[styles.mostUpvoted, styles.mostTypo]}>most upvoted</Text>
       </View>
+      
       <View style={[styles.filters3, styles.filters3Position]}>
-        <View style={styles.filtersShadowBox} />
+        <View style={styles.filtersShadowBoxMain} />
         <Text style={[styles.mostDownvoted, styles.mostTypo]}>
           most downvoted
         </Text>
       </View>
-      <View style={[styles.filters4, styles.filters4Position]}>
+      
+      <View style={[styles.filtersIconStyle, styles.filtersPosition]}>
         <Image
           style={[styles.filter1Icon1, styles.filters3Position]}
           contentFit="cover"
           source={require("../assets/filter-1.png")}
         />
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   filtersShadowBox1: {
-    shadowOpacity: 1,
-    elevation: 5.1,
+    // backgroundColor:"black",
     shadowRadius: 5.1,
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
+    shadowColor: "rgba(0, 0, 0, 0.5)",
   },
   mostTypo: {
     textAlign: "left",
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.inter,
     fontWeight: "600",
     fontSize: FontSize.size_xs,
-    top: "14.89%",
+    top: "15%",
     position: "absolute",
   },
   filters3Position: {
@@ -56,33 +60,26 @@ const styles = StyleSheet.create({
     left: "0%",
     position: "absolute",
   },
-  filters4Position: {
+  filtersPosition: {
     right: "0%",
-    top: "0%",
+    top: "15%",
   },
-  filtersShadowBox: {
-    elevation: 4.4,
-    shadowRadius: 4.4,
-    backgroundColor: Color.colorGray_800,
+  filtersShadowBoxMain: {
     borderRadius: Border.br_5xs,
+    backgroundColor:"white",
+    elevation:2,
     bottom: "0%",
     right: "0%",
     top: "0%",
-    width: "100%",
+    width: "85%",
     height: "100%",
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
     left: "0%",
     position: "absolute",
   },
   all: {
     width: "42.91%",
     left: "28.54%",
-    height: "70.21%",
+    height: "80.21%",
     textAlign: "left",
     color: Color.colorGray_100,
     fontFamily: FontFamily.inter,
@@ -94,14 +91,6 @@ const styles = StyleSheet.create({
     width: "13.42%",
     right: "86.58%",
     left: "0%",
-    shadowOpacity: 1,
-    elevation: 5.1,
-    shadowRadius: 5.1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
     bottom: "57.91%",
     top: "7.01%",
     height: "35.07%",
@@ -116,21 +105,13 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.inter,
     fontWeight: "600",
     fontSize: FontSize.size_xs,
-    top: "14.89%",
   },
   filters2: {
     width: "32.91%",
     right: "50.49%",
     left: "16.6%",
     bottom: "57.91%",
-    shadowOpacity: 1,
-    elevation: 5.1,
-    shadowRadius: 5.1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
+
     position: "absolute",
     top: "7.01%",
     height: "35.07%",
@@ -165,10 +146,10 @@ const styles = StyleSheet.create({
     height: "100%",
     bottom: "0%",
   },
-  filters4: {
-    height: "42.09%",
+  filtersIconStyle: {
+    height: "44%",
     width: "7.66%",
-    left: "92.34%",
+    left: "87.34%",
     shadowOpacity: 1,
     elevation: 5.1,
     shadowRadius: 5.1,
@@ -176,8 +157,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 0,
     },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    bottom: "57.91%",
+    shadowColor: "rgba(0, 0, 0, 1)",
     position: "absolute",
   },
   filters: {

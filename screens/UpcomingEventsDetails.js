@@ -1,37 +1,38 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import LinearGradient from 'react-native-linear-gradient';
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Color, FontFamily, Border, FontSize } from "../GlobalStyles";
 
 const UpcomingEventDetails = ({ route }) => {
-  const navigation = useNavigation();
-  const { events } = route.params;
+
+  const navigation = useNavigation(); //for stack navigation
+  const { userDetail,events } = route.params; //for user session and data passed
 
   return (
     <View style={styles.upcomingeventdetails}>
-      <View style={styles.homeScreen}>
-        <View style={[styles.screenmain, styles.bluebgPosition]} />
-      </View>
 
-
+      {/* EVENT DETAILS */}
       <View style={styles.apps}>
-        <View style={[styles.eventmodule, styles.imageboxPosition]}>
-          <View style={[styles.imagebox, styles.imageboxPosition]} />
-          <Text style={[styles.eventtitle, styles.eventdatePosition]}>
+        <View style={styles.eventmodule}>
+          <Image style={styles.imagebox} 
+            contentFit="cover"
+            source={{ uri: events.img }} 
+            />
+          <Text style={styles.eventtitle}>
             {events.Title}
           </Text>
-          <Text style={[styles.eventdescription, styles.eventdatePosition]}>
-            EventDescription
+          <Text style={styles.eventdescription}>
+            {events.description}
           </Text>
-          <Text style={[styles.eventdate, styles.eventdatePosition]}>
-            March, 2024
+          <Text style={styles.eventdate}>
+            {events?.AnnouncementDate}
           </Text>
         </View>
       </View>
 
-
+      {/* HEADER FUNCTIONALITY */}
       <View style={styles.upper}>
         <LinearGradient
           style={[styles.bluebg, styles.bluebgPosition]}
@@ -40,7 +41,7 @@ const UpcomingEventDetails = ({ route }) => {
         />
         <Pressable
           style={styles.menus1}
-          onPress={() => navigation.navigate("UpcomingEvents")}
+          onPress={() => navigation.navigate("UpcomingEvents",{userDetail})}
         >
           <Image
             style={styles.icon}
@@ -52,9 +53,10 @@ const UpcomingEventDetails = ({ route }) => {
         <Text style={[styles.guidancePortal, styles.textTypo]}>
           Events Details
         </Text>
-        <View style={[styles.upperChild, styles.textPosition]} />
-        <Text style={[styles.text, styles.textPosition]}>+</Text>
+        {/* <View style={[styles.upperChild, styles.textPosition]} /> */}
       </View>
+
+
     </View>
   );
 };
@@ -68,17 +70,6 @@ const styles = StyleSheet.create({
     height: "100%",
     position: "absolute",
     width: "100%",
-  },
-  imageboxPosition: {
-    left: 0,
-    width: 309,
-    position: "absolute",
-  },
-  eventdatePosition: {
-    textAlign: "left",
-    left: "50%",
-    top: "50%",
-    position: "absolute",
   },
   textTypo: {
     color: Color.colorWhite,
@@ -97,17 +88,19 @@ const styles = StyleSheet.create({
     top: "0%",
   },
   homeScreen: {
-    top: 14,
-    left: -2,
+    top: "1%",
+    left: "-20%",
     width: 375,
     position: "absolute",
     height: 812,
   },
   imagebox: {
-    top: 30,
+    top: "7%",
     borderRadius: Border.br_mini,
     backgroundColor: Color.colorMistyrose,
     height: 195,
+    width: 309,
+    position: "absolute",
   },
   eventtitle: {
     marginTop: -309.5,
@@ -122,41 +115,33 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   eventdescription: {
-    marginTop: -61.5,
     fontSize: FontSize.size_base,
-    lineHeight: 16,
     height: 371,
     color: Color.colorDimgray_100,
     fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
-    marginLeft: -154.5,
-    textAlign: "left",
-    left: "50%",
-    top: "50%",
+    left: "0%",
+    top: "90%",
+    // backgroundColor:"grey",
     width: 309,
   },
   eventdate: {
-    marginTop: -305.5,
-    marginLeft: 76.5,
     fontSize: FontSize.size_smi,
-    lineHeight: 13,
     fontFamily: FontFamily.interRegular,
     color: "#131313",
-    width: 78,
-    height: 11,
-    textAlign: "left",
-    left: "50%",
-    top: "50%",
+    left: "62%",
+    top: "0.2%",
+    position: "absolute",
   },
   eventmodule: {
     top: 0,
     height: 619,
+    // backgroundColor:"grey",
   },
   apps: {
-    top: 123,
-    left: 50,
-    height: 619,
-    width: 309,
+    top: "15%",
+    left: "12%",
+    // backgroundColor:"grey",
     position: "absolute",
   },
   bluebg: {
@@ -216,8 +201,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   upper: {
-    top: -163,
-    left: -1,
+    bottom: "92%",
     width: 431,
     height: 233,
     position: "absolute",

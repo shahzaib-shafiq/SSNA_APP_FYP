@@ -1,42 +1,84 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
 import { Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
 
 const Query = () => {
   return (
-    <View style={styles.query}>
-      <View style={styles.queryChild} />
-      <Text style={styles.iWantTo1}>
-        I want to run a snakes and ladders game on my visual studio console but
-        it seems like the IDE is not working properly. I have tried reinstalling
-        it but to no use. I also tried...
-      </Text>
-      <Text style={[styles.daysAgo, styles.daysAgoTypo]}>3 days ago</Text>
-      <Text style={[styles.byAnasNaveed1, styles.daysAgoTypo]}>
-        By Anas Naveed
-      </Text>
-      <Text style={[styles.arduinoProgramming, styles.eeTypo]}>
-        Arduino programming
-      </Text>
-      <Text style={[styles.ee, styles.eeTypo]}>EE</Text>
-      <View style={styles.queryItem} />
-      <View style={[styles.queryInner, styles.queryInnerLayout]} />
-      <View style={[styles.rectangleView, styles.queryInnerLayout]} />
-      <Text style={styles.answer}>ANSWER</Text>
-      <Image
-        style={[styles.upArrow1Icon1, styles.iconLayout]}
-        contentFit="cover"
-        source={require("../assets/uparrow-12.png")}
-      />
-      <Image
-        style={[styles.upArrow2Icon1, styles.iconLayout]}
-        contentFit="cover"
-        source={require("../assets/uparrow-24.png")}
-      />
-      <Text style={[styles.text2, styles.textTypo]}>34</Text>
-      <Text style={[styles.text3, styles.textTypo]}>14</Text>
+
+    <View style={styles.queriesBoxMAIN}>
+
+      <View style={styles.query1}>
+        <View style={styles.queryChild} />
+        <Text style={styles.iWantTo1}>
+          I want to run a snakes and ladders game on my visual studio console but
+          it seems like the IDE is not working properly. I have tried reinstalling
+          it but to no use. I also tried...
+        </Text>
+        <Text style={[styles.daysAgo, styles.daysAgoTypo]}>3 days ago</Text>
+        <Text style={[styles.byAnasNaveed1, styles.daysAgoTypo]}>
+          By Anas Naveed
+        </Text>
+        <Text style={[styles.arduinoProgramming, styles.eeTypo]}>
+          Arduino programming
+        </Text>
+        <Text style={[styles.ee, styles.eeTypo]}>EE</Text>
+        <View style={styles.queryItem} />
+        <View style={[styles.queryInner, styles.queryInnerLayout]} />
+        <View style={[styles.rectangleView, styles.queryInnerLayout]} />
+        <Text style={styles.answer}>ANSWER</Text>
+        <Image
+          style={[styles.upArrow1Icon1, styles.iconLayout]}
+          contentFit="cover"
+          source={require("../assets/uparrow-12.png")}
+        />
+        <Image
+          style={[styles.upArrow2Icon1, styles.iconLayout]}
+          contentFit="cover"
+          source={require("../assets/uparrow-24.png")}
+        />
+        <Text style={[styles.text2, styles.textTypo]}>34</Text>
+        <Text style={[styles.text3, styles.textTypo]}>14</Text>
+      </View>
+
+      <View style={styles.query2}>
+        <View style={styles.queryChild} />
+        <Text style={styles.iWantTo1}>
+          I want to run a snakes and ladders game on my visual studio console but
+          it seems like the IDE is not working properly. I have tried reinstalling
+          it but to no use. I also tried...
+        </Text>
+        <Text style={[styles.daysAgo, styles.daysAgoTypo]}>3 days ago</Text>
+        <Text style={[styles.byAnasNaveed1, styles.daysAgoTypo]}>
+          By Anas Naveed
+        </Text>
+        <Text style={[styles.arduinoProgramming, styles.eeTypo]}>
+          Game Development
+        </Text>
+        <Text style={[styles.ee, styles.eeTypo]}>CS</Text>
+        <View style={styles.queryItem} />
+        <View style={[styles.queryInner, styles.queryInnerLayout]} />
+        <View style={[styles.rectangleView, styles.queryInnerLayout]} />
+        <Text style={styles.answer}>ANSWER</Text>
+        <Image
+          style={[styles.upArrow1Icon1, styles.iconLayout]}
+          contentFit="cover"
+          source={require("../assets/uparrow-12.png")}
+        />
+        <Image
+          style={[styles.upArrow2Icon1, styles.iconLayout]}
+          contentFit="cover"
+          source={require("../assets/uparrow-24.png")}
+        />
+        <Text style={[styles.text2, styles.textTypo]}>34</Text>
+        <Text style={[styles.text3, styles.textTypo]}>14</Text>
+      </View>
+
     </View>
+
+    
+    
+    
   );
 };
 
@@ -184,11 +226,26 @@ const styles = StyleSheet.create({
   text3: {
     left: "29.87%",
   },
-  query: {
-    top: 691,
-    left: 23,
+  query1: {
+    top: "0%",
+    left: "0%",
     width: 395,
     height: 185,
+    position: "absolute",
+  },
+  query2: {
+    top: "40%",
+    left: "0%",
+    width: 395,
+    height: 185,
+    position: "absolute",
+  },
+  queriesBoxMAIN: {
+    top: "25%",
+    left: "4%",
+    width: "92%",
+    // backgroundColor:"grey",
+    height: "70%",
     position: "absolute",
   },
 });

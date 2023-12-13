@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TimetableContainer from "../components/TimetableContainer";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
+import { ColorProperties } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 const BUSROUTES = () => {
   const navigation = useNavigation();
@@ -14,50 +15,13 @@ const BUSROUTES = () => {
         busRoutesImageUrl="Bus Routes Information"
         propMarginLeft={-116.5}
         propTop={184}
-        onMenus1Press={() => navigation.navigate("DrawerMenu")}
+        // onMenus1Press={() => navigation.navigate("DrawerMenu")}
       />
+
+
       <View style={[styles.rectangleParent, styles.groupLayout]}>
         <View style={styles.groupShadowBox} />
         <Text style={[styles.route71, styles.routeTypo]}>Route # 7</Text>
-        <Text style={[styles.arrival, styles.arrivalTypo]}>Arrival</Text>
-        <Text style={[styles.departure, styles.arrivalTypo]}>Departure</Text>
-        <Text style={[styles.am, styles.amTypo]}>07:00 a.m</Text>
-        <Text style={[styles.pm, styles.pmPosition]}>08:45 p.m</Text>
-        <View style={[styles.button, styles.pmPosition]}>
-          <Text style={[styles.postQuestion, styles.arrivalTypo]}>
-            View Details
-          </Text>
-        </View>
-      </View>
-      <View style={[styles.rectangleGroup, styles.groupLayout]}>
-        <View style={styles.groupShadowBox} />
-        <Text style={[styles.route11, styles.routeTypo]}>Route # 1</Text>
-        <Text style={[styles.arrival, styles.arrivalTypo]}>Arrival</Text>
-        <Text style={[styles.departure, styles.arrivalTypo]}>Departure</Text>
-        <Text style={[styles.am, styles.amTypo]}>07:00 a.m</Text>
-        <Text style={[styles.pm, styles.pmPosition]}>08:45 p.m</Text>
-        <View style={[styles.button, styles.pmPosition]}>
-          <Text style={[styles.postQuestion, styles.arrivalTypo]}>
-            View Details
-          </Text>
-        </View>
-      </View>
-      <View style={[styles.rectangleContainer, styles.groupLayout]}>
-        <View style={styles.groupShadowBox} />
-        <Text style={[styles.route71, styles.routeTypo]}>Route # 2</Text>
-        <Text style={[styles.arrival, styles.arrivalTypo]}>Arrival</Text>
-        <Text style={[styles.departure, styles.arrivalTypo]}>Departure</Text>
-        <Text style={[styles.am, styles.amTypo]}>07:00 a.m</Text>
-        <Text style={[styles.pm, styles.pmPosition]}>08:45 p.m</Text>
-        <View style={[styles.button, styles.pmPosition]}>
-          <Text style={[styles.postQuestion, styles.arrivalTypo]}>
-            View Details
-          </Text>
-        </View>
-      </View>
-      <View style={[styles.groupView, styles.groupLayout]}>
-        <View style={styles.groupShadowBox} />
-        <Text style={[styles.route71, styles.routeTypo]}>Route # 3</Text>
         <Text style={[styles.arrival, styles.arrivalTypo]}>Arrival</Text>
         <Text style={[styles.departure, styles.arrivalTypo]}>Departure</Text>
         <Text style={[styles.am, styles.amTypo]}>07:00 a.m</Text>
@@ -75,22 +39,26 @@ const BUSROUTES = () => {
 const styles = StyleSheet.create({
   groupLayout: {
     height: 100,
-    width: 349,
+    width: 359,
     left: "50%",
+    right: "50%",
     position: "absolute",
   },
+
   routeTypo: {
     textAlign: "center",
     color: Color.colorBlack,
     fontFamily: FontFamily.inriaSans,
     fontWeight: "300",
     textTransform: "uppercase",
-    fontSize: FontSize.size_mini,
+    // fontSize: FontSize.size_mini,
+    // fontSize:
     top: 3,
     position: "absolute",
   },
   arrivalTypo: {
     fontFamily: FontFamily.inter,
+    fontSize: 12,
     textAlign: "center",
   },
   amTypo: {
@@ -106,7 +74,7 @@ const styles = StyleSheet.create({
   },
   groupShadowBox: {
     shadowOpacity: 1,
-    elevation: 4,
+    elevation: 45,
     shadowRadius: 4,
     shadowOffset: {
       width: 0,
@@ -116,14 +84,16 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_4xs,
     top: 0,
     marginLeft: -174.5,
-    height: 100,
+    height: 115,
     width: 349,
     left: "50%",
     position: "absolute",
-    backgroundColor: Color.colorWhite,
+    // backgroundColor: Color.colorWhite,
+    backgroundColor: "rgba(10, 10, 10, 0.1)",
   },
   route71: {
     left: 272,
+    // top: 100
   },
   arrival: {
     top: 58,
@@ -162,24 +132,38 @@ const styles = StyleSheet.create({
     top: 68,
   },
   postQuestion: {
+    top: 0,
     fontSize: FontSize.size_sm,
     fontWeight: "500",
     color: Color.colorWhite,
   },
+
   button: {
-    left: 253,
+    right: 10,
+    top: 100, // Adjust this value to move the button higher
     borderRadius: Border.br_7xs,
     backgroundColor: Color.colorDodgerblue,
-    width: 91,
-    height: 28,
-    flexDirection: "row",
+    width: 100,
+    height: 40,
     padding: Padding.p_3xs,
-    alignItems: "center",
+    alignItems: "center", // Use center for alignment
     justifyContent: "center",
+    
+    // // left: 250,
+    // right: 10,
+    // top: 10,
+    // borderRadius: Border.br_7xs,
+    // backgroundColor: Color.colorDodgerblue,
+    // width: 100,
+    // height: 40,
+    // // flexDirection: "row",
+    // padding: Padding.p_3xs,
+    // alignItems: "left",
+    // justifyContent: "center",
   },
   rectangleParent: {
     marginLeft: -176,
-    top: 211,
+    top: 100,
   },
   route11: {
     left: 273,
@@ -196,13 +180,13 @@ const styles = StyleSheet.create({
     marginLeft: -173,
     top: 622,
   },
-  busRoutes: {
-    flex: 1,
-    width: "100%",
-    height: 1011,
-    overflow: "hidden",
-    backgroundColor: Color.colorWhite,
-  },
+  // busRoutes: {
+  //   flex: 1,
+  //   width: "100%",
+  //   height: 1011,
+  //   overflow: "hidden",
+  //   backgroundColor: Color.colorWhite,
+  // },
 });
 
 export default BUSROUTES;

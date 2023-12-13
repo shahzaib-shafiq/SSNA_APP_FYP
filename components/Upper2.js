@@ -1,11 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, Pressable, Text } from "react-native";
-import LinearGradient from 'react-native-linear-gradient';
 import { Image } from "react-native";
+import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View, Pressable, Text } from "react-native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 
-const Upper2 = () => {
+const Upper2 = ({ userDetail }) => {
   const navigation = useNavigation();
 
   return (
@@ -17,19 +17,19 @@ const Upper2 = () => {
       />
       <Pressable
         style={styles.menus1}
-        onPress={() => navigation.navigate("DrawerMenu")}
+        onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
       >
         <Image
           style={[styles.icon, styles.iconLayout]}
           contentFit="cover"
-          source={require("../assets/menus-121.png")}
+          source={require("../assets/epback.png")}
         />
       </Pressable>
       <Text style={[styles.guidancePortal, styles.text1Typo]}>
         Guidance Portal
       </Text>
-      <View style={styles.upperChild} />
-      <Text style={[styles.text1, styles.text1Typo]}>+</Text>
+      <View style={styles.plusButtonGB} />
+      <Text style={[styles.plusSign, styles.text1Typo]}>+</Text>
     </View>
   );
 };
@@ -69,19 +69,18 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   guidancePortal: {
-    height: "10.04%",
+    height: "15.04%",
     width: "57.33%",
-    top: "81.03%",
-    left: "21.86%",
+    top: "79%",
+    left: "20%",
     fontSize: FontSize.size_5xl,
   },
-  upperChild: {
+  plusButtonGB: {
     height: "13.39%",
     width: "9.61%",
     top: "79.57%",
-    right: "5.34%",
     bottom: "7.04%",
-    left: "85.06%",
+    left: "81.06%",
     borderRadius: Border.br_xs,
     backgroundColor: Color.colorGray_1100,
     shadowColor: "rgba(0, 0, 0, 0.15)",
@@ -94,11 +93,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     position: "absolute",
   },
-  text1: {
+  plusSign: {
     height: "23.61%",
     width: "6.94%",
-    top: "74.68%",
-    left: "86.66%",
+    top: "74%",
+    left: "83.3%",
     fontSize: FontSize.size_21xl,
   },
   upper: {

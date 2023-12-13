@@ -1,20 +1,24 @@
+import { Image,TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
+import database from '@react-native-firebase/database'; //for firebase connection
+import { useNavigation } from "@react-navigation/native";
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, View, Pressable, Text, ScrollView  } from "react-native";
-import { Image,TextInput } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily, Padding } from "../GlobalStyles";
 
-import database from '@react-native-firebase/database';
+const FacultyInfo = ( {route} ) => {
 
-const FacultyInfo = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation(); //for stack navigation
+  const { userDetail } = route.params;  //user session
+
+  // for searching member
   const [facInfo, setFacultyInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   
+  //fetch data from realtime database
   const getData = () => {
     const db = database();
-    const dbRef = db.ref('/FacultyDataBase');
+    const dbRef = db.ref('/FacultyDataBase'); //directory in FB
 
     dbRef.on('value', (snapshot) => {
       const data = snapshot.val();
@@ -22,14 +26,15 @@ const FacultyInfo = () => {
       if (data) {
         const facultyData = Object.keys(data).map((id) => ({
           id,
-          Name: data[id].Name,
+          name: data[id].name,
           Department: data[id].Department,
           email: data[id].email,
           phone: data[id].phone,
           Education: data[id].Education,
           address: data[id].address,
           areaOfInterest: data[id].areaOfInterest,
-          university: data[id].university,
+          University: data[id].University,
+          img: data[id].img,
 
         }));
         setFacultyInfo(facultyData);
@@ -41,12 +46,13 @@ const FacultyInfo = () => {
     getData();
   }, []);
 
+  //for searching in small letters
   const filteredFacInfo = facInfo.filter(
-    (faculty) => faculty.Name.toLowerCase().includes(searchTerm.toLowerCase())
+    (faculty) => faculty.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView style={styles.scrollView}>  
       <View style={styles.facultyInfo}>
         <View style={styles.homeScreen}>
           <View style={[styles.screenmain, styles.back_button]} />
@@ -55,13 +61,13 @@ const FacultyInfo = () => {
         <View style={[styles.upper, styles.upperPosition]}>
           <LinearGradient
             style={[styles.bluebg, styles.upperPosition]}
-            locations={[0, 0.59]}
+            locations={[0, 0]}
             colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
           />
           {/* menu_press */}
           <Pressable
             style={styles.menus1}
-            onPress={() => navigation.navigate("MAINPAGE")}
+            onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
           >
             <Image
               style={styles.back_button}
@@ -74,6 +80,7 @@ const FacultyInfo = () => {
           <Text style={styles.facultyInformation}>Faculty Information</Text>
         </View> 
 
+        {/* FACULTY CARDS */}
         {filteredFacInfo.map((faculty,index) => (
           <View 
               key={faculty.id}
@@ -88,11 +95,11 @@ const FacultyInfo = () => {
               <Image
                 style={[styles.queryChild, styles.queryLayout]}
                 contentFit="cover"
-                source={require("../assets/rectangle-7.png")}
+                source={{ uri: faculty.img }}
               />
 
               <Text style={[styles.fac_name, styles.fac_name_typo]}>
-                {faculty.Name}
+                {faculty.name}
               </Text>
 
               <Text style={styles.dept}>{faculty.Department}</Text>
@@ -101,7 +108,7 @@ const FacultyInfo = () => {
 
               <Pressable
                 style={styles.menus1}
-                onPress={() => navigation.navigate("FacultyInfoDetails", { faculty })}
+                onPress={() => navigation.navigate("FacultyInfoDetails", { userDetail ,faculty })}
               >
                 <View style={styles.viewDetails_button}>
                   <Text style={[styles.postQuestion, styles.postQuestionTypo]}>
@@ -113,6 +120,7 @@ const FacultyInfo = () => {
           </View>
       ))}
 
+      {/* SEARCH BAR */}
       <View style={styles.searchbar}>
       <TextInput
           style={styles.searchbarInput}
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 1,
     backgroundColor: "white",
-    paddingHorizontal: 10,
+    paddingHorizontal: "10%",
     borderRadius: Border.br_3xs,
     flex: 1,
     elevation: 2, // Add elevation for Android shadow
@@ -148,8 +156,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   back_button: {
-    left:10,
-    top:5,
+    left:"25%",
+    top:"8%",
     height: "90%",
     width: "90%",
   },
@@ -169,10 +177,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorWhite,
   },
   upperPosition: {
-    height: 233,
-    width: 430,
-    left: "50%",
-    marginLeft: -215,
+    height: "28%",
+    width: "110%",
+    left: "0%",
     position: "absolute",
   },
   scrollView: {
@@ -221,7 +228,7 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_xl,
   },
   bluebg: {
-    bottom: 0,
+    bottom: "0%",
     backgroundColor: "transparent",
   },
   menus1: {
@@ -246,17 +253,17 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   upper: {
-    bottom: 755,
+    bottom: "93%",
   },
   queryChild: {
     borderRadius: Border.br_mini,
-    width: 93,
-    left: 0,
-    top: 0,
-    height: 93,
+    width: "30%",
+    left: "0%",
+    top: "0%",
+    height: "93%",
   },
   fac_name_typo: {
-    height: 27,
+    height: "27%",
     width: 194,
     color: Color.colorDimgray_200,
     fontSize: FontSize.size_lg,
@@ -330,13 +337,6 @@ const styles = StyleSheet.create({
     width: 328,
     position: "absolute",
   },
-  searchbarChild: {
-    backgroundColor: "#ffffff",
-    width: 343,
-    borderRadius: Border.br_3xs,
-    left: 0,
-    elevation: 5, // Add elevation for Android shadow
-  },
   searchbarItem: {
     left: 293,
     backgroundColor: Color.colorSteelblue,
@@ -344,16 +344,6 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255, 255, 255, 0.15)",
     borderWidth: 1,
     width: 50,
-  },
-  searchAnyFaculty1: {
-    top: 16,
-    fontSize: FontSize.size_mini,
-    fontWeight: "300",
-    color: "rgba(105, 105, 105, 0.65)",
-    width: 222,
-    height: 19,
-    left: 0,
-    position: "absolute",
   },
   search1Icon1: {
     top: 13,

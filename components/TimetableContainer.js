@@ -19,7 +19,7 @@ const TimetableContainer = ({
   busRoutesImageUrl,
   propMarginLeft,
   propTop,
-  onMenus1Press,
+  // onMenus1Press,
 }) => {
   const timetableStyle = useMemo(() => {
     return {
@@ -35,13 +35,13 @@ const TimetableContainer = ({
         locations={[0, 0.59]}
         colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
       />
-      <Pressable style={styles.menus1} onPress={onMenus1Press}>
+      {/* <Pressable style={styles.menus1} onPress={onMenus1Press}>
         <Image
           style={styles.icon}
           contentFit="cover"
           source={locationCoordinates}
         />
-      </Pressable>
+      </Pressable> */}
       <Text style={[styles.timetable, timetableStyle]}>
         {busRoutesImageUrl}
       </Text>
@@ -50,6 +50,14 @@ const TimetableContainer = ({
 };
 
 const styles = StyleSheet.create({
+
+  back_button: {
+    left:"25%",
+    top:"8%",
+    height: "90%",
+    width: "90%",
+  },
+  
   upperLayout: {
     height: 233,
     width: 435,
@@ -64,24 +72,24 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  menus1: {
-    top: 184,
-    right: 366,
-    width: 45,
-    height: 33,
-    position: "absolute",
-  },
+  // menus1: {
+  //   top: 184,
+  //   right: 366,
+  //   width: 45,
+  //   height: 33,
+  //   position: "absolute",
+  // },
   timetable: {
     marginLeft: -115.5,
     top: 185,
     left: "50%",
     fontSize: FontSize.size_5xl,
     fontWeight: "600",
-    fontFamily: FontFamily.inter,
+    // fontFamily: FontFamily.inter,
     color: Color.colorWhite,
     textAlign: "left",
     width: 272,
-    height: 23,
+    // height: 23,
     position: "absolute",
   },
   upper: {

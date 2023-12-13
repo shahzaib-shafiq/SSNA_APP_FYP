@@ -1,13 +1,14 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import LinearGradient from 'react-native-linear-gradient';
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
 
 const FacultyInfoDetails = ({ route }) => {
-  const navigation = useNavigation();
-  const { faculty } = route.params;
+
+  const navigation = useNavigation(); //stack navigation
+  const { userDetail, faculty } = route.params; //user session
 
 //a function to get the full form of the department
   const getFullForm = (abbreviation) => {
@@ -46,12 +47,12 @@ const FacultyInfoDetails = ({ route }) => {
       <Image
         style={styles.facultyInfo1Child}
         contentFit="cover"
-        source={require("../assets/rectangle-7.png")}
-      />
+        source={{ uri: faculty.img }}
+        />
 
       {/* faculty member name */}
       <View style={styles.memberNameContainer}>
-        <Text style={styles.memberNameText}>{faculty.Name}</Text>
+        <Text style={styles.memberNameText}>{faculty.name}</Text>
       </View>
 
       {/* Full form mof Department name */}
@@ -104,7 +105,7 @@ const FacultyInfoDetails = ({ route }) => {
       </View>
       
 
-      {/* degree and university */}
+      {/* degree and University */}
       <Image
         style={[styles.phcertificateThinIcon, styles.iconLayout]}
         contentFit="cover"
@@ -114,12 +115,10 @@ const FacultyInfoDetails = ({ route }) => {
         <Text style={styles.ext123}>
           <Text style={styles.phdEe}> {faculty.Education} {"\n"} </Text>
           <Text style={styles.universityStyle}>
-            {faculty.university}
+            {faculty.University}
           </Text>
         </Text>
       </View>
-
-    
     
       <Text style={[styles.areasOfInterest, styles.researchTypo]}>
         Areas of Interest
@@ -144,7 +143,7 @@ const FacultyInfoDetails = ({ route }) => {
       <Pressable
         style={styles.epback}
         onPress={() =>
-          navigation.navigate("FacultyInfo")
+          navigation.navigate("FacultyInfo",{userDetail})
         }
       >
         <Image

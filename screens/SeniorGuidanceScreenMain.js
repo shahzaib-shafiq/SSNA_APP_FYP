@@ -1,18 +1,21 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import Query from "../components/Query";
+import { Color } from "../GlobalStyles";
 import Upper2 from "../components/Upper2";
 import Filters1 from "../components/Filters1";
-import { Color } from "../GlobalStyles";
+import { StyleSheet, View } from "react-native";
 
-const SeniorGuidanceScreenMain = () => {
+const SeniorGuidanceScreenMain = ( {route} ) => {
+  
+  const { userDetail } = route.params;  //user session
+
   return (
     <View style={[styles.seniorGuidanceScreenMain1, styles.screenmainLayout]}>
       <View style={styles.homeScreen}>
         <View style={[styles.screenmain, styles.screenmainLayout]} />
       </View>
-      <Query />
-      <Upper2 />
+      <Query/>
+      <Upper2 userDetail={userDetail} />
       <Filters1 />
     </View>
   );
