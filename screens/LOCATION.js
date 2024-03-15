@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import TimetableContainer from "../components/TimetableContainer";
 import { Color } from "../GlobalStyles";
 import { Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const LOCATION = ({route}) => {
   const navigation = useNavigation();
@@ -143,6 +144,34 @@ const styles = StyleSheet.create({
   shadowOpacity: 0.5,
   shadowRadius: 4,
 },
+map: {
+  ...StyleSheet.absoluteFillObject, // This will make the map take up the whole screen
+},
 });
+
+
+
+<MapView
+  provider={PROVIDER_GOOGLE} // or use PROVIDER_DEFAULT for default map provider
+  style={styles.map}
+  region={{
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }}
+>
+  <Marker
+    coordinate={{
+      latitude: 37.78825,
+      longitude: -122.4324,
+    }}
+    title="Your Location"
+    description="Your current location"
+  />
+</MapView>
+
+
+
 
 export default LOCATION;
