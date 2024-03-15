@@ -1,13 +1,13 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable, Image, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TimetableContainer from "../components/TimetableContainer";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
 import { ColorProperties } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
-const BUSROUTES = () => {
+const BUSROUTES = ({route}) => {
   const navigation = useNavigation();
-
+  const { userDetail } = route.params;  //user session
   return (
     <View style={styles.busRoutes}>
       <TimetableContainer
@@ -17,7 +17,34 @@ const BUSROUTES = () => {
         propTop={184}
         // onMenus1Press={() => navigation.navigate("DrawerMenu")}
       />
+      {/* BACK BUTTON */}
+        <View style={[styles.screenmain, styles.back_button]} />
 
+        <Pressable
+        style={styles.menus1}
+        onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
+        >
+        <Image
+          style={styles.back_button}
+          contentFit="cover"
+          source={require("../assets/epback.png")}
+        />
+      </Pressable>
+
+{/* SEARCH BAR
+<View style={styles.searchbar}>
+      <TextInput
+          style={styles.searchbarInput}
+          placeholder="Search any place"
+          onChangeText={(text) => setSearchTerm(text)}
+        />
+        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
+        <Image
+          style={styles.search1Icon1}
+          contentFit="cover"
+          source={require("../assets/search-12.png")}
+        />
+      </View> */}
 
       <View style={[styles.rectangleParent, styles.groupLayout]}>
         <View style={styles.groupShadowBox} />
@@ -44,7 +71,12 @@ const styles = StyleSheet.create({
     right: "50%",
     position: "absolute",
   },
-
+  back_button: {
+    left:"3%",
+    top:"60%",
+    // height: "90%",
+    // width: "90%",
+  },
   routeTypo: {
     textAlign: "center",
     color: Color.colorBlack,
@@ -133,7 +165,7 @@ const styles = StyleSheet.create({
   },
   postQuestion: {
     top: 0,
-    fontSize: FontSize.size_sm,
+    fontSize: FontSize.size_xl,
     fontWeight: "500",
     color: Color.colorWhite,
   },
@@ -143,6 +175,7 @@ const styles = StyleSheet.create({
     top: 100, // Adjust this value to move the button higher
     borderRadius: Border.br_7xs,
     backgroundColor: Color.colorDodgerblue,
+    // backgroundColor: Color.colorWhite,
     width: 100,
     height: 40,
     padding: Padding.p_3xs,
@@ -186,7 +219,7 @@ const styles = StyleSheet.create({
   //   height: 1011,
   //   overflow: "hidden",
   //   backgroundColor: Color.colorWhite,
-  // },
+  // }, 
 });
 
 export default BUSROUTES;

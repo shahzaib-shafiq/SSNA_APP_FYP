@@ -130,7 +130,7 @@ const SideDrawer = ({route}) => {
 
                 <Pressable
                     style={[styles.courseMaterial, styles.courseMaterialPosition]}
-                    onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
+                    onPress={() => navigation.navigate("CourseMaterial",{userDetail})}
                 >
                     <Text style={[styles.seniorGuidance1, styles.home1Typo]}>
                     Course Material

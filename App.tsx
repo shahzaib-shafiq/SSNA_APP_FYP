@@ -6,17 +6,13 @@ import database from '@react-native-firebase/database';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import UpcomingEvents from "./screens/UpcomingEvents";
-import { ApplicationProvider, Layout } from '@ui-kitten/components';
-import * as eva from '@eva-design/eva';
 import MAINPAGE from './screens/MAINPAGE';
 import FacultyInfo from './screens/FacultyInfo';
 import LOGINPAGE from './screens/LOGINPAGE';
 import LOCATION from './screens/LOCATION';
 import BUSROUTES from './screens/BUSROUTES';
-import FacultyInfo11 from './screens/FacultyInfoDetails';
 import FacultyInfoDetails from './screens/FacultyInfoDetails';
 import Timetable from './screens/Timetable';
-import SeniorGuidanceScreenAnswe from './screens/SeniorGuidanceScreenAnswe';
 import SeniorGuidanceScreenMain from './screens/SeniorGuidanceScreenMain';
 import UpcomingEventDetails from './screens/UpcomingEventsDetails';
 import { GoogleSignin } from '@react-native-community/google-signin';
@@ -26,11 +22,10 @@ import Toast from 'react-native-toast-message';
 //for drawer
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import Animated, { Easing } from 'react-native-reanimated';
-import DrawerContent from './components/DrawerContent';
 import SideDrawer from './screens/SideDrawer';
 import UserProfile from './screens/UserProfile';
 import AboutApp from './screens/AboutApp';
+import CourseMaterial from './screens/CourseMaterial';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +47,8 @@ const App: React.FC = () => {
 
           <Stack.Screen name="UpcomingEvents" component={UpcomingEvents} />
           <Stack.Screen name="UpcomingEventsDetails" component={UpcomingEventDetails} />
+
+          <Stack.Screen name="CourseMaterial" component={CourseMaterial} />
 
           <Stack.Screen name="FacultyInfo" component={FacultyInfo} />
           <Stack.Screen name="FacultyInfoDetails" component={FacultyInfoDetails} />      

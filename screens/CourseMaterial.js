@@ -1,549 +1,337 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import { Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { Linking, ScrollView } from 'react-native';
+import  { useEffect, useState } from "react";
+import { Image, TextInput } from "react-native";
+import database from '@react-native-firebase/database';
 import { useNavigation } from "@react-navigation/native";
+import LinearGradient from 'react-native-linear-gradient';
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
 
-const CourseMaterial = () => {
+const CourseMaterial = ({ route }) => {
+  
+  const { userDetail } = route.params;
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+
+  const [courses, setCourses] = useState([]);
+
+ // for searching member
+ const [searchTerm, setSearchTerm] = useState("");
+
+  const getData = () => {
+    const db = database();
+    const dbRef = db.ref('/CourseMaterial');
+
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+  
+      if (data) {
+        const coursesData = Object.keys(data).map((id) => ({
+          id,
+          Name: data[id].Name,
+          Code: data[id].Code,
+          Department: data[id].Department,
+          Link: data[id].Link,
+        }));
+
+         // Check if a new event is added
+         if (coursesData.length > courses.length) {
+          const newCourse = coursesData[coursesData.length - 1];
+          
+          // Update the state before showing the notification
+          setCourses(coursesData);
+      
+        } else if (coursesData.length < courses.length) {
+          // Event removed, update the state without triggering a notification
+          setCourses(coursesData);
+        } else {
+          // No new event added or removed, update the state
+          setCourses(coursesData);
+        }
+      }
+  
+      setLoading(false);
+    }, (error) => {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+   //for searching in small letters
+   const filteredCourses = courses.filter(
+     (coursess) => 
+     coursess.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     coursess.C.toLowerCase().includes(searchTerm.toLowerCase())
+     
+   );
 
   return (
     <View style={styles.courseMaterial}>
-      <View style={styles.homeScreen}>
-        <View style={[styles.screenmain, styles.bluebgPosition]} />
-      </View>
-      <Pressable
-        style={styles.query}
-        onPress={() => navigation.navigate("SeniorGuidanceScreenViewDetails")}
-      >
-        <View style={styles.queryChild} />
-        <Text style={styles.iWantTo3}>In-depth dive in concepts of C++</Text>
-        <Text style={[styles.daysAgo, styles.daysAgoTypo]}>3 days ago</Text>
-        <Text style={[styles.byAnasNaveed3, styles.daysAgoTypo]}>
-          By D.S Malik
-        </Text>
-        <Text style={[styles.dependencyIssue, styles.csTypo]}>C++</Text>
-        <Text style={[styles.cs, styles.csTypo]}>CS</Text>
-        <Pressable
-          style={styles.queryItem}
-          onPress={() => navigation.navigate("CourseMaterial1")}
-        />
-        <View style={[styles.queryInner, styles.queryInnerLayout]} />
-        <View style={[styles.rectangleView, styles.queryInnerLayout]} />
-        <Text style={[styles.answer, styles.text9Typo]}>DOWNLOAD</Text>
-        <Image
-          style={[styles.upArrow1Icon3, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/uparrow-1.png")}
-        />
-        <Image
-          style={[styles.upArrow2Icon3, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/uparrow-2.png")}
-        />
-        <Text style={[styles.text7, styles.textTypo]}>34</Text>
-        <Text style={[styles.text8, styles.textTypo]}>14</Text>
-      </Pressable>
+
+      {/* FOR EACH COURSE CARD */}
+      {filteredCourses.map((course,index) => (
+        <View
+          key={course.id}
+          style={[
+            styles.course,
+            { top: 200 + index * 150 },
+            { zIndex: courses.length - index }, // Adjust the zIndex
+          ]}          
+        >
+          <View style={styles.courseChild} />
+
+          <Text style={styles.courseCodeStyle}>
+            {course.Code}
+          </Text>
+
+          <Text style={[styles.CourseNameStyle, styles.csTypo]}>
+            {course.Name}
+          </Text>
+
+          <Text style={[styles.courseDepStyle, styles.csTypo]}>
+            {course.Department
+            }</Text>
+            
+          <Pressable
+             style={styles.courseItem}
+             onPress={() => Linking.openURL(course.Link)}
+          >
+            <Text style={[styles.viewMaterial, styles.materialTypo]}>
+              VIEW MATERIAL
+            </Text>
+          </Pressable>
+         </View>
+      ))}
+
+      {/* UPPER BAR */}
       <View style={styles.upper}>
         <LinearGradient
-          style={[styles.bluebg, styles.bluebgPosition]}
-          locations={[0, 0.59]}
+          style={styles.bluebg}
+          locations={[0, 0]}
           colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
         />
-        <Pressable
-          style={styles.menus1}
-          onPress={() => navigation.navigate("DrawerMenu")}
-        >
-          <Image
-            style={[styles.icon, styles.iconLayout]}
-            contentFit="cover"
-            source={require("../assets/menus-12.png")}
-          />
-        </Pressable>
-        <Text style={[styles.guidancePortal, styles.text9Typo]}>
+        <Text style={[styles.courseMaterial1, styles.materialTypo]}>
           Course Material
         </Text>
-        <View style={styles.upperChild} />
-        <Text style={[styles.text9, styles.text9Typo]}>+</Text>
-      </View>
-      <View style={styles.filters}>
-        <View style={[styles.filters1, styles.filtersShadowBox1]}>
-          <View style={styles.filtersShadowBox} />
-          <Text style={[styles.all, styles.mostTypo]}>All</Text>
-        </View>
-        <View style={[styles.filters2, styles.filtersShadowBox1]}>
-          <View style={styles.filtersShadowBox} />
-          <Text style={[styles.mostUpvoted, styles.mostTypo]}>Books</Text>
-        </View>
-        <View style={[styles.filters3, styles.filtersShadowBox1]}>
-          <View style={styles.filtersShadowBox} />
-          <Text style={[styles.mostDownvoted, styles.mostTypo]}>Slides</Text>
-        </View>
-        <View style={[styles.filters4, styles.filtersShadowBox1]}>
+
+        {/* BACK BUTTON */}
+        <Pressable
+          style={styles.epback}
+          onPress={() => 
+            {console.log('Pressable pressed');
+            navigation.navigate("MAINPAGE",{userDetail})}}
+        >
           <Image
-            style={[styles.filter1Icon1, styles.iconLayout]}
+            style={styles.icon}
             contentFit="cover"
-            source={require("../assets/filter-1.png")}
+            source={require("../assets/epback.png")}
           />
-        </View>
+        </Pressable>
       </View>
-      <Text style={[styles.download, styles.downloadTypo]}>DOWNLOAD</Text>
-      <Pressable
-        style={[styles.query1, styles.queryPosition]}
-        onPress={() => navigation.navigate("SeniorGuidanceScreenViewDetails")}
-      >
-        <View style={styles.queryChild} />
-        <Text style={styles.iWantTo3}>In-depth dive in concepts of C++</Text>
-        <Text style={[styles.daysAgo, styles.daysAgoTypo]}>3 days ago</Text>
-        <Text style={[styles.byAnasNaveed3, styles.daysAgoTypo]}>
-          By D.S Malik
-        </Text>
-        <Text style={[styles.dependencyIssue, styles.csTypo]}>OPP</Text>
-        <Text style={[styles.cs, styles.csTypo]}>CS</Text>
-        <View style={styles.queryItem} />
-        <View style={[styles.queryInner, styles.queryInnerLayout]} />
-        <View style={[styles.rectangleView, styles.queryInnerLayout]} />
-        <Text style={[styles.answer, styles.text9Typo]}>DOWNLOAD</Text>
-        <Image
-          style={[styles.upArrow1Icon3, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/uparrow-1.png")}
+
+      {/* SEARCH BAR */}
+      <View style={styles.searchbar}>
+
+        <TextInput
+          style={styles.searchbarInput}
+          placeholder="Search by name"
+          onChangeText={(text) => setSearchTerm(text)}
         />
+      
+        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
+             
+        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
         <Image
-          style={[styles.upArrow2Icon3, styles.iconLayout]}
+          style={styles.search1Icon}
           contentFit="cover"
-          source={require("../assets/uparrow-2.png")}
+          source={require("../assets/search-1.png")}
         />
-        <Text style={[styles.text7, styles.textTypo]}>34</Text>
-        <Text style={[styles.text8, styles.textTypo]}>14</Text>
-      </Pressable>
-      <Text style={[styles.download1, styles.downloadTypo]}>DOWNLOAD</Text>
-      <Pressable
-        style={[styles.query2, styles.queryPosition]}
-        onPress={() => navigation.navigate("SeniorGuidanceScreenViewDetails")}
-      >
-        <View style={styles.queryChild} />
-        <Text style={styles.iWantTo3}>In-depth dive in concepts of C++</Text>
-        <Text style={[styles.daysAgo, styles.daysAgoTypo]}>3 days ago</Text>
-        <Text style={[styles.byAnasNaveed3, styles.daysAgoTypo]}>
-          By D.S Malik
-        </Text>
-        <Text style={[styles.dependencyIssue, styles.csTypo]}>
-          Data Structures
-        </Text>
-        <Text style={[styles.cs, styles.csTypo]}>CS</Text>
-        <View style={styles.queryItem} />
-        <View style={[styles.queryInner, styles.queryInnerLayout]} />
-        <View style={[styles.rectangleView, styles.queryInnerLayout]} />
-        <Text style={[styles.answer, styles.text9Typo]}>DOWNLOAD</Text>
-        <Image
-          style={[styles.upArrow1Icon3, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/uparrow-1.png")}
-        />
-        <Image
-          style={[styles.upArrow2Icon3, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/uparrow-2.png")}
-        />
-        <Text style={[styles.text7, styles.textTypo]}>34</Text>
-        <Text style={[styles.text8, styles.textTypo]}>14</Text>
-      </Pressable>
-      <Text style={[styles.download2, styles.downloadTypo]}>DOWNLOAD</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  bluebgPosition: {
-    bottom: "0%",
-    left: "0%",
-    right: "0%",
-    top: "0%",
-    height: "100%",
-    position: "absolute",
-    width: "100%",
-  },
-  daysAgoTypo: {
-    lineHeight: 11,
-    fontSize: FontSize.size_2xs,
-    top: "60.64%",
-    height: "7.11%",
-    textAlign: "left",
-    color: Color.colorDimgray_100,
-    fontFamily: FontFamily.inter,
-    position: "absolute",
-  },
   csTypo: {
     color: Color.colorDimgray_200,
+    fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
     fontSize: FontSize.size_lg,
+    top: "13.04%",
     textAlign: "left",
-    fontFamily: FontFamily.inter,
-    top: "0%",
     position: "absolute",
   },
-  queryInnerLayout: {
-    width: "22.25%",
-    borderRadius: Border.br_6xs,
-    top: "80%",
-    height: "20%",
-    display: "none",
-    bottom: "0%",
+  searchbarInput: {
+    height:0,
+    borderColor: 'rgba(128, 128, 128, 0.0)',
+    fontSize: 16,
+    borderWidth: 1,
+    backgroundColor: "white",
+    paddingHorizontal: "10%",
+    borderRadius: Border.br_3xs,
+    flex: 1,
+    elevation: 5, // Add elevation for Android shadow
+  },
+  searchbar: {
+    position: 'absolute',
+    top: 109,
+    left: 17,
+    height: 48,
+    width: 385,
+  },
+  searchbarLayout: {
+    borderRadius: Border.br_3xs,
+    height: 48,
+    top: 0,
     position: "absolute",
   },
-  text9Typo: {
-    color: Color.colorWhite,
-    fontWeight: "600",
-    textAlign: "left",
-    fontFamily: FontFamily.inter,
-    position: "absolute",
+  searchbarItem: {
+    left: 329,
+    backgroundColor: Color.colorSteelblue,
+    borderStyle: "solid",
+    borderColor: Color.colorGray_1000,
+    borderWidth: 1,
+    width: 56,
   },
-  iconLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-  },
-  textTypo: {
-    top: "85.19%",
-    width: "6.41%",
-    height: "9.04%",
-    color: Color.colorWhite,
-    fontSize: FontSize.size_sm,
-    fontWeight: "600",
-    textAlign: "left",
-    fontFamily: FontFamily.inter,
-    position: "absolute",
-  },
-  filtersShadowBox1: {
-    elevation: 5.1,
-    shadowRadius: 5.1,
+  courseChild: {
+    top: -5,
+    left: -10,
+    borderRadius: 26,
+    shadowColor: "rgba(0, 0, 0, 0.85)",
+    shadowRadius: 5.8,
+    elevation: 5.8,
+    width: 396,
+    height: 135,
     shadowOpacity: 1,
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
     position: "absolute",
-  },
-  mostTypo: {
-    color: Color.colorGray_100,
-    top: "14.89%",
-    fontWeight: "600",
-    textAlign: "left",
-    fontFamily: FontFamily.inter,
-    fontSize: FontSize.size_xs,
-    position: "absolute",
-  },
-  downloadTypo: {
-    left: 290,
-    color: Color.colorWhite,
-    fontSize: FontSize.size_sm,
-    fontWeight: "600",
-    textAlign: "left",
-    fontFamily: FontFamily.inter,
-    position: "absolute",
-  },
-  queryPosition: {
-    left: 19,
-    height: 187,
-    width: 395,
-    position: "absolute",
-  },
-  screenmain: {
-    left: "0%",
     backgroundColor: Color.colorWhite,
-    bottom: "0%",
   },
-  homeScreen: {
-    top: 14,
-    left: -2,
-    width: 375,
-    height: 812,
-    position: "absolute",
-  },
-  queryChild: {
-    height: "52.89%",
-    width: "39.65%",
-    top: "17.43%",
-    right: "60.35%",
-    bottom: "29.68%",
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorMistyrose,
-    left: "0%",
-    position: "absolute",
-  },
-  iWantTo3: {
-    height: "34.17%",
-    width: "54.28%",
-    top: "24.49%",
+  courseCodeStyle: {
+    height: "100%",
+    width: "100%",
+    top: "54%",
     lineHeight: 12,
-    fontWeight: "300",
-    textAlign: "left",
     color: Color.colorDimgray_100,
-    fontFamily: FontFamily.inter,
+    textAlign: "left",
     fontSize: FontSize.size_xs,
-    left: "42.99%",
+    fontFamily: FontFamily.interLight,
+    fontWeight: "300",
+    left: "2.15%",
     position: "absolute",
   },
-  daysAgo: {
-    width: "18.61%",
-    left: "81.39%",
-    display: "none",
+  CourseNameStyle: {
+    height: "100%",
+    width: "41.94%",
+    left: "2.15%",
+    fontFamily: FontFamily.interSemiBold,
+    fontWeight: "600",
+    fontSize: FontSize.size_lg,
   },
-  byAnasNaveed3: {
-    width: "27.14%",
-    left: "42.99%",
-    lineHeight: 11,
-    fontSize: FontSize.size_2xs,
-    top: "60.64%",
-    height: "7.11%",
+  courseDepStyle: {
+    height: "100%",
+    width: "100%",
+    left: "88.13%",
   },
-  dependencyIssue: {
-    height: "17.43%",
-    width: "50%",
-    left: "0.3%",
-  },
-  cs: {
-    height: "14.81%",
-    width: "8.84%",
-    left: "89.65%",
-  },
-  queryItem: {
-    width: "37.8%",
-    right: "3.06%",
-    left: "59.14%",
-    backgroundColor: Color.colorSkyblue,
+  courseItem: {
+    height: "27.1%",
+    width: "40.13%",
+    top: "50%",
+    right: "1.8%",
+    bottom: "22.9%",
+    left: "58.06%",
     borderRadius: Border.br_6xs,
-    top: "80%",
-    height: "20%",
-    bottom: "0%",
+    backgroundColor: "#62b4be",
     position: "absolute",
   },
-  queryInner: {
-    right: "77.75%",
-    backgroundColor: Color.colorDarkseagreen,
-    left: "0%",
-  },
-  rectangleView: {
-    right: "53.67%",
-    left: "24.08%",
-    backgroundColor: Color.colorSalmon,
-  },
-  answer: {
-    height: "9.09%",
-    width: "15.7%",
-    top: "85.03%",
-    left: "70.13%",
+  viewMaterial: {
+    top: 9,
+    left: 22,
     fontSize: FontSize.size_sm,
+  },
+  materialTypo: {
     color: Color.colorWhite,
-    display: "none",
-  },
-  upArrow1Icon3: {
-    top: "81.28%",
-    right: "82.03%",
-    bottom: "1.93%",
-    left: "10.05%",
-    width: "7.92%",
-    height: "16.79%",
-    maxWidth: "100%",
-    display: "none",
+    fontFamily: FontFamily.interSemiBold,
+    fontWeight: "600",
+    zIndex: 1,
+    textAlign: "left",
     position: "absolute",
   },
-  upArrow2Icon3: {
-    top: "99.36%",
-    right: "50.3%",
-    bottom: "-16.15%",
-    left: "41.77%",
-    width: "7.92%",
-    height: "16.79%",
-    maxWidth: "100%",
-    display: "none",
-    position: "absolute",
-  },
-  text7: {
-    left: "5.8%",
-  },
-  text8: {
-    left: "29.87%",
-    display: "none",
-  },
-  query: {
-    top: 217,
-    left: 20,
-    height: 187,
-    width: 395,
+  course: {
+    top: 261,
+    left: "5%",
+    width: 372,
+    height: 138,
     position: "absolute",
   },
   bluebg: {
     backgroundColor: "transparent",
     left: "0%",
+    bottom: "0%",
+    right: "0%",
+    top: "0%",
+    height: "100%",
+    position: "absolute",
+    width: "100%",
+  },
+  courseMaterial1: {
+    height: "41.43%",
+    width: "45.01%",
+    top: "30.29%",
+    left: "17.87%",
+    fontSize: FontSize.size_5xl,
   },
   icon: {
     height: "100%",
-    maxWidth: "100%",
+    overflow: "hidden",
     width: "100%",
   },
-  menus1: {
-    left: "5.59%",
-    top: "78.8%",
-    right: "84.01%",
-    bottom: "7.08%",
-    width: "10.39%",
-    height: "14.12%",
+  epback: {
+    left: 22,
+    top: 21,
+    width: 38,
+    height: 33,
     position: "absolute",
-  },
-  guidancePortal: {
-    height: "10.04%",
-    width: "57.33%",
-    top: "81.03%",
-    left: "21.86%",
-    fontSize: FontSize.size_5xl,
-  },
-  upperChild: {
-    height: "13.39%",
-    width: "9.61%",
-    top: "79.57%",
-    right: "5.34%",
-    bottom: "7.04%",
-    left: "85.06%",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_1100,
-    shadowRadius: 6.1,
-    elevation: 6.1,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    display: "none",
-    position: "absolute",
-  },
-  text9: {
-    height: "23.61%",
-    width: "6.94%",
-    top: "74.68%",
-    left: "86.66%",
-    fontSize: FontSize.size_21xl,
-    display: "none",
   },
   upper: {
-    top: -163,
     left: -1,
     width: 431,
-    height: 233,
+    height: 70,
+    top: 0,
     position: "absolute",
   },
-  filtersShadowBox: {
-    elevation: 4.4,
-    shadowRadius: 4.4,
-    backgroundColor: Color.colorGray_800,
-    borderRadius: Border.br_5xs,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
-    height: "100%",
-    position: "absolute",
-    width: "100%",
+  searchbarChild: {
+    left: 0,
+    width: 385,
+    borderRadius: Border.br_3xs,
+    backgroundColor: Color.colorWhite,
   },
-  all: {
-    width: "42.91%",
-    left: "28.54%",
-    height: "70.21%",
-    color: Color.colorGray_100,
-    top: "14.89%",
-  },
-  filters1: {
-    width: "13.42%",
-    right: "86.58%",
-    bottom: "57.91%",
-    elevation: 5.1,
-    shadowRadius: 5.1,
-    top: "7.01%",
-    height: "35.07%",
-    left: "0%",
-  },
-  mostUpvoted: {
-    width: "78.61%",
-    left: "11.64%",
-    height: "70.21%",
-    color: Color.colorGray_100,
-    top: "14.89%",
-  },
-  filters2: {
-    width: "32.91%",
-    right: "50.49%",
-    left: "16.6%",
-    bottom: "57.91%",
-    elevation: 5.1,
-    shadowRadius: 5.1,
-    top: "7.01%",
-    height: "35.07%",
-  },
-  mostDownvoted: {
-    height: "74.89%",
-    width: "83.61%",
-    left: "9.83%",
-  },
-  filters3: {
-    width: "38.97%",
-    top: "64.93%",
-    right: "61.03%",
-    elevation: 5.1,
-    shadowRadius: 5.1,
-    height: "35.07%",
-    left: "0%",
-    bottom: "0%",
-  },
-  filter1Icon1: {
-    left: "0%",
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
-    height: "100%",
-    position: "absolute",
-    width: "100%",
-  },
-  filters4: {
-    height: "42.09%",
-    width: "7.66%",
-    left: "92.34%",
-    bottom: "57.91%",
-    elevation: 5.1,
-    shadowRadius: 5.1,
-    right: "0%",
-    top: "0%",
-  },
-  filters: {
-    top: 101,
-    left: 33,
-    width: 368,
-    height: 67,
+  searchAnyCourse: {
+    top: 16,
+    left: 7,
+    fontSize: FontSize.size_mini,
+    color: Color.colorDimgray_600,
+    textAlign: "center",
+    width: 146,
+    height: 19,
+    fontFamily: FontFamily.interLight,
+    fontWeight: "300",
     position: "absolute",
   },
-  download: {
-    top: 377,
-  },
-  query1: {
-    top: 453,
-  },
-  download1: {
-    top: 613,
-  },
-  query2: {
-    top: 699,
-  },
-  download2: {
-    top: 859,
+  search1Icon: {
+    top: 10,
+    left: 343,
+    width: 28,
+    height: 28,
+    position: "absolute",
   },
   courseMaterial: {
     flex: 1,
