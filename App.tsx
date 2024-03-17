@@ -38,7 +38,7 @@ const App: React.FC = () => {
           screenOptions={{ headerShown: false }}
         >
 
-          <Stack.Screen name="LOGINPAGE" component={LOGINPAGE} />
+          {/* <Stack.Screen name="LOGINPAGE" component={LOGINPAGE} />
 
           <Stack.Screen name="MAINPAGE" component={MAINPAGE} />
           <Stack.Screen name="SideDrawer" component={SideDrawer} />
@@ -53,13 +53,14 @@ const App: React.FC = () => {
           <Stack.Screen name="FacultyInfo" component={FacultyInfo} />
           <Stack.Screen name="FacultyInfoDetails" component={FacultyInfoDetails} />      
 
-          <Stack.Screen name="LOCATION" component={LOCATION} />
-
+          */}
+<Stack.Screen name="LOCATION" component={LOCATION} /> 
+{/* 
           <Stack.Screen name="BUSROUTES" component={BUSROUTES} />
           
           <Stack.Screen name="Timetable" component={Timetable} />    
 
-          <Stack.Screen name="SeniorGuidanceScreenMain" component={SeniorGuidanceScreenMain} />
+          <Stack.Screen name="SeniorGuidanceScreenMain" component={SeniorGuidanceScreenMain} /> */}
           
         </Stack.Navigator>
       </NavigationContainer>
