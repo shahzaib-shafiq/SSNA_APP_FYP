@@ -14,7 +14,7 @@ const SeniorGuidanceScreenMain = ( {route} ) => {
       <View style={styles.homeScreen}>
         <View style={[styles.screenmain, styles.screenmainLayout]} />
       </View>
-      <Query/>
+      <Query  userDetail={userDetail}/>
       <Upper2 userDetail={userDetail} />
       <Filters1 />
     </View>

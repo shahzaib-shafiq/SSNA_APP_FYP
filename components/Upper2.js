@@ -25,12 +25,17 @@ const Upper2 = ({ userDetail }) => {
           source={require("../assets/epback.png")}
         />
       </Pressable>
+
       <Text style={[styles.guidancePortal, styles.text1Typo]}>
         Guidance Portal
       </Text>
-      <View style={styles.plusButtonGB} />
-      <Text style={[styles.plusSign, styles.text1Typo]}>+</Text>
+
+      <View style={styles.plusButtonGB}>
+        <Text style={[styles.plusSign, styles.text1Typo]}>+</Text>
+      </View>
+
     </View>
+
   );
 };
 
@@ -40,10 +45,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   text1Typo: {
-    textAlign: "left",
+    textAlign: "center",
     color: Color.colorWhite,
     fontFamily: FontFamily.inter,
-    fontWeight: "600",
+    fontWeight: "700",
     position: "absolute",
   },
   bluebg: {
@@ -72,7 +77,7 @@ const styles = StyleSheet.create({
     height: "15.04%",
     width: "57.33%",
     top: "79%",
-    left: "20%",
+    left: "10%",
     fontSize: FontSize.size_5xl,
   },
   plusButtonGB: {
@@ -94,10 +99,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   plusSign: {
-    height: "23.61%",
-    width: "6.94%",
-    top: "74%",
-    left: "83.3%",
+    height: "500%",
+    width: "50%",
+    top: "-40%",
+    left: "25%",
     fontSize: FontSize.size_21xl,
   },
   upper: {
