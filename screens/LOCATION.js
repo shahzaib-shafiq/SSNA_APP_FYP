@@ -179,7 +179,8 @@
 
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Image } from "react-native-reanimated/lib/typescript/Animated";
 
 const styles = StyleSheet.create({
     container: {
@@ -220,36 +221,62 @@ export default function LOCATION() {
 
 
     ]);
-    return (
 
+    const MyCustomMarkerView = () => {
 
+        return (
+            <Image
+                style={{ width: 30, height: 30 }}
+                source={require('../assets/marker.png')} />
 
-        <View style={styles.container}>
-            <MapView
-                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                style={styles.map}
-                region={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
-                }}
+        )
+    }
 
-            >
-                {
-                    Marker.map((maker) => {
-                        return (
-                            <Marker
-                                key={maker.id}
-                                coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
-                                title={maker.title}
-                                description={maker.description}
-                            />
-                        );
-                        })
-                }
-            </MapView>
-        </View>
+    const MyCustomCalloutView=()=>{
+        return(
+            <View>
+                <Text>My Custom Callout View</Text>
+            </View>
+        )
+    }
+    <View style={styles.container}>
+        <MapView
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            style={styles.map}
+            region={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+            }}
+
+        >
+
+            <Marker coordinate={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+            }
+            }>
+                <MyCustomMarkerView />
+
+                <Callout style={{width:300,height:100}}>
+                    <MyCustomCalloutView />
+                </Callout>
+            </Marker>;
+            {
+                Marker.map((maker) => {
+                    return (
+                        <Marker
+                            key={maker.id}
+                            coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
+                            title={maker.title}
+                            description={maker.description}
+                        />
+                    );
+                })
+            }
+        </MapView>
+    </View>
 
 
     )
