@@ -26,6 +26,8 @@ import SideDrawer from './screens/SideDrawer';
 import UserProfile from './screens/UserProfile';
 import AboutApp from './screens/AboutApp';
 import CourseMaterial from './screens/CourseMaterial';
+import AnnouncementScreen from './screens/AnnouncementScreen';
+import AnnouncementScreenDetail from './screens/AnnouncementScreenDetail';
 
 const Stack = createStackNavigator();
 
@@ -60,6 +62,9 @@ const App: React.FC = () => {
           <Stack.Screen name="Timetable" component={Timetable} />    
 
           <Stack.Screen name="SeniorGuidanceScreenMain" component={SeniorGuidanceScreenMain} />
+          
+          <Stack.Screen name="AnnouncementScreen" component={AnnouncementScreen} />
+          <Stack.Screen name="AnnouncementScreenDetail" component={AnnouncementScreenDetail} />
           
         </Stack.Navigator>
       </NavigationContainer>

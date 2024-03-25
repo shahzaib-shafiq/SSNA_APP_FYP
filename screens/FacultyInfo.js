@@ -18,7 +18,7 @@ const FacultyInfo = ( {route} ) => {
   //fetch data from realtime database
   const getData = () => {
     const db = database();
-    const dbRef = db.ref('/FacultyDataBase'); //directory in FB
+    const dbRef = db.ref('/Faculty'); //directory in FB
 
     dbRef.on('value', (snapshot) => {
       const data = snapshot.val();
