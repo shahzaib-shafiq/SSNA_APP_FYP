@@ -200,7 +200,7 @@ const MAINPAGE = ({ route }) => {
               >
                 <Pressable
                   style={[styles.pressable, styles.pressableLayout]}
-                  onPress={() => navigation.navigate("SeniorGuidanceScreenMain",{userDetail})}
+                  onPress={() => navigation.navigate("SeniorGuidanceScreenMain",{userDetail, route})}
                 >
                   {/* Guidance IMG */}
                   <Image

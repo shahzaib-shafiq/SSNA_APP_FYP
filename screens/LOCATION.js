@@ -1,148 +1,317 @@
-import * as React from "react";
-// import { Image } from "expo-image";
-import { StyleSheet, View, Text, Pressable, Image, TextInput } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import TimetableContainer from "../components/TimetableContainer";
-import { Color } from "../GlobalStyles";
-import { Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
-
-const LOCATION = ({route}) => {
-  const navigation = useNavigation();
-  const { userDetail } = route.params;  //user session
-
-  return (
-    <View style={styles.location}>
-      <TimetableContainer
-        locationCoordinates={require("../assets/menus-1.png")}
-        busRoutesImageUrl="LOCATION"
-        propMarginLeft={-115.5}
-        propTop={185}
-        onMenus1Press={() => navigation.navigate("DrawerMenu")}
-      />
-      <Image
-        style={styles.image1Icon}
-        contentFit="cover"
-        source={require("../assets/maps.png")}
-      />
-
-      {/* SEARCH BAR */}
-      <View style={styles.searchbar}>
-      <TextInput
-          style={styles.searchbarInput}
-          placeholder="Search any place"
-          onChangeText={(text) => setSearchTerm(text)}
-        />
-        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
-        <Image
-          style={styles.search1Icon1}
-          contentFit="cover"
-          source={require("../assets/search-12.png")}
-        />
-      </View>
-
-      {/* BACK BUTTON */}
-      <View style={[styles.screenmain, styles.back_button]} />
-
-      <Pressable
-      style={styles.menus1}
-      onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
-      >
-      <Image
-        style={styles.back_button}
-        contentFit="cover"
-        source={require("../assets/epback.png")}
-      />
-      </Pressable>
-          </View>
-  );
-};
+import React, { useState } from "react";
+import { View, StyleSheet, Image, Text } from "react-native";
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const styles = StyleSheet.create({
-  searchbarLayout: {
-    borderRadius: Border.br_3xs,
-    height: 48,
-    top: 0,
-    position: "absolute",
-  },
-  search1Icon1: {
-    top: 13,
-    left: 307,
-    width: 22,
-    height: 22,
-    position: "absolute",
-  },
-  searchbarInput: {
-    height: 40,
-    borderColor: 'rgba(128, 128, 128, 0.0)',
-    fontSize: 16,
-    borderWidth: 1,
-    backgroundColor: "white",
-    paddingHorizontal: "10%",
-    borderRadius: Border.br_3xs,
-    flex: 1,
-    elevation: 2, // Add elevation for Android shadow
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-  },
-
-  image1Icon: {
-    position: "absolute",
-    top: 180,
-    // margin:10,
-    right: 1,
-    alignContent: "center",
-    // width: 388,
-    // height: 396,
-  },
-  location: {
-    backgroundColor: Color.colorWhite,
-    flex: 1,
-    width: "100%",
-    height: 932,
-    overflow: "hidden",
-  },
-
-  back_button: {
-    left:"3%",
-    top:"60%",
-    // height: "90%",
-    // width: "90%",
-  },
-
-  searchbarItem: {
-    left: 293,
-    backgroundColor: Color.colorSteelblue,
-    borderStyle: "solid",
-    borderColor: "rgba(255, 255, 255, 0.15)",
-    borderWidth: 1,
-    width: 50,
-  },
-
-
-  search1Icon1: {
-    top: 13,
-    left: 307,
-    width: 22,
-    height: 22,
-    position: "absolute",
-  },
- searchbar: {
-  top: 101,
-  left: 40,
-  height: 48,
-  width: 343,
-  position: "absolute",
-  // Android
-  elevation: 5,
-  // iOS
-  shadowColor: "rgba(0, 0, 0, 0.3)",
-  shadowOffset: {
-    width: 0,
-    height: 2,
-  },
-  shadowOpacity: 0.5,
-  shadowRadius: 4,
-},
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
 });
 
-export default LOCATION;
+export default function LOCATION() {
+
+    const [markersList, setmarkerList] = useState([
+        {
+
+
+
+
+
+            id: 1,
+            latitude: 31.600791501404007,
+            longitude: 73.03674226553963,
+            title: 'SFC',
+            description: 'Student Facilation Center',
+        },
+        {
+
+            id: 2,
+            latitude: 31.603291983218153,
+            longitude: 73.03586947447167,
+            title: 'Football Ground',
+            description: 'Playing Area',
+        },
+        {
+
+
+
+
+
+
+            id: 3,
+            latitude: 31.601677813823322,
+            longitude: 73.03560234216219,
+            title: 'FSM',
+            description: 'cafe\nauditorium\nlibrary',
+        },
+
+        {
+
+
+            id: 4,
+            latitude: 31.601881193684026,
+            longitude: 73.03624056637959,
+            title: 'Cricket Ground',
+            description: 'Fitness Center',
+        },
+
+        {
+
+
+            id: 5,
+            latitude: 31.601058143059394,
+            longitude: 73.03655150650509,
+            title: 'basketball Court',
+            description: 'Badminton',
+        },
+        {
+
+
+
+
+            id: 6,
+            latitude: 31.601604325090502,
+            longitude: 73.03703725515523,
+            title: 'Futsall Ground',
+            description: '',
+        },
+        {
+
+
+
+
+            id: 7,
+            latitude: 31.601954873191197,
+            longitude: 73.0348776944143,
+            title: 'Parking',
+            description: 'Car parking',
+        },
+
+
+
+
+    ])
+
+
+
+    // const MyCustomMarkerView = () => {
+    //     return (
+    //         <View>
+    //             <Image source={require('../assets/hostel.png')} />
+
+    //         </View>
+    //     );
+    // };
+
+    return (
+        <View style={styles.container}>
+            <MapView
+                provider={PROVIDER_GOOGLE}
+                style={styles.map}
+                region={{
+                    latitude: 31.601125557441485,
+                    longitude: 73.03560170317493,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.001,
+                }}
+            >
+                {/* <Marker coordinate={{latitude:31.601005195088252,longitude:73.03574086779815}}
+
+>
+ <MyCustomMarkerView/>  
+</Marker>; */}
+                {
+                    markersList.map((maker) => {
+                        return (
+                            <Marker
+                                key={maker.id}
+                                coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
+                                title={maker.title}
+                                description={maker.description}
+                            />
+
+                        )
+                    })
+                }
+            </MapView>
+        </View>
+    );
+}
+
+
+
+////////////////////////////////////////
+
+
+
+
+// import React, { useState } from "react";
+// import { View, StyleSheet, Image, Text } from "react-native";
+// import MapView, { PROVIDER_GOOGLE, Marker,Callout } from 'react-native-maps';
+
+// const styles = StyleSheet.create({
+//     container: {
+//         ...StyleSheet.absoluteFillObject,
+//         flex: 1,
+//         justifyContent: 'flex-end',
+//         alignItems: 'center',
+//     },
+//     map: {
+//         ...StyleSheet.absoluteFillObject,
+//     },
+// });
+
+// export default function LOCATION() {
+
+//     const [markersList, setmarkerList] = useState([
+//         {
+
+//             id: 1,
+//             latitude: 31.600791501404007,
+//             longitude: 73.03674226553963,
+//             title: 'SFC',
+//             description: 'Student Facilation Center',
+//         },
+//         {
+
+//             id: 2,
+//             latitude: 31.603291983218153,
+//             longitude: 73.03586947447167,
+//             title: 'Football Ground',
+//             description: 'Playing Area',
+//         },
+//         {
+
+
+
+
+
+
+//             id: 3,
+//             latitude: 31.601677813823322,
+//             longitude: 73.03560234216219,
+//             title: 'FSM',
+//             description: 'cafe\nauditorium\nlibrary',
+//         },
+
+//         {
+
+
+//             id: 4,
+//             latitude: 31.601881193684026,
+//             longitude: 73.03624056637959,
+//             title: 'Cricket Ground',
+//             description: 'Fitness Center',
+//         },
+
+//         {
+
+
+//             id: 5,
+//             latitude: 31.601058143059394,
+//             longitude: 73.03655150650509,
+//             title: 'basketball Court',
+//             description: 'Badminton',
+//         },
+//         {
+
+
+
+
+//             id: 6,
+//             latitude: 31.601604325090502,
+//             longitude: 73.03703725515523,
+//             title: 'Futsall Ground',
+//             description: '',
+//         },
+//         {
+
+
+
+
+//             id: 7,
+//             latitude: 31.601954873191197,
+//             longitude: 73.0348776944143,
+//             title: 'Parking',
+//             description: 'Car parking',
+//         },
+
+
+
+
+//     ])
+
+//     const MyCustomMarkerView=()=>{
+//         return (
+//             <Image source={require('../assets/marker.png')}
+            
+//             style={{
+
+//                 width:30,
+//                 height:30,
+//             }}
+//             />
+//         )
+//     }
+
+
+//     // const MyCustomCalloutView=()=>{
+//     //     return(<View>
+//     //         <Text>CFD</Text>
+//     //     </View>)
+//     // } 
+//     const MyCustomCalloutView = () => {
+//         return (
+//             <View style={{ width: 300, height: 100 }}>
+//                 <Text>CFD</Text>
+//             </View>
+//         );
+//     };
+    
+//     return (
+//         <View style={styles.container}>
+//             <MapView
+//                 provider={PROVIDER_GOOGLE}
+//                 style={styles.map}
+//                 region={{
+//                     latitude: 31.601125557441485,
+//                     longitude: 73.03560170317493,
+//                     latitudeDelta: 0.01,
+//                     longitudeDelta: 0.001,
+//                 }}
+//             >
+//                 <Marker
+//                  coordinate={{ latitude:31.601125557441485,
+//                   longitude: 73.03560170317493}}
+//                   >
+
+
+//                     <MyCustomMarkerView />
+                 
+//   <Callout>
+//     <MyCustomCalloutView style={{width:300,height:100}} />
+//   </Callout>
+//                 </Marker>;
+//                 {
+//                     markersList.map((maker) => {
+//                         return (
+//                             <Marker
+//                                 key={maker.id}
+//                                 coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
+//                                 title={maker.title}
+//                                 description={maker.description}
+//                             />
+
+//                         )
+//                     })
+//                 }
+//             </MapView>
+//         </View>
+//     );
+// }

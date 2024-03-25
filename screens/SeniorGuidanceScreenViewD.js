@@ -1,154 +1,158 @@
 import * as React from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
 import FormContainer from "../components/FormContainer";
 import ContainerAnswerForm from "../components/ContainerAnswerForm";
 import SectionForm from "../components/SectionForm";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
+import { Image } from "react-native";
 
-const SeniorGuidanceScreenViewD = () => {
+const SeniorGuidanceScreenViewD = ({ route }) => {
+
+  const { userDetail, query } = route.params; //user session
+  const navigation = useNavigation(); //for stack navigation
+
+  const numCharacters = query.Summary.length;
+  const lineHeight = 30; // This should match the line height in your style.
+  const charactersPerLine = 35; // Adjust based on your average character per line at the given style.
+  const lines = Math.ceil(numCharacters / charactersPerLine);
+  const minHeight = 100; // Adjust based on your needs.
+  const dynamicHeight = Math.max(lines * lineHeight, minHeight);
+
+  // Calculate marginTop dynamically based on the height of the summary text
+  const marginTop = query.Summary ? Math.max(20, query.Summary.length * 10) : 0;
+
   return (
-    <View style={styles.seniorGuidanceScreenViewd}>
-      <Text style={[styles.daysAgo, styles.anasTypo]}>3 days ago</Text>
-      <Text style={[styles.byAnasNaveed2, styles.anasTypo]}>
-        By Anas Naveed
-      </Text>
-      <View style={[styles.query, styles.queryLayout]}>
-        <View style={[styles.queryChild, styles.queryLayout]} />
-        <Text style={styles.iWantTo1}>
-          I want to run a snakes and ladders game on my visual studio console
-          but it seems like the IDE is not working properly. I have tried
-          reinstalling it but to no use. I also tried running it on a different
-          machine but still no use. Can anyone help me on this? I have my lab
-          exam in a week and need assistance urgently. Thanks!
-        </Text>
-        <Text style={[styles.byAnasNaveed3, styles.anasTypo]}>
-          By Anas Naveed
-        </Text>
-        <Text style={[styles.dependencyIssue, styles.csPosition]}>
-          Dependency Issue
-        </Text>
-        <Text style={[styles.cs, styles.csPosition]}>CS</Text>
+    <View style={styles.container}>
+      {/* UPPER NAV BAR */}
+      <View style={{ zIndex: 2 }}>
+        <FormContainer route={route} userDetail={userDetail} query={query} />
       </View>
-      <FormContainer
-        menus1={require("../assets/menus-14.png")}
-        propMarginLeft={-217.1}
-        propBottom={1215}
-      />
-      <ContainerAnswerForm productCode={require("../assets/bxsuparrow.png")} />
-      <ContainerAnswerForm
-        productCode={require("../assets/bxsuparrow2.png")}
-        propTop={999}
-        propLeft={275}
-        propWidth={48}
-        propLeft1={284}
-        propLeft2={223}
-      />
-      <SectionForm />
-      <Text style={styles.answers}>Answers</Text>
-    </View>
+
+      {/* BOTTOM VOTING/ANSWER BAR */}
+      <View style={{ zIndex: 1 }}>
+        <SectionForm route={route} userDetail={userDetail} />
+      </View>
+
+      {/* FULL QUERY */}
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.content}>
+          <View style={[styles.query, styles.queryLayout]}>
+
+            <Text style={[styles.cs, styles.queryDptStyle]}>
+              {query.Department}
+            </Text>
+
+            <Text style={[styles.queryTiteStyle, styles.queryDptStyle]}>
+              {query.Title}
+            </Text>
+
+            <Text style={styles.authorStyle}>By {query.Author}</Text>
+
+            <Image
+              style={[styles.queryImgStyle, styles.queryLayout]}
+              source={{ uri: query.img }}
+            />
+
+            <Text
+              style={[
+                styles.querySummaryStyle,
+                { height: dynamicHeight } // Apply dynamic height inline
+              ]}
+            >
+              {query.Summary}
+            </Text>
+
+            {/* Dynamically spaced text */}
+            <Text style={styles.answersTextStyle}>
+              Answers
+            </Text>
+
+            <ContainerAnswerForm route={route} userDetail={userDetail} />
+
+          </View>
+        </View>
+      </ScrollView >
+    </View >
   );
 };
 
 const styles = StyleSheet.create({
-  anasTypo: {
-    height: 11,
-    lineHeight: 10,
-    fontSize: FontSize.size_3xs,
-    textAlign: "left",
-    color: Color.colorDimgray_100,
-    fontFamily: FontFamily.inter,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
+  container: {
+    flex: 1,
   },
-  queryLayout: {
-    width: 375,
-    position: "absolute",
-  },
-  csPosition: {
-    color: Color.colorDimgray_200,
-    marginLeft: -157.15,
-    fontWeight: "600",
-    textAlign: "left",
-    fontFamily: FontFamily.inter,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
-  },
-  daysAgo: {
-    marginTop: -607.5,
-    marginLeft: 84,
-    width: 62,
-  },
-  byAnasNaveed2: {
-    marginTop: -586.5,
-    marginLeft: -185,
-    width: 91,
-  },
-  queryChild: {
-    top: 86,
-    left: 0,
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorMistyrose,
-    height: 180,
-  },
-  iWantTo1: {
-    marginTop: -51.5,
-    marginLeft: -171.45,
+  querySummaryStyle: {
     fontSize: FontSize.size_xl,
     lineHeight: 30,
     width: 349,
-    height: 388,
+    // height: "10%",
     textAlign: "left",
     color: Color.colorDimgray_100,
     fontFamily: FontFamily.inter,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
+    left: "0%",
+    top: "10%",
   },
-  byAnasNaveed3: {
-    marginTop: -280.5,
-    marginLeft: -154.85,
-    width: 106,
+  scrollContainer: {
+    flex: 1,
   },
-  dependencyIssue: {
-    marginTop: -313.5,
-    width: 272,
-    height: 27,
-    fontSize: FontSize.size_5xl,
-    color: Color.colorDimgray_200,
-    marginLeft: -157.15,
+  content: {
+    paddingTop: "220%", // Adjust this value based on the height of FormContainer
+    paddingHorizontal: "0%",
   },
-  cs: {
-    marginTop: -336.5,
-    fontSize: FontSize.size_lg,
-    width: 34,
-    height: 23,
-    color: Color.colorDimgray_200,
-    marginLeft: -157.15,
-  },
-  query: {
-    top: 101,
-    height: 673,
-    left: 26,
+  queryLayout: {
     width: 375,
   },
-  answers: {
-    top: 738,
+  query: {
+    top: "-103%",
+    height: 873,
+    left: "6%",
+    width: 375,
+  },
+  queryImgStyle: {
+    top: "7%",
+    left: -8,
+    borderRadius: Border.br_mini,
+    backgroundColor: Color.colorMistyrose,
+    height: "24%",
+  },
+  cs: {
+    fontSize: FontSize.size_lg,
+    width: "10%",
+    top: "5%",
+    height: "4%",
+    color: Color.colorDimgray_200,
+  },
+  queryTiteStyle: {
+    width: "100%",
+    height: "auto",
+    top: "4%",
+    fontSize: 30,
+    color: Color.colorDimgray_200,
+  },
+  queryDptStyle: {
+    color: Color.colorDimgray_200,
+    marginLeft: -157.15,
+    fontWeight: "600",
+    textAlign: "left",
+    fontFamily: FontFamily.inter,
+    left: "41%",
+  },
+  authorStyle: {
+    fontSize: 15,
+    textAlign: "left",
+    color: Color.colorDimgray_100,
+    fontFamily: FontFamily.inter,
+    left: "0%",
+    top: "4%",
+  },
+  answersTextStyle: {
     color: Color.colorGray_1200,
     fontWeight: "600",
     fontSize: FontSize.size_5xl,
-    left: 26,
+    left: "0%",
     textAlign: "left",
+    top:"10%",
     fontFamily: FontFamily.inter,
-    position: "absolute",
-  },
-  seniorGuidanceScreenViewd: {
-    backgroundColor: Color.colorWhite,
-    flex: 1,
-    width: "100%",
-    height: 1285,
-    overflow: "hidden",
   },
 });
 
