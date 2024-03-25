@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   UpcomingEvents: {
-    flex: 1,
+    // flex: 1,
     overflow: "hidden",
     width: "100%",
     height: 812,
