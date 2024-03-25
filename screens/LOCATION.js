@@ -7,6 +7,23 @@ import LinearGradient from 'react-native-linear-gradient';
 import { View, Text,Pressable } from "react-native";
 
 const styles = StyleSheet.create({
+    zoomButton: {
+        position: "absolute",
+        backgroundColor: "rgba(1,1,2,0.5)",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 30,
+        height: 50,
+        width: 50,
+    },
+    zoomIn: {
+        left: "85%", // Adjust as necessary
+        top: "40%", // Adjust as necessary
+    },
+    zoomOut: {
+        left: "85%", // Adjust as necessary
+        top: "48%", // Adjust as necessary
+    },
     upper: {
         top: -193,
         left: -1,
@@ -16,7 +33,7 @@ const styles = StyleSheet.create({
         position: "absolute",
       },
       bluebg: {
-        backgroundColor: "transparent",
+        backgroundColor: "grey",
       },
       bluebgPosition: {
         left: "0%",
@@ -67,6 +84,12 @@ const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject,
     },
+    zoomButtonText: {
+        color: 'white', // This will make the text color white
+        fontFamily: FontFamily.interSemiBold,
+        fontSize: FontSize.size_5xl,
+        fontWeight: "400",
+    },
 });
 
 export default function LOCATION({route}) {
@@ -75,6 +98,32 @@ export default function LOCATION({route}) {
     console.log('Map-User Detail:', userDetail); // Make sure this prints the correct user details
     const navigation = useNavigation();
 
+    // Initial region for map
+    const initialRegion = {
+        latitude: 31.600791501404007,
+        longitude: 73.03674226553963,
+        latitudeDelta: 0.008,
+        longitudeDelta: 0.008,
+    };
+
+    const [region, setRegion] = useState(initialRegion);
+
+    const zoomIn = () => {
+        setRegion(prevRegion => ({
+            ...prevRegion,
+            latitudeDelta: prevRegion.latitudeDelta / 2,
+            longitudeDelta: prevRegion.longitudeDelta / 2,
+        }));
+    };
+
+    const zoomOut = () => {
+        setRegion(prevRegion => ({
+            ...prevRegion,
+            latitudeDelta: prevRegion.latitudeDelta * 2,
+            longitudeDelta: prevRegion.longitudeDelta * 2,
+        }));
+    };
+    
     const [markersList, setmarkerList] = useState([
         {
 
@@ -157,34 +206,14 @@ export default function LOCATION({route}) {
 
     ])
 
-
-
-    // const MyCustomMarkerView = () => {
-    //     return (
-    //         <View>
-    //             <Image source={require('../assets/hostel.png')} />
-
-    //         </View>
-    //     );
-    // };
-
     return (
         <View style={styles.container}>
             <MapView
-                provider={PROVIDER_GOOGLE}
                 style={styles.map}
-                region={{
-                    latitude: 31.601125557441485,
-                    longitude: 73.03560170317493,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.001,
-                }}
+                provider={MapView.PROVIDER_GOOGLE}
+                region={region}
+                onRegionChangeComplete={region => setRegion(region)}
             >
-                {/* <Marker coordinate={{latitude:31.601005195088252,longitude:73.03574086779815}}
-
->
- <MyCustomMarkerView/>  
-</Marker>; */}
                 {
                     markersList.map((maker) => {
                         return (
@@ -200,7 +229,14 @@ export default function LOCATION({route}) {
                 }
             </MapView>
 
-                  {/* HEADER */}
+            <Pressable style={[styles.zoomButton, styles.zoomIn]} onPress={zoomIn}>
+                <Text style={styles.zoomButtonText}>+</Text>
+            </Pressable>
+            <Pressable style={[styles.zoomButton, styles.zoomOut]} onPress={zoomOut}>
+            <Text style={styles.zoomButtonText}>-</Text>
+            </Pressable>
+
+    {/* HEADER */}
       <View style={styles.upper}>
         <LinearGradient
           colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
