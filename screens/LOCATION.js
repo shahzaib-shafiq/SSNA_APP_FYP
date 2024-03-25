@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet,Image ,Text} from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const styles = StyleSheet.create({
@@ -19,30 +19,30 @@ export default function LOCATION() {
     const [markersList, setmarkerList] = useState([
         {
 
-           
-            
+
+
 
 
             id: 1,
-            latitude:31.600791501404007,
+            latitude: 31.600791501404007,
             longitude: 73.03674226553963,
             title: 'SFC',
             description: 'Student Facilation Center',
         },
         {
-            
+
             id: 2,
             latitude: 31.603291983218153,
-            longitude:73.03586947447167 ,
+            longitude: 73.03586947447167,
             title: 'Football Ground',
             description: 'Playing Area',
         },
         {
 
-            
-            
 
-            
+
+
+
 
             id: 3,
             latitude: 31.601677813823322,
@@ -52,7 +52,7 @@ export default function LOCATION() {
         },
 
         {
-            
+
 
             id: 3,
             latitude: 31.601881193684026,
@@ -62,7 +62,7 @@ export default function LOCATION() {
         },
 
         {
-          
+
 
             id: 3,
             latitude: 31.601058143059394,
@@ -72,8 +72,8 @@ export default function LOCATION() {
         },
         {
 
-            
-            
+
+
 
             id: 3,
             latitude: 31.601604325090502,
@@ -83,8 +83,8 @@ export default function LOCATION() {
         },
         {
 
-            
-            
+
+
 
             id: 3,
             latitude: 31.601954873191197,
@@ -93,8 +93,8 @@ export default function LOCATION() {
             description: 'Car parking',
         },
 
-        
-        
+
+
 
     ])
 
@@ -104,7 +104,7 @@ export default function LOCATION() {
     //     return (
     //         <View>
     //             <Image source={require('../assets/hostel.png')} />
-                
+
     //         </View>
     //     );
     // };
@@ -117,11 +117,11 @@ export default function LOCATION() {
                 region={{
                     latitude: 31.601125557441485,
                     longitude: 73.03560170317493,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.001,
                 }}
             >
-{/* <Marker coordinate={{latitude:31.601005195088252,longitude:73.03574086779815}}
+                {/* <Marker coordinate={{latitude:31.601005195088252,longitude:73.03574086779815}}
 
 >
  <MyCustomMarkerView/>  
@@ -131,7 +131,7 @@ export default function LOCATION() {
                         return (
                             <Marker
                                 key={maker.id}
-                                coordinate={{latitude:maker.latitude,longitude:maker.longitude}}
+                                coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
                                 title={maker.title}
                                 description={maker.description}
                             />
@@ -143,3 +143,4 @@ export default function LOCATION() {
         </View>
     );
 }
+
