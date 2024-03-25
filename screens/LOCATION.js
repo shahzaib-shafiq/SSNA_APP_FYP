@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet,Image ,Text} from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const styles = StyleSheet.create({
@@ -18,32 +18,96 @@ export default function LOCATION() {
 
     const [markersList, setmarkerList] = useState([
         {
+
+           
+            
+
+
             id: 1,
-            
-            latitude: 31.601005195088252,
-            longitude: 73.03574086779815,
-            title: 'CFD Campus',
-            description: 'Fast University',
+            latitude:31.600791501404007,
+            longitude: 73.03674226553963,
+            title: 'SFC',
+            description: 'Student Facilation Center',
         },
-        // {
+        {
             
-        //     id: 2,
-        //     latitude: 31.604715969663634,
-        //     longitude:73.03705512591637 ,
-        //     title: 'Boys Hostel',
-        //     description: 'Faculty and Boys Hostel',
-        // },
-        // {
-        //     id: 3,
-        //     latitude: 31.60394923517809,
-        //     longitude: 73.03672950072392,
-        //     title: 'Tennis Court',
-        //     description: 'Fitness Center',
-        // },
+            id: 2,
+            latitude: 31.603291983218153,
+            longitude:73.03586947447167 ,
+            title: 'Football Ground',
+            description: 'Playing Area',
+        },
+        {
+
+            
+            
+
+            
+
+            id: 3,
+            latitude: 31.601677813823322,
+            longitude: 73.03560234216219,
+            title: 'FSM',
+            description: 'cafe\nauditorium\nlibrary',
+        },
+
+        {
+            
+
+            id: 3,
+            latitude: 31.601881193684026,
+            longitude: 73.03624056637959,
+            title: 'Cricket Ground',
+            description: 'Fitness Center',
+        },
+
+        {
+          
+
+            id: 3,
+            latitude: 31.601058143059394,
+            longitude: 73.03655150650509,
+            title: 'basketball Court',
+            description: 'Badminton',
+        },
+        {
+
+            
+            
+
+            id: 3,
+            latitude: 31.601604325090502,
+            longitude: 73.03703725515523,
+            title: 'Futsall Ground',
+            description: '',
+        },
+        {
+
+            
+            
+
+            id: 3,
+            latitude: 31.601954873191197,
+            longitude: 73.0348776944143,
+            title: 'Parking',
+            description: 'Car parking',
+        },
+
+        
+        
 
     ])
 
 
+
+    // const MyCustomMarkerView = () => {
+    //     return (
+    //         <View>
+    //             <Image source={require('../assets/hostel.png')} />
+                
+    //         </View>
+    //     );
+    // };
 
     return (
         <View style={styles.container}>
@@ -57,9 +121,11 @@ export default function LOCATION() {
                     longitudeDelta: 0.0121,
                 }}
             >
+{/* <Marker coordinate={{latitude:31.601005195088252,longitude:73.03574086779815}}
 
-
-
+>
+ <MyCustomMarkerView/>  
+</Marker>; */}
                 {
                     markersList.map((maker) => {
                         return (
@@ -77,4 +143,3 @@ export default function LOCATION() {
         </View>
     );
 }
-
