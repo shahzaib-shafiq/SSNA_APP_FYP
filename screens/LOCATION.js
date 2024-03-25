@@ -1,8 +1,63 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { useNavigation } from "@react-navigation/native";
+import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import LinearGradient from 'react-native-linear-gradient';
+import { View, Text,Pressable } from "react-native";
 
 const styles = StyleSheet.create({
+    upper: {
+        top: -193,
+        left: -1,
+        width: 431,
+        backgroundColor: Color.colorBlack,
+        height: 260,
+        position: "absolute",
+      },
+      bluebg: {
+        backgroundColor: "transparent",
+      },
+      bluebgPosition: {
+        left: "0%",
+        bottom: "0%",
+        right: "0%",    top: "0%",
+        height: "100%",
+        position: "absolute",
+        width: "100%",
+      },
+      icon: {
+        top:9,
+        left:3,
+        maxWidth: "100%",
+        maxHeight: "100%",
+        overflow: "hidden",
+        height: 30,
+        width: 30,
+      },
+      textTypo: {
+        color: Color.colorWhite,
+        textAlign: "left",
+        fontFamily: FontFamily.interSemiBold,
+        fontWeight: "600",
+      },
+      guidancePortal: {
+        height: "100%",
+        width: "57%",
+        top: "81.6%",
+        left: "20%",
+        fontSize: FontSize.size_5xl,
+        position: "absolute",
+      },
+      menus1: {
+        left: "5.59%",
+        top: "78.8%",
+        right: "84.01%",
+        bottom: "7.08%",
+        width: "10.39%",
+        height: "14.12%",
+        position: "absolute",
+      },
     container: {
         ...StyleSheet.absoluteFillObject,
         flex: 1,
@@ -14,7 +69,11 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function LOCATION() {
+export default function LOCATION({route}) {
+
+    const { userDetail } = route.params;
+    console.log('Map-User Detail:', userDetail); // Make sure this prints the correct user details
+    const navigation = useNavigation();
 
     const [markersList, setmarkerList] = useState([
         {
@@ -140,9 +199,36 @@ export default function LOCATION() {
                     })
                 }
             </MapView>
+
+                  {/* HEADER */}
+      <View style={styles.upper}>
+        <LinearGradient
+          colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
+          style={[styles.bluebg, styles.bluebgPosition]}
+        />
+        {<Pressable
+          style={styles.menus1}
+          
+          onPress={() => 
+            {console.log('Pressable pressed');
+            navigation.navigate("MAINPAGE",{userDetail})}}
+        >
+          <Image
+            style={styles.icon}
+            contentFit="cover" 
+            source={require("../assets/epback.png")}
+          />
+          
+        </Pressable> 
+        }
+        <Text style={[styles.guidancePortal, styles.textTypo]}>Campus Map</Text>
+        
+      </View>
+      
         </View>
     );
 }
+
 
 
 

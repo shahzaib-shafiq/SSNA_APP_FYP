@@ -14,7 +14,10 @@ GoogleSignin.configure({
   webClientId: '879576680646-imadre0ps3b4ot8a1gi4kfgmnqjjekec.apps.googleusercontent.com', // Replace with your Web Client ID
 });
 
-const LOGINPAGE = () => {
+const LOGINPAGE = ({ route }) => {
+
+  // const { userDetail } = route.params;
+
   const navigation = useNavigation();
   const fadeInAnim = React.useRef(new Animated.Value(0)).current;
 

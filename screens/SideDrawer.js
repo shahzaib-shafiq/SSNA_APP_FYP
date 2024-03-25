@@ -108,7 +108,7 @@ const SideDrawer = ({route}) => {
 
                 <Pressable  //CAMPUS MAP
                     style={styles.map}
-                    onPress={() => navigation.navigate("LOCATION")}
+                    onPress={() => navigation.navigate("LOCATION", { userDetail })}
                 >
                     <Text style={[styles.seniorGuidance1, styles.home1Typo]}>
                     Campus Map
