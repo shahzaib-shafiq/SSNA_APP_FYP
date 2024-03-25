@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Marker as MapMarker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const styles = StyleSheet.create({
     container: {
@@ -16,29 +16,34 @@ const styles = StyleSheet.create({
 
 export default function LOCATION() {
 
-    const markers = [
+    const [markersList, setmarkerList] = useState([
         {
             id: 1,
-            latitude: 37.78825,
-            longitude: -122.4324,
-            title: 'You are here',
-            description: 'Your current location',
+            
+            latitude: 31.601005195088252,
+            longitude: 73.03574086779815,
+            title: 'CFD Campus',
+            description: 'Fast University',
         },
-        {
-            id: 2,
-            latitude: 67.78825,
-            longitude: -22.4324,
-            title: 'You are here',
-            description: 'Your current location',
-        },
-        {
-            id: 3,
-            latitude: 87.78825,
-            longitude: -122.4324,
-            title: 'You are here',
-            description: 'Your current location',
-        },
-    ];
+        // {
+            
+        //     id: 2,
+        //     latitude: 31.604715969663634,
+        //     longitude:73.03705512591637 ,
+        //     title: 'Boys Hostel',
+        //     description: 'Faculty and Boys Hostel',
+        // },
+        // {
+        //     id: 3,
+        //     latitude: 31.60394923517809,
+        //     longitude: 73.03672950072392,
+        //     title: 'Tennis Court',
+        //     description: 'Fitness Center',
+        // },
+
+    ])
+
+
 
     return (
         <View style={styles.container}>
@@ -46,21 +51,28 @@ export default function LOCATION() {
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
                 region={{
-                    
-                    latitude: 31.60115140201088,
-                    longitude: 73.03566576594405,
+                    latitude: 31.601125557441485,
+                    longitude: 73.03560170317493,
                     latitudeDelta: 0.015,
                     longitudeDelta: 0.0121,
                 }}
             >
-                {markers.map(marker => (
-                    <MapMarker
-                        key={marker.id}
-                        coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-                        title={marker.title}
-                        description={marker.description}
-                    />
-                ))}
+
+
+
+                {
+                    markersList.map((maker) => {
+                        return (
+                            <Marker
+                                key={maker.id}
+                                coordinate={{latitude:maker.latitude,longitude:maker.longitude}}
+                                title={maker.title}
+                                description={maker.description}
+                            />
+
+                        )
+                    })
+                }
             </MapView>
         </View>
     );
