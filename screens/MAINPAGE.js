@@ -11,6 +11,7 @@ const allModules = [
   "Announcements",
   "Senior Guidance",
   "Faculty Information",
+  "Course Material",
   "Campus Map",
   "Upcoming Events",
 ];
@@ -43,6 +44,7 @@ const MAINPAGE = ({ route }) => {
       "Senior Guidance":"SeniorGuidanceScreenMain",
       "Faculty Information":"FacultyInfo",
       "Campus Map":"LOCATION",
+      "Course Material":"CourseMaterial",
     };
 
     // Get the corresponding route from the mapping
