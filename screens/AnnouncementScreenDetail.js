@@ -8,12 +8,10 @@ import { Color, FontFamily, Border, FontSize } from "../GlobalStyles";
 const AnnouncementScreenDetail = ({ route }) => {
 
   const navigation = useNavigation(); //for stack navigation
-  const { userDetail,events } = route.params; //for user session and data passed
+  const { userDetail, events } = route.params; //for user session and data passed
 
-  const handleDescriptionClick = () => {
-    const url = 'www.google.com';
-
-    Linking.openURL(url)
+  const handleDescriptionClick = (uri) => {
+    Linking.openURL(uri)
       .catch(err => {
         Alert.alert('Error', 'Failed to open URL');
         console.error('Failed to open URL', err);
@@ -26,22 +24,29 @@ const AnnouncementScreenDetail = ({ route }) => {
        {/* EVENT DETAILS */}
        <View style={styles.apps}>
         <View style={styles.eventmodule}>
-          <Image style={styles.imagebox} 
-            contentFit="cover"
-            source={{ uri: events.img }} 
-            />
+         
           <Text style={styles.eventtitle}>
             {events.Title}
           </Text>
-          {/* Wrap the event description in a Pressable component */}
-          <Pressable onPress={handleDescriptionClick}>
-            <Text style={styles.eventdescription}>
-              {events.description}
+         
+          {/* DESCRIPTION */}
+          <Text style={styles.eventdescription}>
+            {events.description}
+          </Text>
+
+
+          {/* LINK */}
+          <Pressable onPress={() => handleDescriptionClick(events.AnnouncementLink)}> 
+            <Text style={styles.link}>
+              CLICK HERE TO OPEN LINK
             </Text>
           </Pressable>
+
+
           <Text style={styles.eventdate}>
             {events?.AnnouncementDate}
           </Text>
+
         </View>
       </View>
 
@@ -75,6 +80,14 @@ const AnnouncementScreenDetail = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  link: {
+    fontSize: FontSize.size_lg,
+    color: Color.colorDimgray_100,
+    fontFamily: FontFamily.interSemiBold,
+    fontWeight: "600",
+  },
+  
+
   bluebgPosition: {
     left: "0%",
     bottom: "0%",
@@ -84,42 +97,45 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
   },
+
   textTypo: {
     color: Color.colorWhite,
     textAlign: "left",
     fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
   },
-  textPosition: {
-    display: "none",
-    position: "absolute",
-  },
-  screenmain: {
-    backgroundColor: Color.colorWhite,
-    bottom: "0%",
-    right: "0%",
-    top: "0%",
-  },
-  homeScreen: {
-    top: "1%",
-    left: "-20%",
-    width: 375,
-    position: "absolute",
-    height: 812,
-  },
-  imagebox: {
-    top: "7%",
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorMistyrose,
-    height: 195,
-    width: 309,
-    position: "absolute",
-  },
+  // textPosition: {
+  //   display: "none",
+  //   position: "absolute",
+  // },
+  // screenmain: {
+  //   backgroundColor: Color.colorWhite,
+  //   bottom: "0%",
+  //   right: "0%",
+  //   top: "0%",
+  // },
+  
+  // homeScreen: {
+  //   top: "1%",
+  //   left: "-20%",
+  //   width: 375,
+  //   position: "absolute",
+  //   height: 812,
+  // },
+
+  // imagebox: {
+  //   top: "7%",
+  //   borderRadius: Border.br_mini,
+  //   backgroundColor: Color.colorMistyrose,
+  //   height: 195,
+  //   width: 309,
+  //   position: "absolute",
+  // },
   eventtitle: {
-    marginTop: -309.5,
-    fontSize: FontSize.size_xl,
-    lineHeight: 20,
-    color: Color.colorDimgray_100,
+    marginTop: -290,
+    fontSize: FontSize.size_11xl,
+    // lineHeight: 20,
+    // color: Color.colorDimgray_100,
     fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
     marginLeft: -154.5,
@@ -128,22 +144,23 @@ const styles = StyleSheet.create({
     top: "50%",
   },
   eventdescription: {
-    fontSize: FontSize.size_base,
+    fontSize: FontSize.size_lg,
     height: 371,
+    lineHeight: 25,
     color: Color.colorDimgray_100,
     fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
     left: "0%",
-    top: "90%",
+    top: "51%",
     // backgroundColor:"grey",
     width: 309,
   },
   eventdate: {
     fontSize: FontSize.size_smi,
     fontFamily: FontFamily.interRegular,
-    color: "#131313",
-    left: "62%",
-    top: "0.2%",
+    // color: "#131313",
+    left: "85%",
+    top: "-4%",
     position: "absolute",
   },
   eventmodule: {
@@ -160,13 +177,13 @@ const styles = StyleSheet.create({
   bluebg: {
     backgroundColor: "transparent",
   },
-  icon: {
-    maxWidth: "100%",
-    maxHeight: "100%",
-    height: "90%",
-    overflow: "hidden",
-    width: "90%",
-  },
+  // icon: {
+  //   maxWidth: "100%",
+  //   maxHeight: "100%",
+  //   height: "90%",
+  //   overflow: "hidden",
+  //   width: "90%",
+  // },
   menus1: {
     left: "5.59%",
     top: "78.8%",
@@ -184,41 +201,44 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_5xl,
     position: "absolute",
   },
-  upperChild: {
-    height: "13.39%",
-    width: "9.61%",
-    top: "79.57%",
-    right: "5.34%",
-    bottom: "7.04%",
-    left: "85.06%",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_1100,
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowRadius: 6.1,
-    elevation: 6.1,
-    shadowOpacity: 1,
-  },
-  text: {
-    height: "23.61%",
-    width: "6.94%",
-    top: "74.68%",
-    left: "86.66%",
-    fontSize: FontSize.size_21xl,
-    color: Color.colorWhite,
-    textAlign: "left",
-    fontFamily: FontFamily.interSemiBold,
-    fontWeight: "600",
-  },
+  // upperChild: {
+  //   height: "13.39%",
+  //   width: "9.61%",
+  //   top: "79.57%",
+  //   right: "5.34%",
+  //   bottom: "7.04%",
+  //   left: "85.06%",
+  //   borderRadius: Border.br_xs,
+  //   backgroundColor: Color.colorGray_1100,
+  //   shadowColor: "rgba(0, 0, 0, 0.15)",
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 4,
+  //   },
+  //   shadowRadius: 6.1,
+  //   elevation: 6.1,
+  //   shadowOpacity: 1,
+  // },
+
+  // text: {
+  //   height: "23.61%",
+  //   width: "6.94%",
+  //   top: "74.68%",
+  //   left: "86.66%",
+  //   fontSize: FontSize.size_21xl,
+  //   color: Color.colorWhite,
+  //   textAlign: "left",
+  //   fontFamily: FontFamily.interSemiBold,
+  //   fontWeight: "600",
+  // },
+
   upper: {
     bottom: "92%",
     width: 431,
     height: 233,
     position: "absolute",
   },
+
   upcomingeventdetails: {
     flex: 1,
     overflow: "hidden",
