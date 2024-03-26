@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, Pressable, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TextInput, Pressable, Image, KeyboardAvoidingView } from 'react-native';
 import axios from 'axios';
 import XLSX from 'xlsx';
 import database from '@react-native-firebase/database'; //for firebase connection
@@ -154,60 +154,62 @@ const fetchAndProcessExcel = async (url) => {
 
   // Render Excel data
   return (
-    
-    <View style={{ flex: 1 }}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <View style={{ flex: 1 }}>
 
-      {/* UPPER NAV BAR */}
-      <TimetableContainer
-        locationCoordinates={require("../assets/menus-11.png")}
-        busRoutesImageUrl="Bus Routes Information"
-        propMarginLeft={-116.5}
-        propTop={184}
-      />
-      {/* BACK BUTTON */}
-      <Pressable
-        style={styles.menus1}
-        onPress={() => navigation.navigate("MAINPAGE", { userDetail })}
-      >
-        <Image
-          style={styles.back_button}
-          contentFit="cover"
-          source={require("../assets/epback.png")}
+        {/* UPPER NAV BAR */}
+        <TimetableContainer
+          locationCoordinates={require("../assets/menus-11.png")}
+          busRoutesImageUrl="Bus Routes Information"
+          propMarginLeft={-116.5}
+          propTop={184}
         />
-      </Pressable>
+        {/* BACK BUTTON */}
+        <Pressable
+          style={styles.menus1}
+          onPress={() => navigation.navigate("MAINPAGE", { userDetail })}
+        >
+          <Image
+            style={styles.back_button}
+            contentFit="cover"
+            source={require("../assets/epback.png")}
+          />
+        </Pressable>
 
-      {/* SEARCH BAR */}
-      <View style={styles.searchbar}>
-        <TextInput
-          style={styles.searchbarInput}
-          placeholder="Search by Route or Stop"
-          onChangeText={setSearchQuery}
-        />
-        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
-        <Image
-          style={styles.search1Icon1}
-          contentFit="cover"
-          source={require("../assets/search-12.png")}
-        />
-      </View>
-
-      <ScrollView contentContainerStyle={styles.container}>
-        {filteredRoutes.map((route, index) => (
-          <View key={index} style={styles.routeContainer}>
-            <Text style={styles.routeNumber}>{route.routeNumber}</Text>
-            <Text style={styles.authorizedPerson}>Authorized Person: {route.authorizedPerson}</Text>
-            <View style={styles.routeInfo}>
-              {route.places.map((place, idx) => (
-                <View key={idx} style={styles.placeInfo}>
-                  <HighlightText text={place} highlight={searchQuery} />
-                  <Text>{formatTime(route.departureTimes[idx])}</Text>
-                </View>
-              ))}
-            </View>
+        {/* SEARCH BAR */}
+        <View style={styles.temp}>
+          <TextInput
+            style={styles.searchbarInput}
+            placeholder="Search by Route or Stop"
+            onChangeText={setSearchQuery}
+          />
           </View>
-        ))}
-      </ScrollView>
-    </View>
+          
+          <View style={[styles.searchbarItem, styles.searchbarLayout]} />
+          <Image
+            style={styles.search1Icon1}
+            contentFit="cover"
+            source={require("../assets/search-12.png")}
+          />
+
+        <ScrollView contentContainerStyle={styles.container}>
+          {filteredRoutes.map((route, index) => (
+            <View key={index} style={styles.routeContainer}>
+              <Text style={styles.routeNumber}>{route.routeNumber}</Text>
+              <Text style={styles.authorizedPerson}>Authorized Person: {route.authorizedPerson}</Text>
+              <View style={styles.routeInfo}>
+                {route.places.map((place, idx) => (
+                  <View key={idx} style={styles.placeInfo}>
+                    <HighlightText text={place} highlight={searchQuery} />
+                    <Text>{formatTime(route.departureTimes[idx])}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -219,12 +221,38 @@ const styles = StyleSheet.create({
     height: 22,
     // position: "absolute",
   },
-  searchbar: {
-    top: "8%",
-    left: 40,
-    height: "14%",
+  searchbarInput: {
+    // top: 90,
+    height: 50,
     width: 343,
+    borderColor: 'rgba(128, 128, 128, 0.0)',
+    fontSize: 16,
+    borderWidth: 1,
+    backgroundColor: "white",
+    // paddingHorizontal: "10%",
+    borderRadius: Border.br_3xs,
+    flex: 0,
+    elevation: 2, // Add elevation for Android shadow
+    shadowOpacity: 0.5,
     // position: "absolute",
+    shadowRadius: 4,
+  },
+  temp: {
+    // top: 90,
+    paddingTop:60,
+    // backgroundColor: "black",
+    left: 40,
+    // height: 50,
+    // width: 343,
+    // position: "absolute",
+  },
+  searchbar: {
+    top: 90,
+    backgroundColor: "black",
+    left: 40,
+    height: 50,
+    width: 343,
+    position: "absolute",
     // Android
     elevation: 5,
     // iOS
@@ -241,12 +269,13 @@ const styles = StyleSheet.create({
     left: "90%",
     width: 22,
     height: 22,
-    // position: "absolute",
+    position: "absolute",
   },
   searchbarLayout: {
     borderRadius: Border.br_3xs,
     height: 48,
-    top: "-40%",
+    top: -48,
+    left: 334,
     // position: "absolute",
   },
   searchbarItem: {
@@ -256,19 +285,6 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255, 255, 255, 0.15)",
     borderWidth: 1,
     width: 50,
-  },
-  searchbarInput: {
-    height: "100%",
-    borderColor: 'rgba(128, 128, 128, 0.0)',
-    fontSize: 16,
-    borderWidth: 1,
-    backgroundColor: "white",
-    paddingHorizontal: "10%",
-    borderRadius: Border.br_3xs,
-    flex: 1,
-    elevation: 2, // Add elevation for Android shadow
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
   },
   back_button: {
     left: "5%",
@@ -304,3 +320,4 @@ const styles = StyleSheet.create({
 });
 
 export default BusRoutesPage;
+
