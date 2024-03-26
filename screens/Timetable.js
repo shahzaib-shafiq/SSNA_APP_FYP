@@ -1,116 +1,150 @@
 import * as React from "react";
-import { Image, Pressable } from "react-native";
-import { Text, StyleSheet, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, StyleSheet, View, Dimensions, ActivityIndicator, Alert, Linking } from "react-native";
+import {Picker} from '@react-native-picker/picker';
+import { Text } from "react-native";
+import { useEffect, useState } from "react";
+import database from '@react-native-firebase/database'; // Import database from Firebase
 import TimetableContainer from "../components/TimetableContainer";
-import { Padding, Border, FontSize, Color, FontFamily } from "../GlobalStyles";
+import { Padding, Color } from "../GlobalStyles"; // Import other styles from GlobalStyles
+import { useNavigation } from "@react-navigation/native";
+import Pdf from 'react-native-pdf';
 
-const Timetable = ({route}) => {
-  
+const Timetable = ({ route }) => {
   const navigation = useNavigation(); //for navigation
   const { userDetail } = route.params; //for user session
 
+  // For Searching Timetable
+  const [TimetableInfo, setTimetableInfo] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState(null);
+
+  // Fetch Data From DATABASE
+  const getData = () => {
+    const db = database();
+    const dbRef = db.ref('/Timetable');
+
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+
+      if (data) {
+        const TimetableData = Object.keys(data).map((id) => ({
+          id,
+          Department: data[id].Department,
+          img: data[id].img,
+        }));
+        setTimetableInfo(TimetableData);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // Find the URL of the PDF for the selected department
+  useEffect(() => {
+    if (selectedDepartment && TimetableInfo.length > 0) {
+      const departmentInfo = TimetableInfo.find(item => item.Department === selectedDepartment);
+      if (departmentInfo) {
+        setPdfUrl(departmentInfo.img);
+      } else {
+        // Department not found
+        setPdfUrl(null);
+      }
+    }
+  }, [selectedDepartment, TimetableInfo]);
+
   return (
-  
-    <View style={styles.timetable}>
-      
-      <TimetableContainer
-        locationCoordinates={require("../assets/menus-1.png")}
-        busRoutesImageUrl="Timetable"
-      />
-      
+    <View style={styles.container}>
+      {/* Timetable Container and Back Button */}
+      <View style={styles.header}>
+        <TimetableContainer
+          locationCoordinates={require("../assets/menus-1.png")}
+          busRoutesImageUrl="Timetable"
+        />
         {/* BACK BUTTON */}
-       <Pressable
-          style={styles.epback}
-          onPress={() =>
-            navigation.navigate("MAINPAGE",{userDetail})
-          }
+        <Pressable
+          style={styles.backButton}
+          onPress={() => navigation.navigate("MAINPAGE", { userDetail })}
         >
-        <Image
-              // style={styles.icon}
-              contentFit="cover"
-              source={require("../assets/epback.png")}
-        />
+          <Image
+            contentFit="cover"
+            source={require("../assets/epback.png")}
+          />
         </Pressable>
-
-      {/* ROUND BUTTONS  */}
-      <View style={[styles.viewTimtableButton, styles.buttonFlexBox]}>
-        <Text style={styles.performAction}>View Timetable</Text>
-      </View>
-      <View style={[styles.setReminderButton, styles.buttonFlexBox]}>
-        <Text style={styles.performAction}>Set Reminder</Text>
-      </View>
-      
-      {/* TIMETABLE IMAGE */}
-      <View style={styles.timetableChild}>
-        <Image
-          style={styles.timetableImage} // Add this style
-          resizeMode="cover" // Set the resizeMode to 'contain'
-          source={require("../assets/Timetable.png")}
-        />
       </View>
 
+      {/* Department Selection */}
+      <View style={styles.departmentSelector}>
+        <Text>Select Department: </Text>
+        <Picker
+          selectedValue={selectedDepartment}
+          style={{ height: 50, width: 200 }}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedDepartment(itemValue)
+          }>
+          <Picker.Item label="Select Department" value={null} />
+    {TimetableInfo.map((item, index) => (
+      <Picker.Item key={index} label={item.Department} value={item.Department} />
+    ))}
+        </Picker>
+      </View>
+
+      {/* PDF Viewer */}
+      <View style={styles.pdfViewer}>
+        {pdfUrl ? (
+          <Pdf
+            trustAllCerts={false}
+            source={{ uri: pdfUrl }}
+            page={1}
+            scale={1.0}
+            minScale={0.5}
+            maxScale={5.0}
+            renderActivityIndicator={() => (
+              <ActivityIndicator color="black" size="large" />
+            )}
+            style={{ flex: 1, width: Dimensions.get('window').width }}
+          />
+        ) : (
+          <Text>No PDF available for the selected department</Text>
+        )}
+      </View>
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
-  buttonFlexBox: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: Padding.p_3xs,
-    flexDirection: "row",
-    height: 45,
-    borderRadius: Border.br_31xl,
-    top:"41%",
-    position: "absolute",
-  },
-  performAction: {
-    fontSize: FontSize.size_sm,
-    fontWeight: "500",
-    color: Color.colorWhite,
-    textAlign: "center",
-    fontFamily: FontFamily.inter,
-  },
-  viewTimtableButton: {
-    left: "55%",
-    backgroundColor: Color.colorDodgerblue,
-    width: 121,
-  },
-  setReminderButton: {
-    left: "16%",
-    backgroundColor: "#ae0000",
-    width: 121,
-  },
-  epback: {
-    left: "5%",
-    top: "2.5%",
-    width: 38,
-    height: 33,
-    position: "absolute",
-  },
-  timetableChild: {
-    top: "12%",
-    borderRadius: 17,
-    backgroundColor: Color.colorMistyrose,
-    width: 332,
-    height: 172,
-    alignSelf: "center",
-    borderWidth: 3, // Set the desired border width
-    borderColor: 'grey', // Set the desired border color
-  },
-  timetableImage: {
-    flex: 1, // Make the image take up the entire container
-    borderRadius: 17,
-    width: 332,
-    height: 172,
-  },
-  timetable: {
-    backgroundColor: Color.colorWhite,
+  container: {
     flex: 1,
-    width: "100%",
+    backgroundColor: Color.colorWhite,
     overflow: "hidden",
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Padding.p_3xs,
+  },
+  backButton: {
+    position: "absolute",
+    left: 15,
+    top: 20,
+    zIndex: 1 // Ensure the button is above the PDF viewer
+  },
+
+  departmentSelector: {
+    // top: ,
+    flex:1,
+    flexDirection: 'row',
+    alignItems: 'center',
+     marginTop: -230,
+    marginLeft: 50,
+    zIndex: 1
+  },
+  pdfViewer: {
+     marginTop: -250,
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
 
