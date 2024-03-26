@@ -84,9 +84,9 @@ const Timetable = ({ route }) => {
             setSelectedDepartment(itemValue)
           }>
           <Picker.Item label="Select Department" value={null} />
-          {TimetableInfo.map((item, index) => (
-            <Picker.Item key={index} label={item.Department} value={item.Department} />
-          ))}
+    {TimetableInfo.map((item, index) => (
+      <Picker.Item key={index} label={item.Department} value={item.Department} />
+    ))}
         </Picker>
       </View>
 
@@ -99,7 +99,7 @@ const Timetable = ({ route }) => {
             page={1}
             scale={1.0}
             minScale={0.5}
-            maxScale={3.0}
+            maxScale={5.0}
             renderActivityIndicator={() => (
               <ActivityIndicator color="black" size="large" />
             )}
@@ -130,14 +130,18 @@ const styles = StyleSheet.create({
     top: 20,
     zIndex: 1 // Ensure the button is above the PDF viewer
   },
+
   departmentSelector: {
+    // top: ,
+    flex:1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10,
-    marginLeft: 10,
+     marginTop: -200,
+    marginLeft: 50,
+    zIndex: 1
   },
   pdfViewer: {
-    marginTop: 10,
+     marginTop: -230,
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
