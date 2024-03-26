@@ -133,7 +133,7 @@ const Query = ({ route, userDetail }) => {
           Title: data[id].Title,
           Department: data[id].Department,
           Author: data[id].Author,
-          AuthorId:data[id].AuthorId,
+          AuthorId: data[id].AuthorId,
           Downvotes: data[id].Downvotes,
           Upvotes: data[id].Upvotes,
           Summary: data[id].Summary,
@@ -167,91 +167,97 @@ const Query = ({ route, userDetail }) => {
   return (
 
     <View style={styles.queriesBoxMAIN}>
-      {queryInfo.map((query, index) => (
-        <View
-          key={query.id}
-          style={[
-            styles.query1,
-            //  styles.facultyShadowBox,
-            { top: -10 + index * 230 }, // Adjust this value
-          ]}
-        >
+      {queryInfo.length === 0 ? (
+        <Text style={styles.nothingHereTxtStyle}>Nothing here yet...</Text>
+      ) : (
 
-          {/* VIEW FULL QUERY */}
-          <Pressable
-            onPress={() => navigation.navigate("SeniorGuidanceScreenViewD", { userDetail, query, route })}
-            style={styles.queryImgBoxStyle}
 
-          >
-            <Image
-              style={styles.queryImgStyle}
-              source={{ uri: query.img }}
-            />
-          </Pressable>
-
-          <Text style={styles.iWantTo1}>
-            {query.Summary.length > 150 ? query.Summary.substring(0, 150) + "..." : query.Summary}
-          </Text>
-
-          <Text style={[styles.datePositionStyle, styles.dateTypoStyle]}>
-            {query.Date}
-          </Text>
-
-          <Text style={[styles.byAnasNaveed1, styles.dateTypoStyle]}>
-            {query.Author}
-          </Text>
-
-          <Text style={[styles.arduinoProgramming, styles.eeTypo]}>
-            {query.Title}
-          </Text>
-
-          <Text style={[styles.ee, styles.eeTypo]}>
-            {query.Department}
-          </Text>
-
-          {/* View Full query button */}
-          <Pressable
-            onPress={() => navigation.navigate("SeniorGuidanceScreenViewD", { userDetail, query, route })}
-            style={styles.viewQueryBoxStyle}
+        queryInfo.map((query, index) => (
+          <View
+            key={query.id}
+            style={[
+              styles.query1,
+              //  styles.facultyShadowBox,
+              { top: -10 + index * 230 }, // Adjust this value
+            ]}
           >
 
-            <Text style={styles.viewQueryTxtStyle}>VIEW</Text>
+            {/* VIEW FULL QUERY */}
+            <Pressable
+              onPress={() => navigation.navigate("SeniorGuidanceScreenViewD", { userDetail, query, route })}
+              style={styles.queryImgBoxStyle}
 
-          </Pressable>
+            >
+              <Image
+                style={styles.queryImgStyle}
+                source={{ uri: query.img }}
+              />
+            </Pressable>
 
-          {/* UPVOTING BUTTON */}
-          <Pressable
-            onPress={() => handleUpvote(query.id, query.Upvotes, query.Downvotes, userDetail.id)}
-            style={[styles.upVoteBoxStyle, styles.votingButtonsBoxStyle]}
-          >
-            <Image
-              style={[styles.upVoteArrowStyle, styles.votingIconLayout]}
-              contentFit="cover"
-              source={require("../assets/uparrow-12.png")}
-            />
-            <Text style={[styles.upVoteTextStyle, styles.votingTextTypo]}>
-              {query.Upvotes}
+            <Text style={styles.iWantTo1}>
+              {query.Summary.length > 150 ? query.Summary.substring(0, 150) + "..." : query.Summary}
             </Text>
-          </Pressable>
 
-          {/* DOWNVOTING BUTTON */}
-          <Pressable
-            onPress={() => handleDownvote(query.id, query.Downvotes, query.Upvotes, userDetail.id)}
-            style={[styles.downVoteBoxStyle, styles.votingButtonsBoxStyle]}
-          >
-            <Image
-              style={[styles.downVoteArrowStyle, styles.votingIconLayout]}
-              contentFit="cover"
-              source={require("../assets/uparrow-24.png")}
-            />
-            <Text style={[styles.downVoteTextStyle, styles.votingTextTypo]}>
-              {query.Downvotes}
+            <Text style={[styles.datePositionStyle, styles.dateTypoStyle]}>
+              {query.Date}
             </Text>
-          </Pressable>
 
-        </View>
-      ))}
+            <Text style={[styles.byAnasNaveed1, styles.dateTypoStyle]}>
+              {query.Author}
+            </Text>
 
+            <Text style={[styles.arduinoProgramming, styles.eeTypo]}>
+              {query.Title}
+            </Text>
+
+            <Text style={[styles.ee, styles.eeTypo]}>
+              {query.Department}
+            </Text>
+
+            {/* View Full query button */}
+            <Pressable
+              onPress={() => navigation.navigate("SeniorGuidanceScreenViewD", { userDetail, query, route })}
+              style={styles.viewQueryBoxStyle}
+            >
+
+              <Text style={styles.viewQueryTxtStyle}>VIEW</Text>
+
+            </Pressable>
+
+            {/* UPVOTING BUTTON */}
+            <Pressable
+              onPress={() => handleUpvote(query.id, query.Upvotes, query.Downvotes, userDetail.id)}
+              style={[styles.upVoteBoxStyle, styles.votingButtonsBoxStyle]}
+            >
+              <Image
+                style={[styles.upVoteArrowStyle, styles.votingIconLayout]}
+                contentFit="cover"
+                source={require("../assets/uparrow-12.png")}
+              />
+              <Text style={[styles.upVoteTextStyle, styles.votingTextTypo]}>
+                {query.Upvotes}
+              </Text>
+            </Pressable>
+
+            {/* DOWNVOTING BUTTON */}
+            <Pressable
+              onPress={() => handleDownvote(query.id, query.Downvotes, query.Upvotes, userDetail.id)}
+              style={[styles.downVoteBoxStyle, styles.votingButtonsBoxStyle]}
+            >
+              <Image
+                style={[styles.downVoteArrowStyle, styles.votingIconLayout]}
+                contentFit="cover"
+                source={require("../assets/uparrow-24.png")}
+              />
+              <Text style={[styles.downVoteTextStyle, styles.votingTextTypo]}>
+                {query.Downvotes}
+              </Text>
+            </Pressable>
+
+          </View>
+        ))
+
+      )}
     </View>
   );
 };
@@ -292,6 +298,17 @@ const styles = StyleSheet.create({
     color: Color.colorWhite,
     fontWeight: "800",
     textAlign: "left",
+    fontFamily: FontFamily.inter,
+    position: "relative", // This ensures the text layer is positioned correctly relative to its parent
+  },
+  nothingHereTxtStyle: {
+    fontSize: 19,
+    top: "30%",
+    width: "100%",
+    height: "100%",
+    color: Color.colorGray_100,
+    fontWeight: "100",
+    textAlign: "center",
     fontFamily: FontFamily.inter,
     position: "relative", // This ensures the text layer is positioned correctly relative to its parent
   },

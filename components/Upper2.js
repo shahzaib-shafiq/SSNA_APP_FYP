@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   plusButtonGB: {
     height: "13.39%",
     width: "9.61%",
-    top: "51.57%",
+    top: "53%",
     bottom: "7.04%",
     left: "81.06%",
     borderRadius: Border.br_xs,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   plusSign: {
     height: "500%",
     width: "50%",
-    top: "-40%",
+    top: "-42%",
     left: "25%",
     fontSize: FontSize.size_21xl,
   },

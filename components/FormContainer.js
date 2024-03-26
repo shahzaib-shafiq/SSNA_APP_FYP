@@ -4,9 +4,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import database from '@react-native-firebase/database'; //for firebase connection
 
 const FormContainer = ({ route, userDetail, query }) => {
-  
+
   const navigation = useNavigation();
 
   console.log('FC-User Detail:', userDetail); // Make sure this prints the correct user details
@@ -14,10 +15,20 @@ const FormContainer = ({ route, userDetail, query }) => {
   console.log('FC-query:', query);
 
   // Function to handle deletion of query
-  const handleDeleteQuery = () => {
-    // Perform deletion of query from the database
-    // Navigate back to SeniorGuidanceScreenMain
-    navigation.navigate("SeniorGuidanceScreenMain");
+  const handleDeleteQuery = (queryId) => {
+
+    const db = database();
+    const queryRef = db.ref(`/Guidance/${queryId}`);
+
+    queryRef.remove()
+      .then(() => {
+        console.log("Query deleted successfully");
+        navigation.navigate("SeniorGuidanceScreenMain", { userDetail, route })
+      })
+      .catch((error) => {
+        console.error("Error deleting query: ", error);
+      });
+
   };
 
   return (
@@ -29,7 +40,7 @@ const FormContainer = ({ route, userDetail, query }) => {
       />
       <Pressable
         style={styles.menus1}
-        onPress={() => navigation.navigate("SeniorGuidanceScreenMain",{userDetail, route})}
+        onPress={() => navigation.navigate("SeniorGuidanceScreenMain", { userDetail, route })}
       >
         <Image
           style={[styles.icon, styles.iconLayout]}
@@ -46,7 +57,7 @@ const FormContainer = ({ route, userDetail, query }) => {
       {query.AuthorId === userDetail.id && (
         <Pressable
           style={styles.plusButtonGB}
-          onPress={handleDeleteQuery}
+          onPress={() => handleDeleteQuery(query.id)}
         >
           <Text style={styles.plusSign}>-</Text>
         </Pressable>
