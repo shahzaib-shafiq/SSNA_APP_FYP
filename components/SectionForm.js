@@ -22,6 +22,18 @@ const SectionForm = ({ route, userDetail }) => {
 
   // Function to toggle the visibility of the ErrorMessage
   const handlePressAns = () => {
+    // Check if the current user is the author of the query
+    if (query.AuthorId === userDetail.id) {
+      // If the current user is the author, log an error and prevent opening the popup
+      Toast.show({
+        type: 'info',
+        text1: 'Permission Denied',
+        text2: 'You cannot answer your own question.'
+      });
+      return;
+    }
+
+    // If the current user is not the author, proceed to open the popup
     setShowPopup(true);
   };
 
@@ -48,7 +60,7 @@ const SectionForm = ({ route, userDetail }) => {
         Toast.show({
           type: 'info',
           text1: 'Downvote removed',
-          downVoteNumStyle: 'Your downvote has been removed.'
+          text2: 'Your downvote has been removed.'
         });
       } else {
         // User is downvoting for the first time or changing their vote
@@ -75,10 +87,11 @@ const SectionForm = ({ route, userDetail }) => {
         Toast.show({
           type: 'success',
           text1: 'Downvote counted',
-          downVoteNumStyle: 'Your downvote has been recorded.'
+          text2: 'Your downvote has been recorded.'
         });
       }
     });
+    // setDownvotes(updatedUpvotes);
   };
   const handleUpvote = (queryId, currentUpvotes, currentDownvotes, userId) => {
     const queryRef = database().ref(`/Guidance/${queryId}`);
@@ -100,7 +113,7 @@ const SectionForm = ({ route, userDetail }) => {
         Toast.show({
           type: 'info',
           text1: 'Upvote removed',
-          downVoteNumStyle: 'Your upvote has been removed.'
+          text2: 'Your upvote has been removed.'
         });
       } else {
         // Adjust the votes based on the current state
@@ -125,10 +138,11 @@ const SectionForm = ({ route, userDetail }) => {
         Toast.show({
           type: 'success',
           text1: 'Upvote counted',
-          downVoteNumStyle: 'Your upvote has been recorded.'
+          text2: 'Your upvote has been recorded.'
         });
       }
     });
+    setUpvotes(updatedUpvotes);
   };
   const [queryInfo, setGuidanceQuery] = useState([]);
 
@@ -195,7 +209,7 @@ const SectionForm = ({ route, userDetail }) => {
           <Modal transparent={true} animationType="slide" visible={showPopup} onRequestClose={() => setShowPopup(false)}>
             <View style={styles.centeredView}>
               <Pressable style={styles.blurbg} onPress={() => setShowPopup(false)} />
-              <AnswerQueryPopup onClose={() => setShowPopup(false)} userDetail={userDetail} route={route}/>
+              <AnswerQueryPopup onClose={() => setShowPopup(false)} userDetail={userDetail} route={route} />
             </View>
           </Modal>
         )}

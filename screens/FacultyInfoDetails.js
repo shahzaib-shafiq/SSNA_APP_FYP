@@ -205,15 +205,6 @@ const styles = StyleSheet.create({
     left: "50%",
     position: "absolute",
   },
-  powerTypo: {
-    left: 1,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.interMedium,
-    fontWeight: "300",
-    fontSize: FontSize.size_lg,
-    textAlign: "left",
-    position: "absolute",
-  },
   screenmain: {
     top: "0%",
     right: "0%",
@@ -402,9 +393,18 @@ const styles = StyleSheet.create({
     top: 809,
   },
   powerSystemsControl: {
-    top: 1,
-    width: 216,
-    height: 74,
+    top: "10%",
+    width: "100%",
+    height: "100%",
+  },
+  powerTypo: {
+    left: "10%",
+    color: Color.colorBlack,
+    fontFamily: FontFamily.interMedium,
+    fontWeight: "500",
+    fontSize: 60,
+    textAlign: "left",
+    // position: "absolute",
   },
   research: {
     marginLeft: -43,

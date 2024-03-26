@@ -59,7 +59,11 @@ const FormContainer = ({ route, userDetail, query }) => {
           style={styles.plusButtonGB}
           onPress={() => handleDeleteQuery(query.id)}
         >
-          <Text style={styles.plusSign}>-</Text>
+           <Image
+          style={styles.delIconStyle}
+          contentFit="cover"
+          source={require("../assets/bin.png")}
+        />
         </Pressable>
       )}
     </View>
@@ -108,11 +112,11 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_5xl,
   },
   plusButtonGB: {
-    height: "13.39%",
-    width: "9.61%",
-    top: "79.57%",
-    bottom: "7.04%",
-    left: "81.06%",
+    height: "18.39%",
+    width: "12.61%",
+    top: "76.57%",
+    bottom: "9.04%",
+    left: "79.06%",
     borderRadius: Border.br_xs,
     backgroundColor: Color.colorGray_1100,
     shadowColor: "rgba(0, 0, 0, 0.15)",
@@ -125,14 +129,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     position: "absolute",
   },
-  plusSign: {
-    height: "500%",
-    width: "50%",
-    top: "-42%",
-    color: Color.colorWhite,
-    fontFamily: FontFamily.inter,
-    left: "35%",
-    fontSize: FontSize.size_21xl,
+  delIconStyle: {
+    height: "60%",
+    width: "40%",
+    top: "17%",
+    left: "27%",
+    maxWidth: "100%",
+    overflow: "hidden",
+    maxHeight: "100%",
   },
   upper: {
     top: -163,

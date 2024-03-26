@@ -25,78 +25,78 @@ const BusRoutesPage = ({ route }) => {
     return moment(time).format('h:mm A');
   };
 
-  const fetchAndProcessExcel = async (url) => {
-    try {
-      const response = await axios.get(url, {
-        responseType: 'arraybuffer', // Important for handling binary data
-      });
-  
-      // Convert array buffer to binary string
-      const data = new Uint8Array(response.data);
-      const binaryString = data.reduce((acc, byte) => acc + String.fromCharCode(byte), '');
-  
-      // Read the Excel file
-      const workbook = XLSX.read(binaryString, { type: 'binary' });
-  
-      // Get the first sheet
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-  
-      // Convert sheet to JSON format with raw values to preserve date formats
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false });
-  
-      // Process columns in pairs
-      const routes = [];
-      // Assuming data starts from the first column and each route info spans two columns
-      for (let col = 0; col < jsonData[0].length; col += 4) {
-        let currentRoute = null;
-  
-        // Iterate through rows
-        for (let row = 0; row < jsonData.length; row++) {
-          // Current cell and the next one in the row
-          const cellValue = jsonData[row][col] || "";
-          const nextCellValue = jsonData[row][col + 1] || "";
-  
-          // Start of a new route
-          if (cellValue.startsWith("Route - ")) {
-            if (currentRoute) {
-              routes.push(currentRoute); // Push the previous route before starting a new one
-            }
-            currentRoute = {
-              routeNumber: cellValue,
-              places: [],
-              departureTimes: [],
-              authorizedPerson: ""
-            };
+const fetchAndProcessExcel = async (url) => {
+  try {
+    const response = await axios.get(url, {
+      responseType: 'arraybuffer', // Important for handling binary data
+    });
+
+    // Convert array buffer to binary string
+    const data = new Uint8Array(response.data);
+    const binaryString = data.reduce((acc, byte) => acc + String.fromCharCode(byte), '');
+
+    // Read the Excel file
+    const workbook = XLSX.read(binaryString, { type: 'binary' });
+
+    // Get the first sheet
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    // Convert sheet to JSON format with raw values to preserve date formats
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false });
+
+    // Process columns in pairs
+    const routes = [];
+    // Assuming data starts from the first column and each route info spans two columns
+    for (let col = 0; col < jsonData[0].length; col += 4) {
+      let currentRoute = null;
+
+      // Iterate through rows
+      for (let row = 0; row < jsonData.length; row++) {
+        // Current cell and the next one in the row
+        const cellValue = jsonData[row][col] || "";
+        const nextCellValue = jsonData[row][col + 1] || "";
+
+        // Start of a new route
+        if (cellValue.startsWith("Route - ")) {
+          if (currentRoute) {
+            routes.push(currentRoute); // Push the previous route before starting a new one
           }
-          // End of a route
-          else if (cellValue.startsWith("Authorized Person: ")) {
-            if (currentRoute) {
-              currentRoute.authorizedPerson = nextCellValue;
-              routes.push(currentRoute);
-              currentRoute = null; // Reset for potentially another route in the same columns
-            }
-          }
-          // Middle of a route (places and times)
-          else if (currentRoute && cellValue && cellValue !== "place" && nextCellValue !== "Dep. Time") {
-            currentRoute.places.push(cellValue);
-            currentRoute.departureTimes.push(nextCellValue);
+          currentRoute = {
+            routeNumber: cellValue,
+            places: [],
+            departureTimes: [],
+            authorizedPerson: ""
+          };
+        }
+        // End of a route
+        else if (cellValue.startsWith("Authorized Person: ")) {
+          if (currentRoute) {
+            currentRoute.authorizedPerson = nextCellValue;
+            routes.push(currentRoute);
+            currentRoute = null; // Reset for potentially another route in the same columns
           }
         }
-        // In case the last route does not end with "Authorized Person"
-        if (currentRoute) {
-          routes.push(currentRoute);
+        // Middle of a route (places and times)
+        else if (currentRoute && cellValue && cellValue !== "place" && nextCellValue !== "Dep. Time") {
+          currentRoute.places.push(cellValue);
+          currentRoute.departureTimes.push(nextCellValue);
         }
       }
-  
-      // Update state with routes info
-      setRoutesInfo(routes);
-  
-    } catch (error) {
-      console.error('Error fetching or processing Excel file:', error);
+      // In case the last route does not end with "Authorized Person"
+      if (currentRoute) {
+        routes.push(currentRoute);
+      }
     }
-  };
-  
+
+    // Update state with routes info
+    setRoutesInfo(routes);
+
+  } catch (error) {
+    console.error('Error fetching or processing Excel file:', error);
+  }
+};
+
 
   useEffect(() => {
     const db = database();
@@ -212,6 +212,13 @@ const BusRoutesPage = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  mainBoxStyle: {
+    top: "-68%",
+    left: "90%",
+    width: 22,
+    height: 22,
+    // position: "absolute",
+  },
   searchbar: {
     top: "8%",
     left: 40,
