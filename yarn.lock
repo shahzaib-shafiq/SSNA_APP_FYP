@@ -7786,6 +7786,7 @@ react-native-maps@^1.11.3:
   dependencies:
     "@types/geojson" "^7946.0.13"
 
+
 react-native-pdf@^6.7.4:
   version "6.7.4"
   resolved "https://registry.npmjs.org/react-native-pdf/-/react-native-pdf-6.7.4.tgz"
@@ -7793,6 +7794,7 @@ react-native-pdf@^6.7.4:
   dependencies:
     crypto-js "4.2.0"
     deprecated-react-native-prop-types "^2.3.0"
+
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"
