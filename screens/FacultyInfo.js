@@ -32,7 +32,7 @@ const FacultyInfo = ( {route} ) => {
           phone: data[id].phone,
           Education: data[id].Education,
           address: data[id].address,
-          areaOfInterest: data[id].areaOfInterest,
+          areaOfInterest: data[id].areaOfIntrest,
           University: data[id].University,
           img: data[id].img,
 

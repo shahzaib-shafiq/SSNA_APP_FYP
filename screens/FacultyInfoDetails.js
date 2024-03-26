@@ -10,6 +10,8 @@ const FacultyInfoDetails = ({ route }) => {
   const navigation = useNavigation(); //stack navigation
   const { userDetail, faculty } = route.params; //user session
 
+  console.log('FI-faculty:', faculty);
+
 //a function to get the full form of the department
   const getFullForm = (abbreviation) => {
     switch (abbreviation) {
@@ -270,17 +272,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left',
   },
-  detailsContainer2: {
-    left: 48,
-    width: 320,
-    top:292,
-    height:200,
-    backgroundColor: 'rgba(128, 128, 128, 0.0)', // Transparent grey color
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 10,
-    textAlign: 'left',
-  },
   emailContainerStyle:{
     top:257
   },
@@ -393,16 +384,28 @@ const styles = StyleSheet.create({
     top: 809,
   },
   powerSystemsControl: {
-    top: "10%",
+    // top: "10%",
     width: "100%",
     height: "100%",
   },
+  detailsContainer2: {
+    left: "8%",
+    width: "78%",
+    top:"35%",
+    height:200,
+    // backgroundColor: 'rgba(128, 128, 128, 0.4)', // Transparent grey color
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
   powerTypo: {
-    left: "10%",
+    // left: "10%",
     color: Color.colorBlack,
+    // backgroundColor: 'rgba(128, 128, 128, 0.9)', // Transparent grey color
     fontFamily: FontFamily.interMedium,
-    fontWeight: "500",
-    fontSize: 60,
+    fontWeight: "400",
+    fontSize: 16,
     textAlign: "left",
     // position: "absolute",
   },
