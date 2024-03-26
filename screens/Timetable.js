@@ -99,7 +99,7 @@ const Timetable = ({ route }) => {
             page={1}
             scale={1.0}
             minScale={0.5}
-            maxScale={1.0}
+            maxScale={5.0}
             renderActivityIndicator={() => (
               <ActivityIndicator color="black" size="large" />
             )}
