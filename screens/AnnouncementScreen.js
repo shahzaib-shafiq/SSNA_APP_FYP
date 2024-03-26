@@ -19,11 +19,11 @@ const UpcomingEvents = ({ route }) => {
     const db = database();
     const dbRef = db.ref('/Announcements');
 
-    const formatDate = (dateString) => {
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
-      return formattedDate;
-    };
+    // const formatDate = (dateString) => {
+    //   const options = { year: "numeric", month: "long", day: "numeric" };
+    //   const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    //   return formattedDate;
+    // };
 
     dbRef.on('value', (snapshot) => {
       const data = snapshot.val();
@@ -34,8 +34,9 @@ const UpcomingEvents = ({ route }) => {
           description: data[id].description,
           Title: data[id].title,
           Announcement: data[id].Announcement,
-          AnnouncementDate: formatDate(data[id].AnnouncementDate),
-          // img: data[id].img,
+          // AnnouncementDate: formatDate(data[id].AnnouncementDate),
+          AnnouncementDate: data[id].AnnouncementDate,
+          Link: data[id].AnnouncementLink
 
         }));
 
@@ -91,7 +92,7 @@ const UpcomingEvents = ({ route }) => {
           <View
             style={[
               styles.appsLayout,
-              { top: 118 + index * 140 }
+              { top: 100 + index * 95 }
             ]}
           >
             <View style={[styles.upcomingEvents1, styles.upcomingPosition]}>
@@ -187,16 +188,16 @@ const styles = StyleSheet.create({
   },
 
   EventTitleStyle: {
-    marginTop: 6,
-    marginLeft: 32.5,
+    marginTop: 25,
+    marginLeft: -32.5,
     fontSize: FontSize.size_5xl,
     lineHeight: 25,
     textAlign: "left",
     color: Color.colorDimgray_100,
-    fontFamily: FontFamily.interSemiBold,
-    fontWeight: "600",
-    left: "49%",
-    // position: "absolute",
+    fontFamily: FontFamily.poppins,
+    fontWeight: "400",
+    left: "12%",
+    position: "absolute",
   },
 
   // upcomingPosition: {
@@ -247,13 +248,12 @@ const styles = StyleSheet.create({
   // },
   dateStyle: {
     marginTop: 0,
-    marginLeft: 48.5,
     fontFamily: FontFamily.interRegular,
     fontSize: FontSize.size_15xs,
     textAlign: "left",
     color: Color.colorDimgray_100,
-    left: "53%",
-    top: "52%",
+    left: "74%",
+    top: "150%",
     position: "absolute",
   },
   // calendar1Icon: {
@@ -263,11 +263,11 @@ const styles = StyleSheet.create({
   //   height: 19,
   //   position: "absolute",
   // },
-  upcomingEvents1: {
-    width: 380,
-    left: 0,
-    top: 0,
-  },
+  // upcomingEvents1: {
+  //   width: 380,
+  //   left: 0,
+  //   top: 0,
+  // },
   // bluebg: {
   //   backgroundColor: "black",
   // },
