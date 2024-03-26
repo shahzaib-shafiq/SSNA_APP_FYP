@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, Linking, Alert } from "react-native";
+import { Image, Linking, Alert, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, View, Text, Pressable } from "react-native";
@@ -10,13 +10,12 @@ const AnnouncementScreenDetail = ({ route }) => {
   const navigation = useNavigation(); //for stack navigation
   const { userDetail, events } = route.params; //for user session and data passed
 
-  const handleDescriptionClick = (uri) => {
-    Linking.openURL(uri)
-      .catch(err => {
-        Alert.alert('Error', 'Failed to open URL');
-        console.error('Failed to open URL', err);
-      });
-  };
+  // const openURL = () => {
+  //   Linking.openURL(events.AnnouncementLink)
+  //       .catch(() => {
+  //           Linking.openURL(events.AnnouncementLink);
+  //       })
+
 
   return (
     <View style={styles.upcomingeventdetails}>
@@ -36,11 +35,12 @@ const AnnouncementScreenDetail = ({ route }) => {
 
 
           {/* LINK */}
-          <Pressable onPress={() => handleDescriptionClick(events.AnnouncementLink)}> 
-            <Text style={styles.link}>
-              CLICK HERE TO OPEN LINK
-            </Text>
-          </Pressable>
+          <View style={styles.buttonContainer}>
+                <Button title="Open Url" onPress={() => {
+                    Linking.openURL(events.link)
+                }} color="steelblue" />
+
+            </View>
 
 
           <Text style={styles.eventdate}>
@@ -80,6 +80,12 @@ const AnnouncementScreenDetail = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+
+  container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  buttonContainer: {
+      margin: 100
+  },
+
   link: {
     fontSize: FontSize.size_lg,
     color: Color.colorDimgray_100,
