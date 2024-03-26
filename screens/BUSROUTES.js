@@ -93,7 +93,7 @@ const fetchAndProcessExcel = async (url) => {
     setRoutesInfo(routes);
 
   } catch (error) {
-    console.error('Error fetching or processing Excel file:', error);
+    // console.error('Error fetching or processing Excel file:', error);
   }
 };
 
