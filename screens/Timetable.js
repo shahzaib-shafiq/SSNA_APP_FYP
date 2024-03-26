@@ -99,7 +99,7 @@ const Timetable = ({ route }) => {
             page={1}
             scale={1.0}
             minScale={0.5}
-            maxScale={5.0}
+            maxScale={1.0}
             renderActivityIndicator={() => (
               <ActivityIndicator color="black" size="large" />
             )}
@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     alignItems: 'center',
-     marginTop: -200,
+     marginTop: -230,
     marginLeft: 50,
     zIndex: 1
   },
   pdfViewer: {
-     marginTop: -230,
+     marginTop: -250,
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
