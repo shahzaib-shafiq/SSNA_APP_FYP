@@ -36,26 +36,23 @@ const UpcomingEvents = ({ route }) => {
           // Announcement: data[id].Announcement,
           // AnnouncementDate: formatDate(data[id].AnnouncementDate),
           AnnouncementDate: data[id].AnnouncementDate,
-          AnnouncementLink: data[id].AnnouncementLink
+          link: data[id].AnnouncementLink
 
         }));
-
+        
         // Check if a new event is added
         if (eventsData.length > announcements.length) {
           const newEvent = eventsData[eventsData.length - 1];
 
           setAnnouncements(eventsData);
 
-          // Show a notification for the new event
-          // PushNotification.localNotification({
-          //   channelId: 'default-channel-id',
-          //   title: 'New Event',
-          //   message: newEvent.Title,
-          // });
         } else if (eventsData.length < announcements.length) {
           // Event removed, update the state without triggering a notification
           setAnnouncements(eventsData);
-        } else {
+        }
+        
+        else 
+        {
           // No new event added or removed, update the state
           setAnnouncements(eventsData);
         }
@@ -109,10 +106,10 @@ const UpcomingEvents = ({ route }) => {
                 {/* UGUGMU */}
               </Text>
 
-              {/* DETAIL OF ANNOUNCEMENT */}
+              {/* DETAIL OF ANNOUNCEMENT
               <Text style={styles.EventDetailStyle}>
                 {events?.Announcement}
-              </Text>
+              </Text> */}
 
               {/* DATE */}
               <Text style={styles.dateStyle}>
