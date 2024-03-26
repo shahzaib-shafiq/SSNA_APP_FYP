@@ -10,11 +10,14 @@ const AnnouncementScreenDetail = ({ route }) => {
   const navigation = useNavigation(); //for stack navigation
   const { userDetail, events } = route.params; //for user session and data passed
 
-  // const openURL = () => {
-  //   Linking.openURL(events.AnnouncementLink)
-  //       .catch(() => {
-  //           Linking.openURL(events.AnnouncementLink);
-  //       })
+  // const openURL = async (url) => {
+  //     const isSupported = await Linking.canOpenURL(url);
+  //     if (isSupported) {
+  //         await Linking.openURL(url);
+  //     } else {
+  //         Alert.alert(`Can't open this link`);
+  //     }
+  //   }
 
 
   return (
@@ -35,12 +38,12 @@ const AnnouncementScreenDetail = ({ route }) => {
 
 
           {/* LINK */}
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}>
                 <Button title="Open Url" onPress={() => {
-                    Linking.openURL(events.link)
+                    Linking.openURL("https://www.google.com")
                 }} color="steelblue" />
 
-            </View>
+            </View> */}
 
 
           <Text style={styles.eventdate}>
@@ -81,10 +84,10 @@ const AnnouncementScreenDetail = ({ route }) => {
 
 const styles = StyleSheet.create({
 
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  buttonContainer: {
-      margin: 100
-  },
+  // container: { flex: 1, justifyContent: "center", alignItems: "center" },
+  // buttonContainer: {
+  //     margin: 100
+  // },
 
   link: {
     fontSize: FontSize.size_lg,

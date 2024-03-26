@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   //   height: 82,
   // },
   dateStyle: {
-    marginTop: 0,
+    marginTop: 25,
     fontFamily: FontFamily.interRegular,
     fontSize: FontSize.size_15xs,
     textAlign: "left",
