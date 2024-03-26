@@ -71,7 +71,7 @@ const SideDrawer = ({route}) => {
                 <Pressable //ANNOUNCEMENTS
                     style={styles.announcements}
                     // onPress={() =>navigation.navigate("AnnouncementsScreenMain")
-                    onPress={() => navigation.navigate("BUSROUTES",{userDetail})
+                    onPress={() => navigation.navigate("AnnouncementScreen",{userDetail})
                     }
                 >
                     <Text style={[styles.busSchedule1, styles.home1Typo]}>

@@ -17,6 +17,9 @@ const allModules = [
 ];
 
 const MAINPAGE = ({ route }) => {
+
+  console.log('MP-Route:', route);
+
   const navigation = useNavigation();
   const { userDetail } = route.params;
 
@@ -40,11 +43,11 @@ const MAINPAGE = ({ route }) => {
       "Upcoming Events": "UpcomingEvents",
       "Bus Schedule": "BUSROUTES",
       "Timetable":"Timetable",
-      "Announcements":"Timetable",
       "Senior Guidance":"SeniorGuidanceScreenMain",
       "Faculty Information":"FacultyInfo",
       "Campus Map":"LOCATION",
       "Course Material":"CourseMaterial",
+      "Announcements":"AnnouncementScreen"
     };
 
     // Get the corresponding route from the mapping

@@ -16,7 +16,6 @@ import Timetable from './screens/Timetable';
 import SeniorGuidanceScreenMain from './screens/SeniorGuidanceScreenMain';
 import UpcomingEventDetails from './screens/UpcomingEventsDetails';
 import { GoogleSignin } from '@react-native-community/google-signin';
-// import PushNotification from 'react-native-push-notification';
 import Toast from 'react-native-toast-message';
 
 //for drawer
@@ -29,6 +28,8 @@ import CourseMaterial from './screens/CourseMaterial';
 import SeniorGuidanceScreenViewD from './screens/SeniorGuidanceScreenViewD';
 import SeniorGuidanceScreenAnswe1 from './screens/SeniorGuidanceScreenAnswe1';
 import SeniorGuidanceAnswerQuery from './screens/SeniorGuidanceAnswerQuery';
+import AnnouncementScreen from './screens/AnnouncementScreen';
+import AnnouncementScreenDetail from './screens/AnnouncementScreenDetail';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +62,9 @@ const App: React.FC = () => {
           <Stack.Screen name="BUSROUTES" component={BUSROUTES} />
           
           <Stack.Screen name="Timetable" component={Timetable} />    
+
+          <Stack.Screen name="AnnouncementScreen" component={AnnouncementScreen} />
+          <Stack.Screen name="AnnouncementScreenDetail" component={AnnouncementScreenDetail} />
 
           <Stack.Screen name="SeniorGuidanceScreenMain" component={SeniorGuidanceScreenMain} />
           <Stack.Screen name="SeniorGuidanceScreenViewD" component={SeniorGuidanceScreenViewD} />

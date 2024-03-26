@@ -5,12 +5,20 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
 
-const FormContainer = ({ route, userDetail  }) => {
+const FormContainer = ({ route, userDetail, query }) => {
   
   const navigation = useNavigation();
 
   console.log('FC-User Detail:', userDetail); // Make sure this prints the correct user details
   console.log('FC-Route:', route);
+  console.log('FC-query:', query);
+
+  // Function to handle deletion of query
+  const handleDeleteQuery = () => {
+    // Perform deletion of query from the database
+    // Navigate back to SeniorGuidanceScreenMain
+    navigation.navigate("SeniorGuidanceScreenMain");
+  };
 
   return (
     <View style={styles.upper}>
@@ -34,9 +42,16 @@ const FormContainer = ({ route, userDetail  }) => {
         Query
       </Text>
 
-
+      {/* Conditional rendering for delete button */}
+      {query.AuthorId === userDetail.id && (
+        <Pressable
+          style={styles.plusButtonGB}
+          onPress={handleDeleteQuery}
+        >
+          <Text style={styles.plusSign}>-</Text>
+        </Pressable>
+      )}
     </View>
-
   );
 };
 
@@ -102,8 +117,10 @@ const styles = StyleSheet.create({
   plusSign: {
     height: "500%",
     width: "50%",
-    top: "-40%",
-    left: "25%",
+    top: "-42%",
+    color: Color.colorWhite,
+    fontFamily: FontFamily.inter,
+    left: "35%",
     fontSize: FontSize.size_21xl,
   },
   upper: {
@@ -114,4 +131,5 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 });
+
 export default FormContainer;

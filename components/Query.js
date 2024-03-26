@@ -133,6 +133,7 @@ const Query = ({ route, userDetail }) => {
           Title: data[id].Title,
           Department: data[id].Department,
           Author: data[id].Author,
+          AuthorId:data[id].AuthorId,
           Downvotes: data[id].Downvotes,
           Upvotes: data[id].Upvotes,
           Summary: data[id].Summary,

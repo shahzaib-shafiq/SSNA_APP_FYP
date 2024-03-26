@@ -40,6 +40,7 @@ const LOGINPAGE = ({ route }) => {
           familyName: userInfo.user.familyName,
           email: userInfo.user.email,
           photo: userInfo.user.photo,
+          AuthorId:userInfo.user.id,
         };
   
         // Navigate to MAINPAGE with userDetail as a parameter
