@@ -1,96 +1,113 @@
-import React, { useMemo } from "react";
-import { StyleSheet, View, Text, ImageSourcePropType } from "react-native";
-import { Image } from "expo-image";
+import { Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import { StyleSheet, View, Text, ImageSourcePropType } from "react-native";
+import database from '@react-native-firebase/database'; //for firebase connection
 
-const getStyleValue = (key, value) => {
-  if (value === undefined) return;
-  return { [key]: value === "unset" ? undefined : value };
-};
-const ContainerAnswerForm = ({
-  productCode,
-  propTop,
-  propLeft,
-  propWidth,
-  propLeft1,
-  propLeft2,
-}) => {
-  const answerStyle = useMemo(() => {
-    return {
-      ...getStyleValue("top", propTop),
-    };
-  }, [propTop]);
 
-  const rectangleViewStyle = useMemo(() => {
-    return {
-      ...getStyleValue("left", propLeft),
-      ...getStyleValue("width", propWidth),
-    };
-  }, [propLeft, propWidth]);
+const ContainerAnswerForm = ({ route, userDetail }) => {
 
-  const bxsupArrowIconStyle = useMemo(() => {
-    return {
-      ...getStyleValue("left", propLeft1),
-    };
-  }, [propLeft1]);
+  const navigation = useNavigation();
 
-  const bxsupArrowIcon1Style = useMemo(() => {
-    return {
-      ...getStyleValue("left", propLeft2),
-    };
-  }, [propLeft2]);
+  const { query, udTemp, rTemp } = route.params;
+
+  console.log('CAF-User Detail:', userDetail); // Make sure this prints the correct user details
+  console.log('CAF-Route:', route);
+  console.log('CAF-Query:', query);
+
+  const [answers, setAnswers] = useState([]);
+
+  // Function to fetch answers from Firebase
+  const fetchAnswers = () => {
+    const dbRef = database().ref(`/Guidance/${query.id}/Answers`);
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // Convert object to array of answers
+        const answersArray = Object.values(data);
+        setAnswers(answersArray);
+      } else {
+        setAnswers([]); // Reset answers if there are none
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchAnswers();
+    // Unsubscribe from Firebase on component unmount
+  }, [query.id]);
 
   return (
-    <View style={[styles.answer, styles.answerLayout1, answerStyle]}>
-      <View style={[styles.answerChild, styles.answerLayout1]} />
-      <Text style={[styles.dayAgo, styles.dayAgoTypo]}>1 day ago</Text>
-      <Text style={[styles.byAnasNaveed1, styles.dayAgoTypo]}>
-        By Anas Naveed
-      </Text>
-      <Text
-        style={styles.iThinkI1}
-      >{`I think I might know whats the problem. I also faced this same problem in my time. 
-
-You need to go to
-settings >> preferences >> modules >> enable extras
-
-This somehow fixed the issue on my pc, I hope it does on yours.`}</Text>
-      <Text style={styles.enableExtras}>Enable extras</Text>
-      <View
-        style={[styles.answerItem, styles.answerLayout, rectangleViewStyle]}
-      />
-      <View style={[styles.answerInner, styles.answerLayout]} />
-      <Image
-        style={[
-          styles.bxsupArrowIcon2,
-          styles.bxsupIconLayout,
-          bxsupArrowIconStyle,
-        ]}
-        contentFit="cover"
-        source={productCode}
-      />
-      <Image
-        style={[
-          styles.bxsupArrowIcon3,
-          styles.bxsupIconLayout,
-          bxsupArrowIcon1Style,
-        ]}
-        contentFit="cover"
-        source={require("../assets/bxsuparrow1.png")}
-      />
-      <Text style={[styles.text2, styles.textTypo]}>34</Text>
-      <Text style={[styles.text3, styles.textTypo]}>12</Text>
-    </View>
+    <View style={styles.answer}>
+    {answers.map((answer, index) => (
+      <View style={styles.answerChild} key={index}>
+        <Text style={styles.answerTxtStyle}>
+          {answer.Answer}
+        </Text>
+  
+        <View style={styles.metaInfo}>
+          <Text style={styles.dateTxtStyle}>
+            {answer.Date}
+          </Text>
+  
+          <Text style={styles.authorTxtStyle}>
+            By {answer.Author}
+          </Text>
+        </View>
+      </View>
+    ))}
+  
+  </View>
+  
   );
 };
 
 const styles = StyleSheet.create({
   answerLayout1: {
-    height: 171,
+    height: "30%",
     width: 363,
-    position: "absolute",
+    // position: "absolute",
   },
-  dayAgoTypo: {
+  answer: {
+    top: "12%",
+    left: "0%",
+  },
+  answerChild: {
+    width: "97%", // Adjust width as necessary
+    borderRadius: Border.br_base,
+    backgroundColor: Color.colorGainsboro_400,
+    padding: 10, // Add padding to create space inside the box
+    marginBottom: 10, // Add margin bottom to separate between entries
+  },
+  answerTxtStyle: {
+    top:"10%",
+    color: Color.colorDimgray_100,
+    fontFamily: FontFamily.inter,
+    fontSize: 15,
+    // Remove fixed width and height to allow dynamic size
+  },
+  metaInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // marginTop: 10, // Add margin top to create space between answer and meta info
+  },
+  dateTxtStyle: {
+    top:"20%",
+
+    fontWeight: "500",
+    color: Color.colorDimgray_100,
+    fontFamily: FontFamily.inter,
+    fontSize: FontSize.size_3xs,
+  },
+  authorTxtStyle: {
+    fontWeight: "700",
+    color: Color.colorDimgray_100,
+    fontFamily: FontFamily.inter,
+    fontSize: 10,
+    width: 363,
+  },
+  txtStyle: {
     height: 11,
     fontWeight: "500",
     textAlign: "left",
@@ -130,35 +147,15 @@ const styles = StyleSheet.create({
     top: "50%",
     position: "absolute",
   },
-  answerChild: {
-    top: 0,
-    left: 0,
-    borderRadius: Border.br_base,
-    backgroundColor: Color.colorGainsboro_400,
-  },
   dayAgo: {
     marginTop: -65.5,
     marginLeft: 109.5,
     width: 53,
   },
-  byAnasNaveed1: {
+  authorTxtStyle: {
     marginTop: 61.5,
     marginLeft: -144.5,
     width: 91,
-  },
-  iThinkI1: {
-    marginTop: -37.5,
-    marginLeft: -166.5,
-    width: 329,
-    height: 79,
-    textAlign: "left",
-    color: Color.colorDimgray_100,
-    fontFamily: FontFamily.inter,
-    lineHeight: 10,
-    fontSize: FontSize.size_3xs,
-    left: "50%",
-    top: "50%",
-    position: "absolute",
   },
   enableExtras: {
     top: 16,
@@ -189,10 +186,6 @@ const styles = StyleSheet.create({
   },
   text3: {
     marginLeft: 54.5,
-  },
-  answer: {
-    top: 788,
-    left: 37,
   },
 });
 

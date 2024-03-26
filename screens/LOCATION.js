@@ -1,148 +1,439 @@
-import * as React from "react";
-// import { Image } from "expo-image";
-import { StyleSheet, View, Text, Pressable, Image, TextInput } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Image } from "react-native";
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { useNavigation } from "@react-navigation/native";
-import TimetableContainer from "../components/TimetableContainer";
-import { Color } from "../GlobalStyles";
-import { Border, FontSize, FontFamily, Padding } from "../GlobalStyles";
-
-const LOCATION = ({route}) => {
-  const navigation = useNavigation();
-  const { userDetail } = route.params;  //user session
-
-  return (
-    <View style={styles.location}>
-      <TimetableContainer
-        locationCoordinates={require("../assets/menus-1.png")}
-        busRoutesImageUrl="LOCATION"
-        propMarginLeft={-115.5}
-        propTop={185}
-        onMenus1Press={() => navigation.navigate("DrawerMenu")}
-      />
-      <Image
-        style={styles.image1Icon}
-        contentFit="cover"
-        source={require("../assets/maps.png")}
-      />
-
-      {/* SEARCH BAR */}
-      <View style={styles.searchbar}>
-      <TextInput
-          style={styles.searchbarInput}
-          placeholder="Search any place"
-          onChangeText={(text) => setSearchTerm(text)}
-        />
-        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
-        <Image
-          style={styles.search1Icon1}
-          contentFit="cover"
-          source={require("../assets/search-12.png")}
-        />
-      </View>
-
-      {/* BACK BUTTON */}
-      <View style={[styles.screenmain, styles.back_button]} />
-
-      <Pressable
-      style={styles.menus1}
-      onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
-      >
-      <Image
-        style={styles.back_button}
-        contentFit="cover"
-        source={require("../assets/epback.png")}
-      />
-      </Pressable>
-          </View>
-  );
-};
+import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
+import LinearGradient from 'react-native-linear-gradient';
+import { View, Text,Pressable } from "react-native";
 
 const styles = StyleSheet.create({
-  searchbarLayout: {
-    borderRadius: Border.br_3xs,
-    height: 48,
-    top: 0,
-    position: "absolute",
-  },
-  search1Icon1: {
-    top: 13,
-    left: 307,
-    width: 22,
-    height: 22,
-    position: "absolute",
-  },
-  searchbarInput: {
-    height: 40,
-    borderColor: 'rgba(128, 128, 128, 0.0)',
-    fontSize: 16,
-    borderWidth: 1,
-    backgroundColor: "white",
-    paddingHorizontal: "10%",
-    borderRadius: Border.br_3xs,
-    flex: 1,
-    elevation: 2, // Add elevation for Android shadow
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-  },
-
-  image1Icon: {
-    position: "absolute",
-    top: 180,
-    // margin:10,
-    right: 1,
-    alignContent: "center",
-    // width: 388,
-    // height: 396,
-  },
-  location: {
-    backgroundColor: Color.colorWhite,
-    flex: 1,
-    width: "100%",
-    height: 932,
-    overflow: "hidden",
-  },
-
-  back_button: {
-    left:"3%",
-    top:"60%",
-    // height: "90%",
-    // width: "90%",
-  },
-
-  searchbarItem: {
-    left: 293,
-    backgroundColor: Color.colorSteelblue,
-    borderStyle: "solid",
-    borderColor: "rgba(255, 255, 255, 0.15)",
-    borderWidth: 1,
-    width: 50,
-  },
-
-
-  search1Icon1: {
-    top: 13,
-    left: 307,
-    width: 22,
-    height: 22,
-    position: "absolute",
-  },
- searchbar: {
-  top: 101,
-  left: 40,
-  height: 48,
-  width: 343,
-  position: "absolute",
-  // Android
-  elevation: 5,
-  // iOS
-  shadowColor: "rgba(0, 0, 0, 0.3)",
-  shadowOffset: {
-    width: 0,
-    height: 2,
-  },
-  shadowOpacity: 0.5,
-  shadowRadius: 4,
-},
+    zoomButton: {
+        position: "absolute",
+        backgroundColor: "rgba(1,1,2,0.5)",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 30,
+        height: 50,
+        width: 50,
+    },
+    zoomIn: {
+        left: "85%", // Adjust as necessary
+        top: "40%", // Adjust as necessary
+    },
+    zoomOut: {
+        left: "85%", // Adjust as necessary
+        top: "48%", // Adjust as necessary
+    },
+    upper: {
+        top: -193,
+        left: -1,
+        width: 431,
+        backgroundColor: Color.colorBlack,
+        height: 260,
+        position: "absolute",
+      },
+      bluebg: {
+        backgroundColor: "grey",
+      },
+      bluebgPosition: {
+        left: "0%",
+        bottom: "0%",
+        right: "0%",    top: "0%",
+        height: "100%",
+        position: "absolute",
+        width: "100%",
+      },
+      icon: {
+        top:9,
+        left:3,
+        maxWidth: "100%",
+        maxHeight: "100%",
+        overflow: "hidden",
+        height: 30,
+        width: 30,
+      },
+      textTypo: {
+        color: Color.colorWhite,
+        textAlign: "left",
+        fontFamily: FontFamily.interSemiBold,
+        fontWeight: "600",
+      },
+      guidancePortal: {
+        height: "100%",
+        width: "57%",
+        top: "81.6%",
+        left: "20%",
+        fontSize: FontSize.size_5xl,
+        position: "absolute",
+      },
+      menus1: {
+        left: "5.59%",
+        top: "78.8%",
+        right: "84.01%",
+        bottom: "7.08%",
+        width: "10.39%",
+        height: "14.12%",
+        position: "absolute",
+      },
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    zoomButtonText: {
+        color: 'white', // This will make the text color white
+        fontFamily: FontFamily.interSemiBold,
+        fontSize: FontSize.size_5xl,
+        fontWeight: "400",
+    },
 });
 
-export default LOCATION;
+export default function LOCATION({route}) {
+
+    const { userDetail } = route.params;
+    console.log('Map-User Detail:', userDetail); // Make sure this prints the correct user details
+    const navigation = useNavigation();
+
+    // Initial region for map
+    const initialRegion = {
+        latitude: 31.600791501404007,
+        longitude: 73.03674226553963,
+        latitudeDelta: 0.008,
+        longitudeDelta: 0.008,
+    };
+
+    const [region, setRegion] = useState(initialRegion);
+
+    const zoomIn = () => {
+        setRegion(prevRegion => ({
+            ...prevRegion,
+            latitudeDelta: prevRegion.latitudeDelta / 2,
+            longitudeDelta: prevRegion.longitudeDelta / 2,
+        }));
+    };
+
+    const zoomOut = () => {
+        setRegion(prevRegion => ({
+            ...prevRegion,
+            latitudeDelta: prevRegion.latitudeDelta * 2,
+            longitudeDelta: prevRegion.longitudeDelta * 2,
+        }));
+    };
+    
+    const [markersList, setmarkerList] = useState([
+        {
+
+
+
+
+
+            id: 1,
+            latitude: 31.600791501404007,
+            longitude: 73.03674226553963,
+            title: 'SFC',
+            description: 'Student Facilation Center',
+        },
+        {
+
+            id: 2,
+            latitude: 31.603291983218153,
+            longitude: 73.03586947447167,
+            title: 'Football Ground',
+            description: 'Playing Area',
+        },
+        {
+
+
+
+
+
+
+            id: 3,
+            latitude: 31.601677813823322,
+            longitude: 73.03560234216219,
+            title: 'FSM',
+            description: 'cafe\nauditorium\nlibrary',
+        },
+
+        {
+
+
+            id: 4,
+            latitude: 31.601881193684026,
+            longitude: 73.03624056637959,
+            title: 'Cricket Ground',
+            description: 'Fitness Center',
+        },
+
+        {
+
+
+            id: 5,
+            latitude: 31.601058143059394,
+            longitude: 73.03655150650509,
+            title: 'basketball Court',
+            description: 'Badminton',
+        },
+        {
+
+
+
+
+            id: 6,
+            latitude: 31.601604325090502,
+            longitude: 73.03703725515523,
+            title: 'Futsall Ground',
+            description: '',
+        },
+        {
+
+
+
+
+            id: 7,
+            latitude: 31.601954873191197,
+            longitude: 73.0348776944143,
+            title: 'Parking',
+            description: 'Car parking',
+        },
+
+
+
+
+    ])
+
+    return (
+        <View style={styles.container}>
+            <MapView
+                style={styles.map}
+                provider={MapView.PROVIDER_GOOGLE}
+                region={region}
+                onRegionChangeComplete={region => setRegion(region)}
+            >
+                {
+                    markersList.map((maker) => {
+                        return (
+                            <Marker
+                                key={maker.id}
+                                coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
+                                title={maker.title}
+                                description={maker.description}
+                            />
+
+                        )
+                    })
+                }
+            </MapView>
+
+            <Pressable style={[styles.zoomButton, styles.zoomIn]} onPress={zoomIn}>
+                <Text style={styles.zoomButtonText}>+</Text>
+            </Pressable>
+            <Pressable style={[styles.zoomButton, styles.zoomOut]} onPress={zoomOut}>
+            <Text style={styles.zoomButtonText}>-</Text>
+            </Pressable>
+
+    {/* HEADER */}
+      <View style={styles.upper}>
+        <LinearGradient
+          colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
+          style={[styles.bluebg, styles.bluebgPosition]}
+        />
+        {<Pressable
+          style={styles.menus1}
+          
+          onPress={() => 
+            {console.log('Pressable pressed');
+            navigation.navigate("MAINPAGE",{userDetail})}}
+        >
+          <Image
+            style={styles.icon}
+            contentFit="cover" 
+            source={require("../assets/epback.png")}
+          />
+          
+        </Pressable> 
+        }
+        <Text style={[styles.guidancePortal, styles.textTypo]}>Campus Map</Text>
+        
+      </View>
+      
+        </View>
+    );
+}
+
+
+
+
+////////////////////////////////////////
+
+
+
+
+// import React, { useState } from "react";
+// import { View, StyleSheet, Image, Text } from "react-native";
+// import MapView, { PROVIDER_GOOGLE, Marker,Callout } from 'react-native-maps';
+
+// const styles = StyleSheet.create({
+//     container: {
+//         ...StyleSheet.absoluteFillObject,
+//         flex: 1,
+//         justifyContent: 'flex-end',
+//         alignItems: 'center',
+//     },
+//     map: {
+//         ...StyleSheet.absoluteFillObject,
+//     },
+// });
+
+// export default function LOCATION() {
+
+//     const [markersList, setmarkerList] = useState([
+//         {
+
+//             id: 1,
+//             latitude: 31.600791501404007,
+//             longitude: 73.03674226553963,
+//             title: 'SFC',
+//             description: 'Student Facilation Center',
+//         },
+//         {
+
+//             id: 2,
+//             latitude: 31.603291983218153,
+//             longitude: 73.03586947447167,
+//             title: 'Football Ground',
+//             description: 'Playing Area',
+//         },
+//         {
+
+
+
+
+
+
+//             id: 3,
+//             latitude: 31.601677813823322,
+//             longitude: 73.03560234216219,
+//             title: 'FSM',
+//             description: 'cafe\nauditorium\nlibrary',
+//         },
+
+//         {
+
+
+//             id: 4,
+//             latitude: 31.601881193684026,
+//             longitude: 73.03624056637959,
+//             title: 'Cricket Ground',
+//             description: 'Fitness Center',
+//         },
+
+//         {
+
+
+//             id: 5,
+//             latitude: 31.601058143059394,
+//             longitude: 73.03655150650509,
+//             title: 'basketball Court',
+//             description: 'Badminton',
+//         },
+//         {
+
+
+
+
+//             id: 6,
+//             latitude: 31.601604325090502,
+//             longitude: 73.03703725515523,
+//             title: 'Futsall Ground',
+//             description: '',
+//         },
+//         {
+
+
+
+
+//             id: 7,
+//             latitude: 31.601954873191197,
+//             longitude: 73.0348776944143,
+//             title: 'Parking',
+//             description: 'Car parking',
+//         },
+
+
+
+
+//     ])
+
+//     const MyCustomMarkerView=()=>{
+//         return (
+//             <Image source={require('../assets/marker.png')}
+            
+//             style={{
+
+//                 width:30,
+//                 height:30,
+//             }}
+//             />
+//         )
+//     }
+
+
+//     // const MyCustomCalloutView=()=>{
+//     //     return(<View>
+//     //         <Text>CFD</Text>
+//     //     </View>)
+//     // } 
+//     const MyCustomCalloutView = () => {
+//         return (
+//             <View style={{ width: 300, height: 100 }}>
+//                 <Text>CFD</Text>
+//             </View>
+//         );
+//     };
+    
+//     return (
+//         <View style={styles.container}>
+//             <MapView
+//                 provider={PROVIDER_GOOGLE}
+//                 style={styles.map}
+//                 region={{
+//                     latitude: 31.601125557441485,
+//                     longitude: 73.03560170317493,
+//                     latitudeDelta: 0.01,
+//                     longitudeDelta: 0.001,
+//                 }}
+//             >
+//                 <Marker
+//                  coordinate={{ latitude:31.601125557441485,
+//                   longitude: 73.03560170317493}}
+//                   >
+
+
+//                     <MyCustomMarkerView />
+                 
+//   <Callout>
+//     <MyCustomCalloutView style={{width:300,height:100}} />
+//   </Callout>
+//                 </Marker>;
+//                 {
+//                     markersList.map((maker) => {
+//                         return (
+//                             <Marker
+//                                 key={maker.id}
+//                                 coordinate={{ latitude: maker.latitude, longitude: maker.longitude }}
+//                                 title={maker.title}
+//                                 description={maker.description}
+//                             />
+
+//                         )
+//                     })
+//                 }
+//             </MapView>
+//         </View>
+//     );
+// }

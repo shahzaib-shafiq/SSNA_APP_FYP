@@ -10,6 +10,8 @@ const FacultyInfoDetails = ({ route }) => {
   const navigation = useNavigation(); //stack navigation
   const { userDetail, faculty } = route.params; //user session
 
+  console.log('FI-faculty:', faculty);
+
 //a function to get the full form of the department
   const getFullForm = (abbreviation) => {
     switch (abbreviation) {
@@ -205,15 +207,6 @@ const styles = StyleSheet.create({
     left: "50%",
     position: "absolute",
   },
-  powerTypo: {
-    left: 1,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.interMedium,
-    fontWeight: "300",
-    fontSize: FontSize.size_lg,
-    textAlign: "left",
-    position: "absolute",
-  },
   screenmain: {
     top: "0%",
     right: "0%",
@@ -273,17 +266,6 @@ const styles = StyleSheet.create({
   detailsContainer: {
     left: 100,
     width: 280,
-    backgroundColor: 'rgba(128, 128, 128, 0.0)', // Transparent grey color
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 10,
-    textAlign: 'left',
-  },
-  detailsContainer2: {
-    left: 48,
-    width: 320,
-    top:292,
-    height:200,
     backgroundColor: 'rgba(128, 128, 128, 0.0)', // Transparent grey color
     borderRadius: 8,
     padding: 10,
@@ -402,9 +384,30 @@ const styles = StyleSheet.create({
     top: 809,
   },
   powerSystemsControl: {
-    top: 1,
-    width: 216,
-    height: 74,
+    // top: "10%",
+    width: "100%",
+    height: "100%",
+  },
+  detailsContainer2: {
+    left: "8%",
+    width: "78%",
+    top:"35%",
+    height:200,
+    // backgroundColor: 'rgba(128, 128, 128, 0.4)', // Transparent grey color
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+  powerTypo: {
+    // left: "10%",
+    color: Color.colorBlack,
+    // backgroundColor: 'rgba(128, 128, 128, 0.9)', // Transparent grey color
+    fontFamily: FontFamily.interMedium,
+    fontWeight: "400",
+    fontSize: 16,
+    textAlign: "left",
+    // position: "absolute",
   },
   research: {
     marginLeft: -43,

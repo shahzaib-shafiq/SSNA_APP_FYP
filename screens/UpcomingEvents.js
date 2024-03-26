@@ -17,7 +17,7 @@ const UpcomingEvents = ({ route }) => {
 
   const getData = () => {
     const db = database();
-    const dbRef = db.ref('/Announcements');
+    const dbRef = db.ref('/Events');
 
     const formatDate = (dateString) => {
       const options = { year: "numeric", month: "long", day: "numeric" };
@@ -32,9 +32,9 @@ const UpcomingEvents = ({ route }) => {
         const eventsData = Object.keys(data).map((id) => ({
           id,
           description: data[id].description,
-          Title: data[id].Title,
+          Title: data[id].title,
           Announcement: data[id].Announcement,
-          AnnouncementDate: formatDate(data[id].AnnouncementDate),
+          AnnouncementDate: formatDate(data[id].EventDate),
           img: data[id].img,
 
         }));

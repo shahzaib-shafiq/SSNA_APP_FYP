@@ -59,7 +59,7 @@ const SideDrawer = ({route}) => {
 
                 <Pressable //BUS SCHEDULE
                     style={styles.busSchedule}
-                    onPress={() => navigation.navigate("BUSROUTES")}
+                    onPress={() => navigation.navigate("BUSROUTES",{userDetail})}
                 >
                     <Text style={[styles.busSchedule1, styles.home1Typo]}>
                     Bus Schedule
@@ -71,8 +71,8 @@ const SideDrawer = ({route}) => {
                 <Pressable //ANNOUNCEMENTS
                     style={styles.announcements}
                     // onPress={() =>navigation.navigate("AnnouncementsScreenMain")
+
                     onPress={() => navigation.navigate("AnnouncementScreen",{userDetail})}
-                    
                 >
                     <Text style={[styles.busSchedule1, styles.home1Typo]}>
                     Announcements
@@ -83,7 +83,7 @@ const SideDrawer = ({route}) => {
 
                 <Pressable    //SENIOR GUIDANCE
                     style={styles.seniorGuidance}
-                    onPress={() => navigation.navigate("SeniorGuidanceScreenMain")}
+                    onPress={() => navigation.navigate("SeniorGuidanceScreenMain",{userDetail})}
                 >
                     <Text style={[styles.seniorGuidance1, styles.home1Typo]}>
                     Senior Guidance
@@ -108,7 +108,7 @@ const SideDrawer = ({route}) => {
 
                 <Pressable  //CAMPUS MAP
                     style={styles.map}
-                    onPress={() => navigation.navigate("LOCATION")}
+                    onPress={() => navigation.navigate("LOCATION", { userDetail })}
                 >
                     <Text style={[styles.seniorGuidance1, styles.home1Typo]}>
                     Campus Map
