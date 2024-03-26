@@ -65,8 +65,6 @@ const App: React.FC = () => {
           
           <Stack.Screen name="Timetable" component={Timetable} />    
 
-          <Stack.Screen name="AnnouncementScreen" component={AnnouncementScreen} />
-          <Stack.Screen name="AnnouncementScreenDetail" component={AnnouncementScreenDetail} />
 
           <Stack.Screen name="SeniorGuidanceScreenMain" component={SeniorGuidanceScreenMain} />
 
