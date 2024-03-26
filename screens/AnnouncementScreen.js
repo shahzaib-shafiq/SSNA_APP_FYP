@@ -33,10 +33,10 @@ const UpcomingEvents = ({ route }) => {
           id,
           description: data[id].description,
           Title: data[id].title,
-          Announcement: data[id].Announcement,
+          // Announcement: data[id].Announcement,
           // AnnouncementDate: formatDate(data[id].AnnouncementDate),
           AnnouncementDate: data[id].AnnouncementDate,
-          Link: data[id].AnnouncementLink
+          AnnouncementLink: data[id].AnnouncementLink
 
         }));
 
@@ -263,11 +263,11 @@ const styles = StyleSheet.create({
   //   height: 19,
   //   position: "absolute",
   // },
-  // upcomingEvents1: {
-  //   width: 380,
-  //   left: 0,
-  //   top: 0,
-  // },
+  upcomingEvents1: {
+    width: 380,
+    left: 0,
+    top: 0,
+  },
   // bluebg: {
   //   backgroundColor: "black",
   // },
