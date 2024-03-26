@@ -1,20 +1,18 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import Component2 from "../components/Component2";
-import ErrorMessage from "../components/ErrorMessage";
+import answerQueryPopup from "../components/AnswerQueryPopup";
 import { useNavigation } from "@react-navigation/native";
 import { Color } from "../GlobalStyles";
 
-const SeniorGuidanceScreenAnswe1 = ({ route }) => {
+const SeniorGuidanceAnswerQuery = ({ route }) => {
 
   const { userDetail, query } = route.params; //user session
   const navigation = useNavigation(); //for stack navigation
 
   return (
     <View style={styles.seniorGuidanceScreenAnswe1}>
-      {/* <Component2 /> */}
       <View style={styles.blurbg} />
-      <ErrorMessage />
+      <answerQueryPopup />  
     </View>
   );
 };
@@ -38,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SeniorGuidanceScreenAnswe1;
+export default SeniorGuidanceAnswerQuery;

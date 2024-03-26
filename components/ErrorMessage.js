@@ -1,54 +1,154 @@
-import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import { Image } from "expo-image";
+import React, { useState } from "react";
+import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, Border, Color, FontSize } from "../GlobalStyles";
+import Toast from 'react-native-toast-message';
+import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
+import database from '@react-native-firebase/database'; // Import Firebase database
 
-const ErrorMessage = () => {
+const ErrorMessage = ({ onClose, userDetail }) => {
+
   const navigation = useNavigation();
+  const [title, setTitle] = useState("");
+  const [department, setDepartment] = useState("CS");
+  const [question, setQuestion] = useState("");
+
+  console.log('EM-User Detail:', userDetail); // Make sure this prints the correct user details
+  // console.log('EM-Route:', route);
+
+  const formatDate = (date) => {
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(date);
+  };
+
+
+  const handleNewQuery = () => {
+    // Query the Firebase database to count the number of queries posted by the current user
+    database().ref('/Guidance')
+      .orderByChild('Author')
+      .equalTo(userDetail?.familyName)
+      .once('value')
+      .then(snapshot => {
+        const userQueries = snapshot.exists() ? Object.values(snapshot.val()) : [];
+        if (userQueries.length < 2) {
+          // User has posted fewer than 2 queries, allow them to post a new one
+          const newQuery = {
+            Title: title,
+            Department: department,
+            Author: userDetail?.familyName,
+            Downvotes: 0,
+            Upvotes: 0,
+            Summary: question,
+            AuthorId: userDetail?.id,
+            Date: formatDate(new Date()),
+            img: 'https://firebasestorage.googleapis.com/v0/b/ssna-admin.appspot.com/o/FacultyImgs%2F17bd54e3-3347-46bc-8123-2bfb8ed1e58e?alt=media&token=f1c0a37a-56f4-4e4e-bdcf-66dfc197317d'
+          };
+  
+          // Push the new query to the Firebase database
+          database().ref('/Guidance').push(newQuery)
+            .then(() => {
+              console.log('New query added successfully!');
+              Toast.show({
+                type: 'info',
+                text1: 'Query Added Successfully',
+                text2: 'Your query has been posted in the portal.'
+              });
+              onClose();
+            })
+            .catch(error => {
+              console.error('Error adding new query: ', error);
+            });
+        } else {
+          // User has already posted 2 queries, prevent them from posting another one
+          console.log('User has already posted 2 queries');
+          Toast.show({
+            type: 'info',
+            text1: 'Limit Exceeded',
+            text2: 'You cannot post more than 2 queries at at time'
+          });
+          onClose();
+        }
+      })
+      .catch(error => {
+        console.error('Error checking existing queries: ', error);
+      });
+  };
+  
 
   return (
-    <View style={styles.errormessage}>
-      <View style={[styles.errormessageChild, styles.errormessageShadowBox]} />
-      <Text style={[styles.answerToAnas1, styles.publicTypo]}>
-        Answer to Anas
-      </Text>
-      <Text style={[styles.public, styles.publicTypo]}>Public</Text>
-      <Pressable
-        style={[styles.errormessageItem, styles.errormessageShadowBox]}
-        onPress={() =>
-          navigation.navigate("SeniorGuidanceScreenAnswerRejected")
-        }
-      />
-      <Text style={styles.postAnswer}>Post Answer</Text>
-      <Image
-        style={[styles.fontistoworldOIcon1, styles.errormessageInnerPosition]}
-        contentFit="cover"
-        source={require("../assets/fontistoworldo.png")}
-      />
-      <View
-        style={[styles.errormessageInner, styles.errormessageInnerPosition]}
-      />
+    <View style={styles.popupMainViewStyle}>
+      <View style={[styles.errormessageChild, styles.errormessageShadowBox]}>
+
+        <Picker
+          selectedValue={department}
+          style={styles.picker}
+          onValueChange={(itemValue, itemIndex) => setDepartment(itemValue)}
+        >
+          <Picker.Item label="Computer Science (CS)" value="CS" />
+          <Picker.Item label="Electrical Engineering (EE)" value="EE" />
+          <Picker.Item label="Artificial Intelligence (AI)" value="AI" />
+          <Picker.Item label="Software Engineering (SE)" value="SE" />
+        </Picker>
+
+        <TextInput
+          style={styles.input}
+          onChangeText={setTitle}
+          value={title}
+          placeholder="Enter Title"
+          maxLength={20}
+        />
+
+        <TextInput
+          style={[styles.input, styles.questionInput]}
+          onChangeText={setQuestion}
+          value={question}
+          placeholder="Enter Question"
+          multiline={true}
+          maxLength={200}
+        />
+        <Pressable
+          style={[styles.errormessageItem, styles.errormessageShadowBox]}
+          onPress={handleNewQuery}
+        >
+          <Text style={styles.postAnswer}>Post Question</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: 'white',
+    borderColor: 'rgba(128, 128, 128, 0.3)', // Adjust the alpha value
+  },
+  picker: {
+    height: 50,
+    width: '80%',
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginVertical: 10,
+  },
+  questionInput: {
+    height: "60%", // Adjust based on your preference
+    textAlignVertical: 'top', // Aligns text to the top
+  },
   errormessageShadowBox: {
     shadowOpacity: 1,
     shadowOffset: {
       width: -1,
       height: 6,
     },
-    position: "absolute",
-  },
-  publicTypo: {
-    textAlign: "left",
-    fontFamily: FontFamily.inter,
-    position: "absolute",
-  },
-  errormessageInnerPosition: {
-    left: "4.4%",
     position: "absolute",
   },
   errormessageChild: {
@@ -60,9 +160,18 @@ const styles = StyleSheet.create({
     left: "0%",
     borderRadius: Border.br_11xl,
     backgroundColor: Color.colorWhite,
-    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowColor: "rgba(0, 0, 0, 1)",
     shadowRadius: 12.3,
     elevation: 12.3,
+  },
+  publicTypo: {
+    textAlign: "left",
+    fontFamily: FontFamily.inter,
+    position: "absolute",
+  },
+  errormessageInnerPosition: {
+    left: "4.4%",
+    position: "absolute",
   },
   answerToAnas1: {
     height: "5.1%",
@@ -95,16 +204,16 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   postAnswer: {
-    height: "3.17%",
-    width: "29.48%",
-    top: "89.77%",
-    left: "58.33%",
+    height: "100%",
+    width: "100%",
+    top: "18%",
+    left: "0%",
     fontSize: FontSize.size_base,
     fontWeight: "700",
     color: Color.colorWhite,
     textAlign: "center",
     fontFamily: FontFamily.inter,
-    position: "absolute",
+    // position: "absolute",
   },
   fontistoworldOIcon1: {
     height: "2.12%",
@@ -126,12 +235,12 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_2xl,
     backgroundColor: Color.colorGainsboro_300,
   },
-  errormessage: {
-    top: 111,
-    left: 22,
-    width: 384,
-    height: 684,
-    position: "absolute",
+  popupMainViewStyle: {
+    top: "13%",
+    left: "4%",
+    width: "92%",
+    height: "90%",
+    // position: "absolute",
   },
 });
 

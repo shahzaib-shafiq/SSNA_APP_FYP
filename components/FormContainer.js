@@ -1,76 +1,122 @@
-import React, { useMemo } from "react";
-import { StyleSheet, View, Text, ImageSourcePropType } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image } from "expo-image";
+import * as React from "react";
+import { Image } from "react-native";
+import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View, Pressable, Text } from "react-native";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import database from '@react-native-firebase/database'; //for firebase connection
 
-const getStyleValue = (key, value) => {
-  if (value === undefined) return;
-  return { [key]: value === "unset" ? undefined : value };
-};
-const FormContainer = ({ menus1, propMarginLeft, propBottom }) => {
-  const upperStyle = useMemo(() => {
-    return {
-      ...getStyleValue("marginLeft", propMarginLeft),
-      ...getStyleValue("bottom", propBottom),
-    };
-  }, [propMarginLeft, propBottom]);
+const FormContainer = ({ route, userDetail, query }) => {
+
+  const navigation = useNavigation();
+
+  console.log('FC-User Detail:', userDetail); // Make sure this prints the correct user details
+  console.log('FC-Route:', route);
+  console.log('FC-query:', query);
+
+  // Function to handle deletion of query
+  const handleDeleteQuery = (queryId) => {
+
+    const db = database();
+    const queryRef = db.ref(`/Guidance/${queryId}`);
+
+    queryRef.remove()
+      .then(() => {
+        console.log("Query deleted successfully");
+        navigation.navigate("SeniorGuidanceScreenMain", { userDetail, route })
+      })
+      .catch((error) => {
+        console.error("Error deleting query: ", error);
+      });
+
+  };
 
   return (
-    <View style={[styles.upper, styles.upperLayout, upperStyle]}>
+    <View style={styles.upper}>
       <LinearGradient
-        style={[styles.bluebg, styles.upperLayout]}
+        style={[styles.bluebg, styles.iconLayout]}
         locations={[0, 0.59]}
         colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
       />
-      <Image style={styles.menus1Icon1} contentFit="cover" source={menus1} />
-      <Text style={[styles.guidancePortal, styles.text1Typo]}>
-        Guidance Portal
+      <Pressable
+        style={styles.menus1}
+        onPress={() => navigation.navigate("SeniorGuidanceScreenMain", { userDetail, route })}
+      >
+        <Image
+          style={[styles.icon, styles.iconLayout]}
+          contentFit="cover"
+          source={require("../assets/epback.png")}
+        />
+      </Pressable>
+
+      <Text style={[styles.HeaderTitleStyle, styles.text1Typo]}>
+        Query
       </Text>
-      <View style={styles.upperChild} />
-      <Text style={[styles.text1, styles.text1Typo]}>+</Text>
+
+      {/* Conditional rendering for delete button */}
+      {query.AuthorId === userDetail.id && (
+        <Pressable
+          style={styles.plusButtonGB}
+          onPress={() => handleDeleteQuery(query.id)}
+        >
+           <Image
+          style={styles.delIconStyle}
+          contentFit="cover"
+          source={require("../assets/bin.png")}
+        />
+        </Pressable>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  upperLayout: {
-    height: 233,
-    width: 432,
-    left: "50%",
-    position: "absolute",
+  iconLayout: {
+    width: "100%",
+    height: "100%",
   },
   text1Typo: {
     textAlign: "left",
     color: Color.colorWhite,
     fontFamily: FontFamily.inter,
-    fontWeight: "600",
-    top: "50%",
-    left: "50%",
+    fontWeight: "700",
     position: "absolute",
   },
   bluebg: {
-    marginLeft: -216.05,
-    bottom: 0,
+    top: "0%",
+    right: "0%",
+    bottom: "0%",
+    left: "0%",
     backgroundColor: "transparent",
-  },
-  menus1Icon1: {
-    top: 184,
-    left: 17,
-    width: 45,
-    height: 33,
     position: "absolute",
   },
-  guidancePortal: {
-    marginTop: 69.5,
-    marginLeft: -138.95,
-    fontSize: FontSize.size_5xl,
-    width: 248,
-    height: 23,
+  icon: {
+    maxWidth: "100%",
+    overflow: "hidden",
+    maxHeight: "100%",
   },
-  upperChild: {
-    top: 185,
-    left: 357,
+  menus1: {
+    left: "5.59%",
+    top: "78.8%",
+    right: "84.01%",
+    bottom: "7.08%",
+    width: "10.39%",
+    height: "14.12%",
+    position: "absolute",
+  },
+  HeaderTitleStyle: {
+    height: "15.04%",
+    width: "57.33%",
+    top: "79%",
+    left: "20%",
+    fontSize: FontSize.size_5xl,
+  },
+  plusButtonGB: {
+    height: "18.39%",
+    width: "12.61%",
+    top: "76.57%",
+    bottom: "9.04%",
+    left: "79.06%",
     borderRadius: Border.br_xs,
     backgroundColor: Color.colorGray_1100,
     shadowColor: "rgba(0, 0, 0, 0.15)",
@@ -81,20 +127,23 @@ const styles = StyleSheet.create({
     shadowRadius: 6.1,
     elevation: 6.1,
     shadowOpacity: 1,
-    width: 42,
-    height: 31,
     position: "absolute",
   },
-  text1: {
-    marginTop: 56.5,
-    marginLeft: 147.05,
-    fontSize: FontSize.size_21xl,
-    width: 30,
-    height: 55,
+  delIconStyle: {
+    height: "60%",
+    width: "40%",
+    top: "17%",
+    left: "27%",
+    maxWidth: "100%",
+    overflow: "hidden",
+    maxHeight: "100%",
   },
   upper: {
-    marginLeft: -215,
-    bottom: 744,
+    top: -163,
+    left: -1,
+    width: 431,
+    height: 233,
+    position: "absolute",
   },
 });
 

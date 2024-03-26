@@ -7,7 +7,7 @@ import { StyleSheet, View, Text,Pressable } from "react-native";
 import { FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 
-const UpcomingEvents = ({ route }) => {
+const AnnouncementScreen = ({ route }) => {
 
   const { userDetail } = route.params;
 
@@ -17,7 +17,7 @@ const UpcomingEvents = ({ route }) => {
 
   const getData = () => {
     const db = database();
-    const dbRef = db.ref('/Events');
+    const dbRef = db.ref('/Announcements');
 
     const formatDate = (dateString) => {
       const options = { year: "numeric", month: "long", day: "numeric" };
@@ -32,9 +32,9 @@ const UpcomingEvents = ({ route }) => {
         const eventsData = Object.keys(data).map((id) => ({
           id,
           description: data[id].description,
-          Title: data[id].title,
+          Title: data[id].Title,
           Announcement: data[id].Announcement,
-          AnnouncementDate: formatDate(data[id].EventDate),
+          AnnouncementDate: formatDate(data[id].AnnouncementDate),
           img: data[id].img,
 
         }));
@@ -73,7 +73,7 @@ const UpcomingEvents = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.UpcomingEvents}>
+    <View style={styles.AnnouncementScreen}>
       <View style={styles.homeScreen}>
         <View style={[styles.screenmain, styles.bluebgPosition]} />
       </View>
@@ -87,7 +87,7 @@ const UpcomingEvents = ({ route }) => {
           styles.upcomingEventsChild,
           { zIndex: announcements.length - index }, // Adjust the zIndex
         ]}
-        onPress={() => navigation.navigate("UpcomingEventsDetails", { userDetail,events })}
+        onPress={() => navigation.navigate("AnnouncementScreenDetail", { userDetail,events })}
       >
           <View 
             style={[
@@ -132,7 +132,8 @@ const UpcomingEvents = ({ route }) => {
           colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
           style={[styles.bluebg, styles.bluebgPosition]}
         />
-        {<Pressable
+        {
+          <Pressable
           style={styles.menus1}
           
           onPress={() => 
@@ -147,7 +148,7 @@ const UpcomingEvents = ({ route }) => {
           
         </Pressable> 
         }
-        <Text style={[styles.guidancePortal, styles.textTypo]}>Upcoming Events</Text>
+        <Text style={[styles.guidancePortal, styles.textTypo]}>Announcements</Text>
         
       </View>
     </View>
@@ -296,8 +297,8 @@ const styles = StyleSheet.create({
     height: 260,
     position: "absolute",
   },
-  UpcomingEvents: {
-    flex: 1,
+  AnnouncementScreen: {
+    // flex: 1,
     overflow: "hidden",
     width: "100%",
     height: 812,
@@ -305,4 +306,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UpcomingEvents;
+export default AnnouncementScreen;

@@ -1,23 +1,23 @@
 import * as React from "react";
 import { Linking, ScrollView } from 'react-native';
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, TextInput } from "react-native";
 import database from '@react-native-firebase/database';
 import { useNavigation } from "@react-navigation/native";
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, KeyboardAvoidingView } from "react-native";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
 
 const CourseMaterial = ({ route }) => {
-  
+
   const { userDetail } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
 
   const [courses, setCourses] = useState([]);
 
- // for searching member
- const [searchTerm, setSearchTerm] = useState("");
+  // for searching member
+  const [searchTerm, setSearchTerm] = useState("");
 
   const getData = () => {
     const db = database();
@@ -25,23 +25,23 @@ const CourseMaterial = ({ route }) => {
 
     dbRef.on('value', (snapshot) => {
       const data = snapshot.val();
-  
+
       if (data) {
         const coursesData = Object.keys(data).map((id) => ({
           id,
-          Name: data[id].Name,
-          Code: data[id].Code,
+          Name: data[id].CourseName,
+          Code: data[id].CourseCode,
           Department: data[id].Department,
-          Link: data[id].Link,
+          Link: data[id].DriveLink,
         }));
 
-         // Check if a new event is added
-         if (coursesData.length > courses.length) {
+        // Check if a new event is added
+        if (coursesData.length > courses.length) {
           const newCourse = coursesData[coursesData.length - 1];
-          
+
           // Update the state before showing the notification
           setCourses(coursesData);
-      
+
         } else if (coursesData.length < courses.length) {
           // Event removed, update the state without triggering a notification
           setCourses(coursesData);
@@ -50,7 +50,7 @@ const CourseMaterial = ({ route }) => {
           setCourses(coursesData);
         }
       }
-  
+
       setLoading(false);
     }, (error) => {
       console.error('Error fetching data:', error);
@@ -62,52 +62,18 @@ const CourseMaterial = ({ route }) => {
     getData();
   }, []);
 
-   //for searching in small letters
-   const filteredCourses = courses.filter(
-     (coursess) => 
-     coursess.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     coursess.C.toLowerCase().includes(searchTerm.toLowerCase())
-     
-   );
+  //for searching in small letters
+  const filteredCourses = courses.filter(
+    (coursess) =>
+      coursess.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      coursess.Department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      coursess.Code.toLowerCase().includes(searchTerm.toLowerCase()
+      )
+
+  );
 
   return (
     <View style={styles.courseMaterial}>
-
-      {/* FOR EACH COURSE CARD */}
-      {filteredCourses.map((course,index) => (
-        <View
-          key={course.id}
-          style={[
-            styles.course,
-            { top: 200 + index * 150 },
-            { zIndex: courses.length - index }, // Adjust the zIndex
-          ]}          
-        >
-          <View style={styles.courseChild} />
-
-          <Text style={styles.courseCodeStyle}>
-            {course.Code}
-          </Text>
-
-          <Text style={[styles.CourseNameStyle, styles.csTypo]}>
-            {course.Name}
-          </Text>
-
-          <Text style={[styles.courseDepStyle, styles.csTypo]}>
-            {course.Department
-            }</Text>
-            
-          <Pressable
-             style={styles.courseItem}
-             onPress={() => Linking.openURL(course.Link)}
-          >
-            <Text style={[styles.viewMaterial, styles.materialTypo]}>
-              VIEW MATERIAL
-            </Text>
-          </Pressable>
-         </View>
-      ))}
-
       {/* UPPER BAR */}
       <View style={styles.upper}>
         <LinearGradient
@@ -122,9 +88,10 @@ const CourseMaterial = ({ route }) => {
         {/* BACK BUTTON */}
         <Pressable
           style={styles.epback}
-          onPress={() => 
-            {console.log('Pressable pressed');
-            navigation.navigate("MAINPAGE",{userDetail})}}
+          onPress={() => {
+            console.log('Pressable pressed');
+            navigation.navigate("MAINPAGE", { userDetail })
+          }}
         >
           <Image
             style={styles.icon}
@@ -136,15 +103,12 @@ const CourseMaterial = ({ route }) => {
 
       {/* SEARCH BAR */}
       <View style={styles.searchbar}>
-
         <TextInput
           style={styles.searchbarInput}
-          placeholder="Search by name"
+          placeholder="Search by name, Department or code"
           onChangeText={(text) => setSearchTerm(text)}
         />
-      
         <View style={[styles.searchbarItem, styles.searchbarLayout]} />
-             
         <View style={[styles.searchbarItem, styles.searchbarLayout]} />
         <Image
           style={styles.search1Icon}
@@ -152,9 +116,41 @@ const CourseMaterial = ({ route }) => {
           source={require("../assets/search-1.png")}
         />
       </View>
+
+      {/* FOR EACH COURSE CARD */}
+      {filteredCourses.map((course, index) => (
+        <View
+          key={course.id}
+          style={[
+            styles.course,
+            { top: 200 + index * 150 },
+            { zIndex: courses.length - index }, // Adjust the zIndex
+          ]}
+        >
+          <View style={styles.courseChild} />
+          <Text style={styles.courseCodeStyle}>
+            {course.Code}
+          </Text>
+          <Text style={[styles.CourseNameStyle, styles.csTypo]}>
+            {course.Name}
+          </Text>
+          <Text style={[styles.courseDepStyle, styles.csTypo]}>
+            {course.Department}
+          </Text>
+          <Pressable
+            style={styles.courseItem}
+            onPress={() => Linking.openURL(course.Link)}
+          >
+            <Text style={[styles.viewMaterial, styles.materialTypo]}>
+              VIEW MATERIAL
+            </Text>
+          </Pressable>
+        </View>
+      ))}
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   csTypo: {
@@ -167,20 +163,21 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   searchbarInput: {
-    height:0,
+    height: 40, // Adjusted from 0 to 40 for visibility
     borderColor: 'rgba(128, 128, 128, 0.0)',
     fontSize: 16,
     borderWidth: 1,
     backgroundColor: "white",
     paddingHorizontal: "10%",
+    paddingLeft: 20, // Adjust this value to control left padding
     borderRadius: Border.br_3xs,
     flex: 1,
     elevation: 5, // Add elevation for Android shadow
   },
   searchbar: {
     position: 'absolute',
-    top: 109,
-    left: 17,
+    top: 110,
+    left: "4%",
     height: 48,
     width: 385,
   },
