@@ -45,6 +45,15 @@ const AnnouncementScreenDetail = ({ route }) => {
 
             </View> */}
 
+          {/* <Pressable
+            style={styles.courseItem}
+            onPress={() => Linking.openURL(events.link)}
+          >
+            <Text style={[styles.viewMaterial, styles.materialTypo]}>
+              VIEW MATERIAL
+            </Text>
+          </Pressable> */}
+
 
           <Text style={styles.eventdate}>
             {events?.AnnouncementDate}
@@ -83,6 +92,32 @@ const AnnouncementScreenDetail = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+
+  viewMaterial: {
+    top: 9,
+    left: 22,
+    fontSize: FontSize.size_sm,
+  },
+
+  // materialTypo: {
+  //   color: Color.colorWhite,
+  //   fontFamily: FontFamily.interSemiBold,
+  //   fontWeight: "600",
+  //   zIndex: 1,
+  //   textAlign: "left",
+  //   position: "absolute",
+  // },
+  // courseItem: {
+  //   height: "27.1%",
+  //   width: "40.13%",
+  //   top: "50%",
+  //   right: "1.8%",
+  //   bottom: "22.9%",
+  //   left: "58.06%",
+  //   borderRadius: Border.br_6xs,
+  //   backgroundColor: "#62b4be",
+  //   position: "absolute",
+  // },
 
   // container: { flex: 1, justifyContent: "center", alignItems: "center" },
   // buttonContainer: {
