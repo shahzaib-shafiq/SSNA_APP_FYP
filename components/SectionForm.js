@@ -142,7 +142,7 @@ const SectionForm = ({ route, userDetail }) => {
         });
       }
     });
-    setUpvotes(updatedUpvotes);
+    // setUpvotes(updatedUpvotes);
   };
   const [queryInfo, setGuidanceQuery] = useState([]);
 

@@ -2,8 +2,9 @@ import * as React from "react";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Linking } from "react-native";
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
+
 
 const FacultyInfoDetails = ({ route }) => {
 
@@ -12,7 +13,41 @@ const FacultyInfoDetails = ({ route }) => {
 
   console.log('FI-faculty:', faculty);
 
-//a function to get the full form of the department
+  const handlePress = () => {
+    const recipient = faculty.email; // Assuming faculty.email is defined and contains the email address
+    const subject = encodeURIComponent('');
+    const body = encodeURIComponent('');
+  
+    // Create the mailto link
+    const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
+  
+    // Intent to open in Chrome
+    const chromeIntent = `googlechrome://navigate?url=${encodeURIComponent(mailtoLink)}`;
+  
+    Linking.canOpenURL(chromeIntent)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(chromeIntent).catch(err => {
+            alert('Error opening link with Chrome');
+            console.error('Error opening link with Chrome', err);
+          });
+        } else {
+          // Fallback if Chrome isn't found
+          alert('Chrome is not installed, opening with default browser');
+          Linking.openURL(mailtoLink).catch(err => {
+            alert('Failed to open link');
+            console.error('Failed to open link', err);
+          });
+        }
+      })
+      .catch((err) => {
+        alert('An error occurred');
+        console.error('An error checking URL support', err);
+      });
+  };
+  
+
+  //a function to get the full form of the department
   const getFullForm = (abbreviation) => {
     switch (abbreviation) {
       case 'AI':
@@ -50,7 +85,7 @@ const FacultyInfoDetails = ({ route }) => {
         style={styles.facultyInfo1Child}
         contentFit="cover"
         source={{ uri: faculty.img }}
-        />
+      />
 
       {/* faculty member name */}
       <View style={styles.memberNameContainer}>
@@ -61,7 +96,7 @@ const FacultyInfoDetails = ({ route }) => {
       <Text style={styles.dpt_name}>{getFullForm(faculty.Department)}</Text>
 
       {/* faculty email */}
-      <View style={[styles.detailsContainer,styles.emailContainerStyle]}>
+      <View style={[styles.detailsContainer, styles.emailContainerStyle]}>
         <Text style={[styles.emailStyle, styles.emailStyle2]}>{faculty.email}</Text>
       </View>
       <Image
@@ -76,11 +111,11 @@ const FacultyInfoDetails = ({ route }) => {
         contentFit="cover"
         source={require("../assets/telephone.png")}
       />
-      <View style={[styles.detailsContainer,styles.phoneContainerStyle]}>
+      <View style={[styles.detailsContainer, styles.phoneContainerStyle]}>
         <Text style={styles.ext123}>
           {/* {faculty.phone} */}
           {faculty.phone}
-        </Text>      
+        </Text>
       </View>
 
       {/* office address */}
@@ -89,12 +124,12 @@ const FacultyInfoDetails = ({ route }) => {
         contentFit="cover"
         source={require("../assets/location.png")}
       />
-      <View style={[styles.detailsContainer,styles.addressContainerStyle]}>
+      <View style={[styles.detailsContainer, styles.addressContainerStyle]}>
         <Text style={styles.ext123}>
-            {faculty.address}
-        </Text> 
+          {faculty.address}
+        </Text>
       </View>
-     
+
 
       {/* profession */}
       <Image
@@ -102,10 +137,18 @@ const FacultyInfoDetails = ({ route }) => {
         contentFit="cover"
         source={require("../assets/education.png")}
       />
-      <View style={[styles.detailsContainer,styles.professionContainerStyle]}>
+      <View style={[styles.detailsContainer, styles.professionContainerStyle]}>
         <Text style={styles.ext123}>Professor</Text>
       </View>
-      
+
+      {/* EMAIL BUTTON */}
+      <Pressable onPress={handlePress} style={styles.container}>
+          <Image
+            style={styles.iconLayout2}
+            source={require("../assets/emailwhite.png")}
+          />
+      </Pressable>
+
 
       {/* degree and University */}
       <Image
@@ -113,7 +156,7 @@ const FacultyInfoDetails = ({ route }) => {
         contentFit="cover"
         source={require("../assets/award.png")}
       />
-      <View style={[styles.detailsContainer,styles.DegreeContainerStyle]}>
+      <View style={[styles.detailsContainer, styles.DegreeContainerStyle]}>
         <Text style={styles.ext123}>
           <Text style={styles.phdEe}> {faculty.Education} {"\n"} </Text>
           <Text style={styles.universityStyle}>
@@ -121,7 +164,7 @@ const FacultyInfoDetails = ({ route }) => {
           </Text>
         </Text>
       </View>
-    
+
       <Text style={[styles.areasOfInterest, styles.researchTypo]}>
         Areas of Interest
       </Text>
@@ -130,22 +173,22 @@ const FacultyInfoDetails = ({ route }) => {
       <View style={[styles.line1, styles.facultyPosition]} />
       <View style={[styles.line2, styles.facultyPosition]} />
 
-      
+
       <View style={styles.detailsContainer2}>
         <Text
           style={[styles.powerSystemsControl, styles.powerTypo]}
         >
-           {faculty.areaOfInterest}
+          {faculty.areaOfInterest}
         </Text>
       </View>
 
 
-      
+
       {/* BACK BUTTON */}
       <Pressable
         style={styles.epback}
         onPress={() =>
-          navigation.navigate("FacultyInfo",{userDetail})
+          navigation.navigate("FacultyInfo", { userDetail })
         }
       >
         <Image
@@ -159,6 +202,15 @@ const FacultyInfoDetails = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: "20%",
+    height: "10%",
+    left: "73%",
+    top: "85%",
+    position: "absolute",
+    borderRadius: 50, // Half of width or height makes it a circle
+    backgroundColor: "#4d7da9", // Example color
+  },
   iconLayout1: {
     height: "100%",
     width: "100%",
@@ -178,6 +230,15 @@ const styles = StyleSheet.create({
     left: 56,
     position: "absolute",
     overflow: "hidden",
+  },
+  iconLayout2: {
+    height: 44,
+    width: 46,
+    left: "22%",
+    top: "20%",
+    position: "absolute",
+    overflow: "hidden",
+    resizeMode: 'cover',
   },
   DetailTextPosition: {
     left: 110,
@@ -254,10 +315,10 @@ const styles = StyleSheet.create({
     left: "50%",
     position: "absolute",
   },
-   memberNameContainer: {
-    top:190,
-    left:-2,
-    width:400,
+  memberNameContainer: {
+    top: 190,
+    left: -2,
+    width: 400,
     backgroundColor: 'white', // Blue color
     borderRadius: 8, // Adjust as needed
     padding: 10, // Adjust as needed
@@ -272,20 +333,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left',
   },
-  emailContainerStyle:{
-    top:257
+  emailContainerStyle: {
+    top: 257
   },
-  phoneContainerStyle:{
-    top:263
+  phoneContainerStyle: {
+    top: 263
   },
-  addressContainerStyle:{
-    top:268
+  addressContainerStyle: {
+    top: 268
   },
-  professionContainerStyle:{
-    top:82
+  professionContainerStyle: {
+    top: 82
   },
-  DegreeContainerStyle:{
-    top:92
+  DegreeContainerStyle: {
+    top: 92
   },
   memberNameText: {
     color: 'black', // White text color
@@ -295,11 +356,11 @@ const styles = StyleSheet.create({
     textAlign: 'center', // Center text horizontally
   },
   dpt_name: {
-     top:167,
-    left:0,
-    width:400,
+    top: 167,
+    left: 0,
+    width: 400,
     textAlign: 'center', // Center text horizontally
-    height:40,
+    height: 40,
     backgroundColor: 'white', // Blue color
     borderRadius: 8, // Adjust as needed
     padding: 10, // Adjust as needed
@@ -391,8 +452,8 @@ const styles = StyleSheet.create({
   detailsContainer2: {
     left: "8%",
     width: "78%",
-    top:"35%",
-    height:200,
+    top: "35%",
+    height: 200,
     // backgroundColor: 'rgba(128, 128, 128, 0.4)', // Transparent grey color
     borderRadius: 8,
     padding: 10,
@@ -421,7 +482,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     overflow: "hidden",
-    top:-5
+    top: -5
   },
   epback: {
     left: 19,
