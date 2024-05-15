@@ -26,6 +26,16 @@ const ErrorMessage = ({ onClose, userDetail }) => {
 
 
   const handleNewQuery = () => {
+    // Check if either title or question is empty
+    if (title.trim() === "" || question.trim() === "") {
+      Toast.show({
+        type: 'error',  // Use 'error' type for error messages
+        text1: 'Missing Information',
+        text2: 'Both title and question are required to post your query.'
+      });
+      return; // Exit the function to prevent further execution
+    }
+  
     // Query the Firebase database to count the number of queries posted by the current user
     database().ref('/Guidance')
       .orderByChild('Author')
@@ -67,7 +77,7 @@ const ErrorMessage = ({ onClose, userDetail }) => {
           Toast.show({
             type: 'info',
             text1: 'Limit Exceeded',
-            text2: 'You cannot post more than 2 queries at at time'
+            text2: 'You cannot post more than 2 queries at a time'
           });
           onClose();
         }

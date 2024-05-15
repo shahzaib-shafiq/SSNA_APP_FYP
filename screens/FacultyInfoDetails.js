@@ -14,6 +14,7 @@ const FacultyInfoDetails = ({ route }) => {
   console.log('FI-faculty:', faculty);
 
   const handlePress = () => {
+    console.log('Press detected');
     const recipient = faculty.email; // Assuming faculty.email is defined and contains the email address
     const subject = encodeURIComponent('');
     const body = encodeURIComponent('');
@@ -205,11 +206,13 @@ const styles = StyleSheet.create({
   container: {
     width: "20%",
     height: "10%",
-    left: "73%",
-    top: "85%",
+    left: "75%",
+    top: "88%",
     position: "absolute",
     borderRadius: 50, // Half of width or height makes it a circle
     backgroundColor: "#4d7da9", // Example color
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconLayout1: {
     height: "100%",
@@ -237,8 +240,10 @@ const styles = StyleSheet.create({
     left: "22%",
     top: "20%",
     position: "absolute",
-    overflow: "hidden",
-    resizeMode: 'cover',
+    // overflow: "hidden",
+    // resizeMode: 'cover',
+    // backgroundColor: Color.colorBlack,
+
   },
   DetailTextPosition: {
     left: 110,
@@ -493,10 +498,12 @@ const styles = StyleSheet.create({
   },
   facultyInfo1: {
     flex: 1,
-    overflow: "hidden",
-    height: 812,
+    // overflow: "hidden",
+    height: "100%",
     width: "100%",
     backgroundColor: Color.colorWhite,
+    // backgroundColor: Color.colorBlack,
+
   },
 });
 

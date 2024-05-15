@@ -520,7 +520,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   quickAccessTxt: {
-    top: "78%",
+    top: "79.5%",
     left: "9.5%",
     color: "#111",
     fontWeight: "700",

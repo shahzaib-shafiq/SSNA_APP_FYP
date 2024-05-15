@@ -67,7 +67,8 @@ const SeniorGuidanceScreenViewD = ({ route }) => {
             <Text style={styles.answersTextStyle}>
               Answers
             </Text>
-
+            
+            {/* ANSWERS FROM OTHER STUDENTS */}
             <ContainerAnswerForm route={route} userDetail={userDetail} />
 
           </View>
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   querySummaryStyle: {
     fontSize: FontSize.size_xl,
     lineHeight: 30,
-    width: 349,
+    width: "100%",
     // height: "10%",
     textAlign: "left",
     color: Color.colorDimgray_100,
@@ -96,17 +97,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingTop: "220%", // Adjust this value based on the height of FormContainer
+    paddingTop: "230%", // Adjust this value based on the height of FormContainer
     paddingHorizontal: "0%",
   },
   queryLayout: {
-    width: 375,
+    width: "98%",
   },
   query: {
     top: "-103%",
     height: 873,
-    left: "6%",
-    width: 375,
+    left: "4%",
+    // width: "80%",
   },
   queryImgStyle: {
     top: "7%",

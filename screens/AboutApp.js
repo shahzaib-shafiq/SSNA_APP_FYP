@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "react-native-linear-gradient";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
-import { StyleSheet, Pressable, Text, View } from "react-native";
+import { StyleSheet, Pressable, Text, View,ScrollView } from "react-native";
 
 const AboutApp = ({ route }) => {
 
@@ -11,6 +11,7 @@ const AboutApp = ({ route }) => {
   const { userDetail } = route.params;  //user session
 
   return (
+    
     <View style={[styles.AboutApp, styles.iconLayout]}>
       
       {/* HEADER */}
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   },
   paraStyleObjective: {
     textAlign: "left",
-    top: "50%",
+    top: "48%",
     left: "8%",
     width:"85%",
     color: Color.colorDimgray_200,
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   objectiveTitle: {
-    top: "45%",
+    top: "43%",
     fontSize: FontSize.size_5xl,
     textAlign: "left",
     left: "8%",

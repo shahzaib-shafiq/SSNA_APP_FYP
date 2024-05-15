@@ -52,98 +52,97 @@ const FacultyInfo = ( {route} ) => {
   );
 
   return (
-    <ScrollView style={styles.scrollView}>  
-      <View style={styles.facultyInfo}>
-        <View style={styles.homeScreen}>
-          <View style={[styles.screenmain, styles.back_button]} />
-        </View>
-        
-        <View style={[styles.upper, styles.upperPosition]}>
-          <LinearGradient
-            style={[styles.bluebg, styles.upperPosition]}
-            locations={[0, 0]}
-            colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
+    <>
+      <View style={styles.upperPosition}>
+        <LinearGradient
+          style={[styles.bluebg, styles.upperPosition]}
+          locations={[0, 0]}
+          colors={["rgba(77, 142, 169, 0)", "#4d7da9"]}
+        />
+        {/* menu_press */}
+        <Pressable
+          style={styles.backButtonPosition}
+          onPress={() => navigation.navigate("MAINPAGE", { userDetail })}
+        >
+          <Image
+            style={styles.back_button}
+            contentFit="cover"
+            source={require("../assets/epback.png")}
           />
-          {/* menu_press */}
-          <Pressable
-            style={styles.menus1}
-            onPress={() => navigation.navigate("MAINPAGE",{userDetail})}
-          >
-            <Image
-              style={styles.back_button}
-              contentFit="cover"
-              source={require("../assets/epback.png")}
-            />
-          </Pressable>
-
-          {/* head_title */}
-          <Text style={styles.facultyInformation}>Faculty Information</Text>
-        </View> 
-
-        {/* FACULTY CARDS */}
-        {filteredFacInfo.map((faculty,index) => (
-          <View 
+        </Pressable>
+  
+        {/* head_title */}
+        <Text style={styles.facultyInformation}>Faculty Information</Text>
+      </View>
+  
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.facultyInfo}>
+          {/* FACULTY CARDS */}
+          {filteredFacInfo.map((faculty, index) => (
+            <View
               key={faculty.id}
               style={[
                 styles.facultyInfo_bgBOX,
                 styles.facultyShadowBox,
-                { top: 198 + index * 180 }, // Adjust this value
+                { top: 150 + index * 180 }, // Adjust this value
               ]}
-        
-          >
-            <View style={styles.query}>
-              <Image
-                style={[styles.queryChild, styles.queryLayout]}
-                contentFit="cover"
-                source={{ uri: faculty.img }}
-              />
-
-              <Text style={[styles.fac_name, styles.fac_name_typo]}>
-                {faculty.name}
-              </Text>
-
-              <Text style={styles.dept}>{faculty.Department}</Text>
-
-              <Text style={styles.email}>{faculty.email}</Text>
-
-              <Pressable
-                style={styles.menus1}
-                onPress={() => navigation.navigate("FacultyInfoDetails", { userDetail ,faculty })}
-              >
-                <View style={styles.viewDetails_button}>
-                  <Text style={[styles.postQuestion, styles.postQuestionTypo]}>
-                    View Details
-                  </Text>
-                </View>
-              </Pressable>
-            </View>
-          </View>
-      ))}
-
-      {/* SEARCH BAR */}
-      <View style={styles.searchbar}>
-      <TextInput
-          style={styles.searchbarInput}
-          placeholder="Search by name"
-          onChangeText={(text) => setSearchTerm(text)}
-        />
-        <View style={[styles.searchbarItem, styles.searchbarLayout]} />
-        <Image
-          style={styles.search1Icon1}
-          contentFit="cover"
-          source={require("../assets/search-12.png")}
-        />
-      </View>
+            >
+              <View style={styles.query}>
+                <Pressable
+                    style={styles.menus1}
+                    onPress={() => navigation.navigate("FacultyInfoDetails", { userDetail, faculty })}
+                  >
+                    
+                  <Image
+                    style={[styles.queryChild, styles.queryLayout]}
+                    contentFit="cover"
+                    source={{ uri: faculty.img }}
+                  />
     
-    </View>
-   </ScrollView>
-
+                  <Text style={[styles.fac_name, styles.fac_name_typo]}>
+                    {faculty.name}
+                  </Text>
+    
+                  <Text style={styles.dept}>{faculty.Department}</Text>
+    
+                  <Text style={styles.email}>{faculty.email}</Text>
+    
+                
+                    <View style={styles.viewDetails_button}>
+                      <Text style={[styles.ViewDetailsTxt, styles.ViewDetailsTxtTypo]}>
+                        View Details
+                      </Text>
+                    </View>
+                </Pressable>
+              </View>
+            </View>
+          ))}
+  
+          {/* SEARCH BAR */}
+          <View style={styles.searchbar}>
+            <TextInput
+              style={styles.searchbarInput}
+              placeholder="Search by name"
+              onChangeText={(text) => setSearchTerm(text)}
+            />
+            <View style={[styles.searchbarItem, styles.searchbarLayout]} />
+            <Image
+              style={styles.search1Icon1}
+              contentFit="cover"
+              source={require("../assets/search-12.png")}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </>
   );
+  
+
 };
 
 const styles = StyleSheet.create({
   searchbarInput: {
-    height: 40,
+    // height: 4,
     borderColor: 'rgba(128, 128, 128, 0.0)',
     fontSize: 16,
     borderWidth: 1,
@@ -157,30 +156,21 @@ const styles = StyleSheet.create({
   },
   back_button: {
     left:"25%",
-    top:"8%",
+    top:"28%",
     height: "90%",
+        // backgroundColor: Color.colorBlack,
     width: "90%",
   },
-  facultyShadowBox: {
-    height: 142,
-    width: 334,
-    shadowOpacity: 5,
-    elevation: 4,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.5)",
-    borderRadius: Border.br_xl,
-    position: "absolute",
-    backgroundColor: Color.colorWhite,
-  },
   upperPosition: {
-    height: "28%",
-    width: "110%",
+    height: "8%",
+    width: "100%",
+    backgroundColor:"#4d7da9",
     left: "0%",
-    position: "absolute",
+    // position: "absolute",
+  },
+  bluebg: {
+    top: "10%",
+    backgroundColor: "transparent",
   },
   scrollView: {
     flexGrow: 1,    
@@ -189,7 +179,7 @@ const styles = StyleSheet.create({
   },
   queryLayout: {
     height: 93,
-    position: "absolute",
+    // position: "absolute",
   },
   searchbarLayout: {
     borderRadius: Border.br_3xs,
@@ -213,10 +203,25 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 812,
   },
+  facultyShadowBox: {
+    height: "15%",
+    // width: 334,
+    shadowOpacity: 5,
+    elevation: 4,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.5)",
+    borderRadius: Border.br_xl,
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
+  },
   facultyInfo_bgBOX: {
-    top: 198,
-    left: 39,
-    width: 334,
+    // top: 198,
+    left: "8%",
+    width: "84%",
     shadowOpacity: 15,
     elevation: 4,
     shadowRadius: 4,
@@ -227,33 +232,32 @@ const styles = StyleSheet.create({
     shadowColor: "ffffff",
     borderRadius: Border.br_xl,
   },
-  bluebg: {
-    bottom: "0%",
-    backgroundColor: "transparent",
-  },
   menus1: {
-    top: 183,
+    left: "0%",
+    top: "3%",
+    height: "100%",
+    width: "100%",
+    position: "absolute",
+        // backgroundColor: Color.colorBlack,
+
+  },
+  backButtonPosition: {
+    top: "15%",
     width: 44,
+    // backgroundColor: Color.colorBlack,
     height: 33,
-    left: 15,
+    left: "4%",
     position: "absolute",
   },
   facultyInformation: {
-    marginTop: 70.5,
-    marginLeft: -120,
     fontSize: FontSize.size_5xl,
-    width: 257,
-    height: 53,
     textAlign: "left",
     fontFamily: FontFamily.inter,
     fontWeight: "700",
-    top: "50%",
+    top: "25%",
     color: Color.colorWhite,
-    left: "50%",
+    left: "20%",
     position: "absolute",
-  },
-  upper: {
-    bottom: "93%",
   },
   queryChild: {
     borderRadius: Border.br_mini,
@@ -306,19 +310,19 @@ const styles = StyleSheet.create({
     left: "43.5%",
     position: "absolute",
   },
-  postQuestion: {
+  ViewDetailsTxt: {
     fontSize: FontSize.size_sm,
     fontWeight: "700",
-    height:20,
+    height:"100%",
     color: Color.colorWhite,
     textAlign: "center",
   },
-  postQuestionTypo: {
+  ViewDetailsTxtTypo: {
     textAlign: "center",
     fontFamily: FontFamily.inter,
   },
   viewDetails_button: {
-    top: -106,
+    top: "18%",
     left: 154,
     borderRadius: Border.br_7xs,
     backgroundColor: Color.colorDodgerblue,
@@ -331,32 +335,32 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   query: {
-    left: 20,
+    left: "5%",
     top: 15,
     height: 414,
     width: 328,
     position: "absolute",
   },
   searchbarItem: {
-    left: 293,
+    left: "85%",
     backgroundColor: Color.colorSteelblue,
     borderStyle: "solid",
     borderColor: "rgba(255, 255, 255, 0.15)",
     borderWidth: 1,
-    width: 50,
+    width: "15%",
   },
   search1Icon1: {
-    top: 13,
-    left: 307,
+    top: "25%",
+    left: "89%",
     width: 22,
     height: 22,
     position: "absolute",
   },
  searchbar: {
-  top: 101,
-  left: 40,
-  height: 48,
-  width: 343,
+  top: "5%",
+  left: "7%",
+  height: "5%",
+  width: "88%",
   position: "absolute",
   // Android
   elevation: 5,
@@ -372,7 +376,7 @@ const styles = StyleSheet.create({
   facultyInfo: {
     flex: 1,
     overflow: "hidden",
-    height: 812,
+    height: 1012,
     width: "100%",
     backgroundColor: Color.colorWhite,
   },
