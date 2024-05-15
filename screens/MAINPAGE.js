@@ -1,9 +1,15 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Alert } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import { Image,Animated,TextInput, FlatList,TouchableWithoutFeedback, Keyboard} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
+
+import { useEffect, useState } from 'react';
+// import React, { useEffect } from 'react';
+// import { View, Text, Alert } from 'react-native';
+import messaging from '@react-native-firebase/messaging'
+
 
 const allModules = [
   "Timetable",
@@ -17,6 +23,9 @@ const allModules = [
 ];
 
 const MAINPAGE = ({ route }) => {
+
+  const [notification, setNotification] = useState(null);
+
 
   console.log('MP-Route:', route);
 
@@ -69,6 +78,56 @@ const MAINPAGE = ({ route }) => {
   console.log('Route:', route);
 
   React.useEffect(() => {
+
+    // Notification Code
+    const requestUserPermission = async () => {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    };
+
+    const initializeFirebaseMessaging = async () => {
+      await requestUserPermission();
+
+      messaging()
+        .getToken()
+        .then((token) => {
+          console.log('FCM Token:', token);
+          // Send this token to your server to associate it with the user
+        });
+
+      // Handle incoming messages while app is in foreground
+      messaging().onMessage(async (remoteMessage) => {
+        console.log('Foreground Message:', remoteMessage);
+
+        // Extract notification body and title from remoteMessage
+        const { notification } = remoteMessage;
+
+        // Set the notification state to trigger a re-render
+        setNotification(notification);
+
+        // Show alert with notification message
+        Alert.alert(
+          notification.title || 'Notification',
+          notification.body || '',
+          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+          { cancelable: false }
+        );
+      });
+    };
+
+    initializeFirebaseMessaging();
+
+    return () => {
+      // Clean up listeners when component unmounts
+      messaging().onTokenRefresh(() => {});
+    };
+
     // Trigger the slide-in animation when the component mounts
     Animated.timing(slideAnimation, {
       toValue: 0, // Target value for the animation (slide in)
@@ -80,6 +139,12 @@ const MAINPAGE = ({ route }) => {
   return (
     <TouchableWithoutFeedback onPress={handleDismissSuggestions}>
       <Animated.View style={[styles.mainPage,{ left: slideAnimation }]}>
+      {notification && (
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ fontWeight: 'bold' }}>{notification.title}</Text>
+          <Text>{notification.body}</Text>
+        </View>
+      )}
         <View style={styles.mainPage}>
           <LinearGradient
             style={[styles.bluebg, styles.bluebgPosition]}
@@ -257,7 +322,7 @@ const MAINPAGE = ({ route }) => {
                    {/* UpcomingEvents IMG */}
                   <Image
                     style={styles.upcomingEvent_icon}
-                    contentFit="cover"
+                    contentFit=""
                     source={require("../assets/promotion-8629286-1.png")}
                   />
                     <Text style={[styles.upcomingEventTxt, styles.allTextStyle]}>

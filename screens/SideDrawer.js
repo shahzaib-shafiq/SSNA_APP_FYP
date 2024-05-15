@@ -165,11 +165,11 @@ const SideDrawer = ({route}) => {
                     />
                 </Pressable>
 
-                <Image
+                {/* <Image
                 style={styles.uilsettingIcon}
                 contentFit="cover"
                 source={require("../assets/uilsetting.png")}
-                />
+                /> */}
             </View>
         </View>
     </Animated.View>

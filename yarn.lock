@@ -2117,7 +2117,7 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-firebase/app@^18.7.2", "@react-native-firebase/app@18.7.2":
+"@react-native-firebase/app@^18.7.2", "@react-native-firebase/app@18.7.2", "@react-native-firebase/app@18.9.0":
   version "18.7.2"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.7.2.tgz"
   integrity sha512-ZLHB0SfTPEwEzFO1oxWKb24Y8uI0vfGVjfWhfViFQsRKIhe9GF414lff7AFEbI2zW2zb23KdcKCE4WU10i+YrA==
@@ -2136,6 +2136,11 @@
   version "18.7.2"
   resolved "https://registry.npmjs.org/@react-native-firebase/database/-/database-18.7.2.tgz"
   integrity sha512-TcCLjcNezxqR6OD0eo3T0qEaJRMJEoxxJJCmvP8qxCDGjYTC0qbutdGQHDBZN+5BzejH1RIVQRvaJNJ+mqdgiw==
+
+"@react-native-firebase/messaging@^18.9.0":
+  version "18.9.0"
+  resolved "https://registry.npmjs.org/@react-native-firebase/messaging/-/messaging-18.9.0.tgz"
+  integrity sha512-Jl62EI1WEpM7TZG4BXXeKAphkiFlyNh57yiBJRRY4N5/c8GXxP4GoB7UZVyQjhD55RuqrVfosFG63uBtd7Hsvg==
 
 "@react-native-picker/picker@^2.7.0":
   version "2.7.0"
