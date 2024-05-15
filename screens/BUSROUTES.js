@@ -160,7 +160,7 @@ const BusRoutesPage = ({ route }) => {
         {/* UPPER NAV BAR */}
         <TimetableContainer
           locationCoordinates={require("../assets/menus-11.png")}
-          busRoutesImageUrl="Bus Routes Information"
+          busRoutesImageUrl="Bus Routes"
           propMarginLeft={-116.5}
           propTop={184}
         />

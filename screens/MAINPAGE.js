@@ -142,6 +142,8 @@ const MAINPAGE = ({ route }) => {
                     )}
                   />
                 )}
+
+              {/* SEARCH ICON */}
               <View style={[styles.searchbarItem, styles.searchbarItemLayout]} />
               <Image
                 style={styles.search1Icon1}
@@ -432,7 +434,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: Border.br_6xl,
     borderBottomLeftRadius: Border.br_6xl,
     width: "100%",
-    height: "40%",
+    // height: "40%",
+    // width: 413,
+    height: 329,
+
     top:"-2%"
   },
   userprofilePressable: {

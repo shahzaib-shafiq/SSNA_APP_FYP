@@ -162,14 +162,14 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   upperPosition: {
-    height: "8%",
+    height: 68,
     width: "100%",
     backgroundColor:"#4d7da9",
     left: "0%",
     // position: "absolute",
   },
   bluebg: {
-    top: "10%",
+    top: 0,
     backgroundColor: "transparent",
   },
   scrollView: {
@@ -307,13 +307,14 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.inter,
     fontWeight: "600",
     top: "53.5%",
-    left: "43.5%",
+    left: "45.5%",
     position: "absolute",
   },
   ViewDetailsTxt: {
     fontSize: FontSize.size_sm,
     fontWeight: "700",
-    height:"100%",
+    top: "-2%",
+    height:"120%",
     color: Color.colorWhite,
     textAlign: "center",
   },
