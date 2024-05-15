@@ -100,7 +100,7 @@ const MAINPAGE = ({ route }) => {
               />
 
               {/* QUICK ACCESS TEXT */}
-              <Text style={styles.quickAccess1}>Quick Access</Text>
+              <Text style={styles.quickAccessTxt}>Quick Access</Text>
 
              {/* INFO BUTTON */}
             <View style={styles.appInfoButton} >
@@ -322,7 +322,6 @@ const MAINPAGE = ({ route }) => {
 
 const styles = StyleSheet.create({
   bluebgPosition: {
-    top: "-1.5%",
     position: "absolute",
   },
   iconLayout1: {
@@ -347,26 +346,25 @@ const styles = StyleSheet.create({
     width: "10%",
   },
   searchbarItemLayout: {
-    width: 45,
+    width: "150%",
     position: "absolute",
   },
   pressableLayout: {
     opacity: 1,
-    
     borderRadius: 13,
   },
   wrapperLayout: {
-    height: 120,
     elevation: 5, // Adjust the elevation value to control the shadow depth
-    width: 170,
     borderRadius: 13,
+    height: "27%",
+    width: "44%",
     backgroundColor: 'rgba(0, 0, 0, 5)',
     position: "absolute",
   },
   framePosition: {
-    top: 571,
-    height: 120,
-    width: 170,
+    top: "120%",
+    height: "27%",
+    width: "44%",
     elevation: 5, 
     position: "absolute",
   },
@@ -430,17 +428,12 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.inter,
     position: "absolute",
   },
-  iconLayout: {
-    height: 12,
-    width: 12,
-    left: 189,
-    position: "absolute",
-  },
   bluebg: {
     borderBottomRightRadius: Border.br_6xl,
     borderBottomLeftRadius: Border.br_6xl,
-    width: 413,
-    height: 329,
+    width: "100%",
+    height: "40%",
+    top:"-2%"
   },
   userprofilePressable: {
     top: "24.5%",
@@ -456,7 +449,7 @@ const styles = StyleSheet.create({
       borderRadius: 22.5, 
   },
   usernameStyle: {
-    top: "45%",
+    top: "43%",
     left: "7.5%",
     fontSize: 27,
     fontWeight: "700",
@@ -472,8 +465,8 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   appInfoButton: {
-    top: "60.2%",
-    left: 358,
+    top: "57.5%",
+    left: "91%",
     width: 41,
     height: 40,
     borderRadius: Border.br_3xs,
@@ -520,15 +513,15 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   searchbar: {
-    top: "60%",
+    top: "57%",
     left: "10%",
     height: 44,
-    width: 307,
+    width: 30,
     position: "absolute",
   },
-  quickAccess1: {
-    top: "82%",
-    left: "6%",
+  quickAccessTxt: {
+    top: "78%",
+    left: "9.5%",
     color: "#111",
     fontWeight: "700",
     fontSize: FontSize.size_5xl,
@@ -538,7 +531,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   mainPageItem: {
-    top: -40,
+    top: "-5%",
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
@@ -546,7 +539,7 @@ const styles = StyleSheet.create({
     },
     width: 389,
     height: 456,
-    left: -7,
+    left: "-3.7%",
     borderRadius: Border.br_smi,
     borderWidth: 0,
     position: "absolute",
@@ -558,36 +551,33 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   timetableBOX: {
-    top: 426,
-    width: 170,
-    left: 34,
+    top: "89%",
+    left: "9%",
   },
   guidancePortalBOX: {
-    left: 225,
-    top: 426,
-    width: 170,
-    borderRadius: 13,
+    left: "56.6%",
+    top: "89%",
   },
   busRoutesBOX: {
-    left: 34,
+    left: "9%",
     borderRadius: 13,
   },
   upcomingEventTxtBOX: {
-    left: 225,
+    left: "56.6%",
     borderRadius: 13,
     elevation: 5, // Adjust the elevation value to control the shadow depth
   },
   facultyInfoBOX: {
-    top: 716,
+    top: "151%",
     borderRadius: 13,
-    left: 225,
+    left: "56.6%",
     elevation: 5, // Adjust the elevation value to control the shadow depth
   },
   locationBOX: {
-    top: 715,
+    top: "151%",
     elevation: 5, // Adjust the elevation value to control the shadow depth
     borderRadius: 13,
-    left: 34,
+    left: "9%",
     backgroundColor: 'rgba(0, 0, 0, 1)', 
   },
   location: {
@@ -750,6 +740,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     overflow: "hidden",
+    position: "absolute",
     backgroundColor: Color.colorWhite,
     width: "100%",
   },

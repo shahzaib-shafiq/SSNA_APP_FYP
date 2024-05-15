@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, FontSize, FontFamily, Color } from "../GlobalStyles";
+
+const { width, height } = Dimensions.get("window");
 
 const HOMESCREEN = () => {
   const navigation = useNavigation();
@@ -15,8 +17,7 @@ const HOMESCREEN = () => {
         source={require("../assets/unsplashtor-t4qtpq.png")}
       />
       <View style={styles.homeScreenChild} />
-      <Text style={styles.letsGetStarted}>{`LETS GET
-STARTED`}</Text>
+      <Text style={styles.letsGetStarted}>{`LETS GET\nSTARTED`}</Text>
       <View style={styles.title}>
         <Text style={styles.welcome}>WELCOME</Text>
       </View>
@@ -77,10 +78,65 @@ STARTED`}</Text>
 };
 
 const styles = StyleSheet.create({
+  homeScreen: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+    height: "100%",
+    backgroundColor: Color.colorWhite,
+  },
+  unsplashTorT4qtpqIcon: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
+  homeScreenChild: {
+    top: "32%",
+    left: "4%",
+    borderRadius: Border.br_smi,
+    width: "92%",
+    height: "55%",
+    opacity: 0.1,
+    position: "absolute",
+    backgroundColor: Color.colorWhite,
+  },
+  letsGetStarted: {
+    top: "42%",
+    left: "50%",
+    transform: [{ translateX: -width * 0.195 }],
+    fontSize: FontSize.size_13xl,
+    fontFamily: FontFamily.exo,
+    width: "45%",
+    height: "11%",
+    textAlign: "center",
+    color: Color.colorWhite,
+    position: "absolute",
+  },
+  welcome: {
+    marginLeft: -width * 0.25,
+    fontSize: 36,
+    fontFamily: FontFamily.poppins,
+    height: 63,
+    width: "50%",
+    textAlign: "center",
+    color: Color.colorWhite,
+    top: 0,
+    position: "absolute",
+    left: "50%",
+  },
+  title: {
+    top: "10%",
+    left: "50%",
+    marginLeft: -width * 0.25,
+    height: 63,
+    width: "50%",
+    position: "absolute",
+  },
   loginLayout: {
     height: 47,
-    width: 296,
+    width: "80%",
     left: "50%",
+    marginLeft: -width * 0.4,
     position: "absolute",
   },
   buttonChildShadowBox: {
@@ -103,7 +159,9 @@ const styles = StyleSheet.create({
   },
   registerLayout: {
     height: 51,
-    width: 296,
+    width: "80%",
+    left: "50%",
+    marginLeft: -width * 0.4,
     position: "absolute",
   },
   nowTypo: {
@@ -114,7 +172,7 @@ const styles = StyleSheet.create({
   },
   sectionLayout: {
     height: 1,
-    width: 146,
+    width: "40%",
     position: "absolute",
     backgroundColor: Color.colorWhite,
   },
@@ -133,76 +191,27 @@ const styles = StyleSheet.create({
     color: Color.colorWhite,
     position: "absolute",
   },
-  unsplashTorT4qtpqIcon: {
-    width: 430,
-    left: 0,
-    top: 0,
-    position: "absolute",
-    height: 932,
-  },
-  homeScreenChild: {
-    top: 300,
-    left: 16,
-    borderRadius: Border.br_smi,
-    width: 398,
-    height: 513,
-    opacity: 0.1,
-    position: "absolute",
-    backgroundColor: Color.colorWhite,
-  },
-  letsGetStarted: {
-    top: 387,
-    left: 131,
-    fontSize: FontSize.size_13xl,
-    fontFamily: FontFamily.exo,
-    width: 166,
-    height: 101,
-    textAlign: "center",
-    color: Color.colorWhite,
-    position: "absolute",
-  },
-  welcome: {
-    marginLeft: -104.5,
-    fontSize: 36,
-    fontFamily: FontFamily.poppins,
-    height: 63,
-    width: 209,
-    left: "50%",
-    textAlign: "center",
-    color: Color.colorWhite,
-    top: 0,
-    position: "absolute",
-  },
-  title: {
-    marginLeft: -105,
-    top: 97,
-    height: 63,
-    width: 209,
-    left: "50%",
-    position: "absolute",
-  },
   loginButtonChild: {
-    marginLeft: -148.1,
     backgroundColor: "rgba(255, 255, 255, 0.4)",
     borderColor: "#4b4b4b",
     height: 47,
-    width: 296,
-    left: "50%",
+    width: "100%",
+    left: 0,
     position: "absolute",
   },
   signInNow: {
     top: 10,
-    left: 66,
-    width: 162,
+    left: "25%",
+    width: "50%",
     fontWeight: "600",
     fontSize: FontSize.size_xl,
     fontFamily: FontFamily.poppins,
     textAlign: "center",
     color: Color.colorWhite,
+    position: "absolute",
   },
   loginButton: {
-    marginLeft: -147,
-    top: 529,
+    top: "57%",
   },
   registerButtonChild: {
     backgroundColor: "rgba(167, 0, 0, 0.4)",
@@ -220,18 +229,18 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_3xs,
     top: 0,
     left: 0,
+    width: "100%",
   },
   registerNow: {
     top: 11,
-    left: 55,
-    width: 185,
+    left: "20%",
+    width: "60%",
     height: 31,
     fontWeight: "600",
     position: "absolute",
   },
   registerButton: {
-    top: 694,
-    left: 67,
+    top: "75%",
   },
   orSectionChild: {
     top: 18,
@@ -239,11 +248,12 @@ const styles = StyleSheet.create({
   },
   orSectionItem: {
     top: 16,
-    left: 209,
+    right: 0,
   },
   or: {
-    left: 161,
-    width: 33,
+    left: "50%",
+    marginLeft: -width * 0.04,
+    width: "8%",
     fontSize: FontSize.size_xl,
     fontFamily: FontFamily.poppins,
     textAlign: "center",
@@ -251,28 +261,29 @@ const styles = StyleSheet.create({
     top: 0,
   },
   orSection: {
-    top: 631,
-    left: 37,
-    width: 355,
+    top: "67%",
+    left: "10%",
+    width: "80%",
   },
   ssnaLogoIcon: {
-    top: 246,
-    left: 160,
+    top: "26%",
+    left: "50%",
+    marginLeft: -55,
     borderRadius: Border.br_65xl_5,
     width: 110,
     height: 108,
     position: "absolute",
   },
   alreadyHaveAn1: {
-    marginLeft: -86,
-    top: 589,
-    width: 171,
+    marginLeft: -width * 0.22,
+    top: "63%",
+    width: "44%",
     height: 20,
   },
   createANew1: {
-    marginLeft: -75,
-    top: 753,
-    width: 151,
+    marginLeft: -width * 0.19,
+    top: "81%",
+    width: "38%",
     height: 19,
   },
   vectorIcon1: {
@@ -294,7 +305,7 @@ const styles = StyleSheet.create({
   },
   yourCampusCompanion1: {
     top: 23,
-    left: 35,
+    left: "20%",
     fontWeight: "500",
   },
   bottomtext: {
@@ -307,19 +318,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   cfdBuildingDrawingV21: {
-    marginLeft: -200,
-    top: 147,
-    width: 400,
+    marginLeft: -width * 0.5,
+    top: "16%",
+    width: "100%",
     height: 95,
     left: "50%",
     position: "absolute",
-  },
-  homeScreen: {
-    flex: 1,
-    width: "100%",
-    overflow: "hidden",
-    height: 932,
-    backgroundColor: Color.colorWhite,
   },
 });
 
