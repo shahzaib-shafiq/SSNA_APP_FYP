@@ -109,9 +109,9 @@ const styles = StyleSheet.create({
   },
   guidancePortalStyle: {
     height: "12.5%",
-    width: "40.33%",
+    width: "50.33%",
     top: "65%",
-    left: "18%",
+    left: "15%",
     fontSize: FontSize.size_5xl,
   },
   plusButtonGB: {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   plusSign: {
     height: "500%",
     width: "50%",
-    top: "-42%",
+    top: "-47%",
     left: "25%",
     fontSize: FontSize.size_21xl,
   },

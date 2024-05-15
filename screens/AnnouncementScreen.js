@@ -95,10 +95,7 @@ const UpcomingEvents = ({ route }) => {
             <View style={[styles.upcomingEvents1, styles.upcomingPosition]}>
 
               <View style={[styles.upcomingEventsChild, styles.upcomingPosition]}>
-                {/* <Image
-                source={{ uri: events.img }}
-                style={{ width: '100%', height: '130%', borderRadius: Border.br_mini }}
-              /> */}
+                
               </View>
               {/* TITLE OF ANNOUNCEMENT */}
               <Text style={styles.EventTitleStyle}>
@@ -106,20 +103,11 @@ const UpcomingEvents = ({ route }) => {
                 {/* UGUGMU */}
               </Text>
 
-              {/* DETAIL OF ANNOUNCEMENT
-              <Text style={styles.EventDetailStyle}>
-                {events?.Announcement}
-              </Text> */}
-
               {/* DATE */}
               <Text style={styles.dateStyle}>
                 {events?.AnnouncementDate}
               </Text>
-              {/* <Image
-                style={styles.calendar1Icon}
-                contentFit="cover"
-                source={require("../assets/calendar-1.png")}
-              /> */}
+              
             </View>
           </View>
         </Pressable>
@@ -167,10 +155,8 @@ const styles = StyleSheet.create({
   },
   appsLayout: {
     height: 70,
-    top: 120,
-    left: 20,
-    width: 370,
-    position: "absolute",
+    left: "2.5%",
+    width: "95%",
     shadowOpacity: 5,
     elevation: 4,
     shadowRadius: 6,
@@ -183,7 +169,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: Color.colorWhite,
   },
-
+  upcomingEventsChild:{
+    backgroundColor: Color.colorBlack,
+  },
   EventTitleStyle: {
     marginTop: 25,
     marginLeft: -32.5,

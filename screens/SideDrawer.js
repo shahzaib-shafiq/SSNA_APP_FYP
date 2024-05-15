@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Image,Animated } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FontFamily, FontSize, Color } from "../GlobalStyles";
+import { FontFamily,Border, FontSize, Color } from "../GlobalStyles";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 
 const SideDrawer = ({route}) => {
@@ -165,11 +165,11 @@ const SideDrawer = ({route}) => {
                     />
                 </Pressable>
 
-                <Image
+                {/* <Image
                 style={styles.uilsettingIcon}
                 contentFit="cover"
                 source={require("../assets/uilsetting.png")}
-                />
+                /> */}
             </View>
         </View>
     </Animated.View>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   courseMaterialPosition: {
-    left: 0,
+    // left: 0,
     position: "absolute",
   },
   logoutFlexBox: {
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
     // height: "30%",
   },
   exploretxt: {
-    top: "13%",
-    left: 25,
+    top: "15%",
+    left: "3%",
     fontSize: FontSize.size_13xl,
     lineHeight: 32,
     fontWeight: "600",
@@ -283,9 +283,8 @@ const styles = StyleSheet.create({
   },
   logout_st: {
     width: "40%",
-    top: "83%",
-    left: "19%",
-    // backgroundColor:'grey',
+    top: "91%",
+    left: "-2%",
     zIndex: 8,
     height: "1%",
   },
@@ -359,6 +358,9 @@ const styles = StyleSheet.create({
   sidebar: {
     top: "0%",
     left: "0%",
+    borderRadius: 1005,
+    width: "100%",
+    height: "100%",
   },
   SideDrawer: {
     backgroundColor: Color.colorWhite,

@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     left: "0%",
   },
   answerChild: {
-    width: "97%", // Adjust width as necessary
+    width: "96%", // Adjust width as necessary
     borderRadius: Border.br_base,
     backgroundColor: Color.colorGainsboro_400,
     padding: 10, // Add padding to create space inside the box

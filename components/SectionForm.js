@@ -142,7 +142,7 @@ const SectionForm = ({ route, userDetail }) => {
         });
       }
     });
-    setUpvotes(updatedUpvotes);
+    // setUpvotes(updatedUpvotes);
   };
   const [queryInfo, setGuidanceQuery] = useState([]);
 
@@ -195,10 +195,10 @@ const SectionForm = ({ route, userDetail }) => {
 
       <View style={styles.bgdownPosition}>
 
-        <View style={[styles.bgdown, styles.bgdownPosition]} />
+        {/* <View style={[styles.bgdown, styles.bgdownPosition]} /> */}
 
         <Pressable
-          style={[styles.answerbuttonChild, styles.respondPosition]}
+          style={styles.answerbuttonChild}
           onPress={handlePressAns}
         >
           <Text style={styles.answer}>ANSWER</Text>
@@ -220,7 +220,7 @@ const SectionForm = ({ route, userDetail }) => {
       <View style={[styles.respond, styles.respondPosition]}>
 
         {/* DOWNVOTING BUTTON */}
-        <Pressable
+        {/* <Pressable
           onPress={() => handleDownvote(query.id, query.Downvotes, query.Upvotes, userDetail.id)}
           style={[styles.downVoteButtonStyle, styles.respondLayout]}
         >
@@ -232,10 +232,10 @@ const SectionForm = ({ route, userDetail }) => {
           <Text style={[styles.downVoteNumStyle, styles.votingTextPosition]}>
             {query.Downvotes}
           </Text>
-        </Pressable>
+        </Pressable> */}
 
         {/* UPVOTING BUTTON */}
-        <Pressable
+        {/* <Pressable
           onPress={() => handleUpvote(query.id, query.Upvotes, query.Downvotes, userDetail.id)}
           style={[styles.upVoteButtonStyle, styles.respondLayout]}
         >
@@ -247,7 +247,7 @@ const SectionForm = ({ route, userDetail }) => {
           <Text style={[styles.upVoteNumStyle, styles.votingTextPosition]}>
             {query.Upvotes}
           </Text>
-        </Pressable>
+        </Pressable> */}
       </View>
 
     </View>
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   bgdownPosition: {
     top: 0,
     height: 56,
-    width: 430,
+    width: "100%",
     left: 0,
     position: "absolute",
   },
@@ -313,11 +313,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
   },
   answerbuttonChild: {
-    left: 257,
-    backgroundColor: Color.colorSkyblue,
+    left: "58%",
+    backgroundColor:  "#4d7da9",
     width: 143,
     borderRadius: Border.br_6xs,
-    height: 31,
+    height: 41,
     top: 12,
   },
   answer: {
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     fontSize: 16,
     left: "-2%",
-    top: "12%",
+    top: "19%",
     // position: "absolute",
   },
   upVoteButtonStyle: {
@@ -364,11 +364,11 @@ const styles = StyleSheet.create({
     top: 12,
   },
   answerbuttonParent: {
-    top: "1400%",
+    top: "1309%",
     height: 56,
-    width: 430,
+    width: "100%",
     // position: "absolute",
-    left: 0,
+    left: "0%",
   },
 });
 

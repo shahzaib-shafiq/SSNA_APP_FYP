@@ -27,9 +27,16 @@ const AnswerQueryPopup = ({ onClose, userDetail,route }) => {
     };
 
     const handleNewAnswer = (queryID) => {
-        // const { id } = query.id; // Assuming `id` is the property containing the query ID
-        console.log('AQP-QueryID:', queryID);
-
+        if (!question.trim()) {
+            // If the question is empty or only contains whitespace
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Please enter your answer.',
+            });
+            return; // Exit the function without posting the answer
+        }
+    
         // Creating a new answer object with user-provided answer, author, and current date
         const newAnswer = {
             Answer: question,
@@ -52,7 +59,7 @@ const AnswerQueryPopup = ({ onClose, userDetail,route }) => {
                 console.error('Error adding new answer: ', error);
             });
     };
-
+    
     return (
         <View style={styles.popupMainViewStyle}>
             <View style={[styles.errormessageChild, styles.errormessageShadowBox]}>
